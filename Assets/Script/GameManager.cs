@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class Gamemanager : MonoBehaviour
 {
-    public string name;
+    public string name_;
     
     public int level = 1;
     public int exp = 0;
