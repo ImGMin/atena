@@ -1,34 +1,94 @@
+using System;
+using System.IO;
 using UnityEngine;
-using UnityEngine.UI;
+using Newtonsoft.Json;
 
-
-public class Gamemanager : MonoBehaviour
+public class GameData
 {
-    public string name_;
-    
-    public int level = 1;
-    public int exp = 0;
-    public int cash = 0;
-    public int energy = 0;
-    public int repute = 0;
-    public int follower = 0;
+    public int level {  get; set; }
+    public int exp {  get; set; }
+    public int energy { get; set; }
+    public int friends { get; set; }
+    public int cash { get; set; }
+    public int reputation { get; set; }
+    public int atenaGrowth { get; set; }
+    public AtenaDate curTime { get; set; }
+}
 
-    void Start()
+public class GameManager : MonoBehaviour
+{
+    private static GameManager instance;
+    public GameData gameData;
+
+    private string dataPath;
+
+    // 싱글턴
+    public static GameManager Instance
     {
-        Debug.Log(exp);
-        Debug.Log(energy);
-        Debug.Log(repute);
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<GameManager>();
+                if (instance == null)
+                {
+                    instance = new GameObject("GameManager").AddComponent<GameManager>();
+                }
+            }
+            return instance;
+        }
     }
-        public void PlusButton()
+
+    //싱글턴 인스턴스 초기화
+    private void Awake()
     {
-        exp += 10;
-        energy -= 10;
-        repute +=5;
-
-    Debug.Log(exp);
-    Debug.Log(energy);
-    Debug.Log(repute);
-
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // 씬 로딩 시 인스턴스 유지
+            dataPath = Path.Combine(Application.persistentDataPath, "gameData.json");
+            LoadGameData();
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject); // 중복 인스턴스 제거
+        }
     }
 
+    //저장
+    public void SaveGameData()
+    {
+        string jsonData = JsonConvert.SerializeObject(gameData, Formatting.Indented);
+        File.WriteAllText(dataPath, jsonData);
+    }
+
+    //불러오기
+    public void LoadGameData()
+    {
+        if (File.Exists(dataPath))
+        {
+            string jsonData = File.ReadAllText(dataPath);
+            GameData gameData = JsonConvert.DeserializeObject<GameData>(jsonData);
+        }
+        else
+        {
+            gameData = new GameData()
+            {
+                level = 0,
+                exp = 0,
+                energy = 100,
+                friends = 0,
+                cash = 0,
+                reputation = 0,
+                atenaGrowth = 0,
+                curTime = new AtenaDate(2025, 1, 1)
+            };
+        }
+    }
+
+    //아르바이트
+    public void PlayGame()
+    {
+        Debug.Log("Game is starting...");
+    }
 }
