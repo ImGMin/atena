@@ -2,6 +2,8 @@ using System;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using System.Xml.Linq;
+using Unity.VisualScripting;
 
 public class GameData
 {
@@ -13,6 +15,22 @@ public class GameData
     public int reputation { get; set; }
     public int atenaGrowth { get; set; }
     public AtenaDate curTime { get; set; }
+
+    public GameData() {
+        level = 0;
+        exp = 0;
+        energy = 100;
+        friends = 0;
+        cash = 0;
+        reputation = 0;
+        atenaGrowth = 0;
+        curTime = new AtenaDate(2025, 1, 1);
+    }
+
+    public override string ToString()
+    {
+        return $"level: {level}\n exp: {exp}\n level: {level}\n level: {level}\n level: {level}\n ";
+    }
 }
 
 public class GameManager : MonoBehaviour
@@ -72,17 +90,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            gameData = new GameData()
-            {
-                level = 0,
-                exp = 0,
-                energy = 100,
-                friends = 0,
-                cash = 0,
-                reputation = 0,
-                atenaGrowth = 0,
-                curTime = new AtenaDate(2025, 1, 1)
-            };
+            gameData = new GameData();
         }
     }
 
