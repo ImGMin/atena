@@ -30,8 +30,23 @@ public class GameData
         curTime = new AtenaDate(2025, 1, 1);
     }
 
-    public override string ToString()
+    public void ChangeValue(
+        int? exp = null,
+        int? energy = null,
+        int? friends = null, 
+        int? reputation = null, 
+        int? atenaGrowth = null
+        )
+    {
+        
+    }
+
+
+
+
+
+    /*public override string ToString()
     {
         return $"level: {level}\n exp: {exp}\n level: {level}\n level: {level}\n level: {level}\n ";
-    }
+    }*/
 }
