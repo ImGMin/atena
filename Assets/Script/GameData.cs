@@ -14,7 +14,13 @@ public class GameData
     public int atenaGrowth { get; set; }
     public AtenaDate curTime { get; set; }
 
-    public event Action<string, int> OnValueChanged;
+    public event Action<int> OnLvChanged;
+    public event Action<int> OnExpChanged;
+    /*public event Action<int> OnEnergyChanged;
+    public event Action<int> OnFriendChanged;
+    public event Action<int> OnCashChanged;
+    public event Action<int> OnReputationChanged;
+    public event Action<int> OnAtenaGrowthChanged;*/
 
     public int[] LvUpEXP = { 0, 20, 26, 35 };
 
@@ -30,23 +36,11 @@ public class GameData
         curTime = new AtenaDate(2025, 1, 1);
     }
 
-    public void ChangeValue(
-        int? exp = null,
-        int? energy = null,
-        int? friends = null, 
-        int? reputation = null, 
-        int? atenaGrowth = null
-        )
+    public void ChangeLvExp()
     {
-        
+        OnLvChanged?.Invoke(level);
+        OnExpChanged?.Invoke(exp);
     }
 
 
-
-
-
-    /*public override string ToString()
-    {
-        return $"level: {level}\n exp: {exp}\n level: {level}\n level: {level}\n level: {level}\n ";
-    }*/
 }

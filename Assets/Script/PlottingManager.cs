@@ -33,26 +33,4 @@ public class PlottingManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    public TMP_Text energyText;
-    public TMP_Text reputationText;
-    public TMP_Text currencyText;
-
-    public void UpdateEnergyUI(int energy)
-    {
-        if (energyText != null)
-            energyText.text = $"Energy: {energy}";
-    }
-
-    public void UpdateReputationUI(int reputation)
-    {
-        if (reputationText != null)
-            reputationText.text = $"Reputation: {reputation}";
-    }
-
-    public void UpdateCurrencyUI(int currency)
-    {
-        if (currencyText != null)
-            currencyText.text = $"Currency: {currency}";
-    }
 }
