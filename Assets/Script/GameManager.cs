@@ -2,36 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
-using System.Xml.Linq;
 using Unity.VisualScripting;
-
-public class GameData
-{
-    public int level {  get; set; }
-    public int exp {  get; set; }
-    public int energy { get; set; }
-    public int friends { get; set; }
-    public int cash { get; set; }
-    public int reputation { get; set; }
-    public int atenaGrowth { get; set; }
-    public AtenaDate curTime { get; set; }
-
-    public GameData() {
-        level = 0;
-        exp = 0;
-        energy = 100;
-        friends = 0;
-        cash = 0;
-        reputation = 0;
-        atenaGrowth = 0;
-        curTime = new AtenaDate(2025, 1, 1);
-    }
-
-    public override string ToString()
-    {
-        return $"level: {level}\n exp: {exp}\n level: {level}\n level: {level}\n level: {level}\n ";
-    }
-}
 
 public class GameManager : MonoBehaviour
 {
@@ -86,7 +57,7 @@ public class GameManager : MonoBehaviour
         if (File.Exists(dataPath))
         {
             string jsonData = File.ReadAllText(dataPath);
-            GameData gameData = JsonConvert.DeserializeObject<GameData>(jsonData);
+            gameData = JsonConvert.DeserializeObject<GameData>(jsonData);
         }
         else
         {
@@ -94,9 +65,56 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //아르바이트
-    public void PlayGame()
+    //초기화
+    public void InitGameData()
     {
-        Debug.Log("Game is starting...");
+        gameData.exp = 0;
+        gameData.level = 1;
+        gameData.ChangeLvExp();
+    }
+
+    public void LevelUp()
+    {
+        while (gameData.exp >= gameData.LvUpEXP[gameData.level])
+        {
+            gameData.exp -= gameData.LvUpEXP[gameData.level];
+            gameData.level++;
+        }
+        return;
+    }
+    public void ChangeValue(
+    int? exp = null,
+    int? energy = null,
+    int? friends = null,
+    int? reputation = null,
+    int? atenaGrowth = null
+    )
+    {
+        if (exp.HasValue)
+        {
+            gameData.exp += exp.Value;
+            LevelUp();
+            gameData.ChangeLvExp();
+        }
+
+        /*if (energy.HasValue)
+        {
+            gameData.energy += energy.Value;
+        }
+
+        if (friends.HasValue)
+        {
+            gameData.friends += friends.Value;
+        }
+
+        if (reputation.HasValue)
+        {
+            gameData.exp = reputation.Value; 
+        }
+
+        if (atenaGrowth.HasValue)
+        {
+            gameData.atenaGrowth += atenaGrowth.Value;
+        }*/
     }
 }
