@@ -14,10 +14,16 @@ public class LoadStartScene : MonoBehaviour
         GameManager.Instance.SaveGameData();
     }
 
+    public void DayUp()
+    {
+        GameManager.Instance.ChangeValue(curTime: 1);
+        GameManager.Instance.SaveGameData();
+    }
+    
+
     public void Init()
     {
         GameManager.Instance.InitGameData();
         GameManager.Instance.SaveGameData();
-        Debug.Log(GameManager.Instance.gameData.level.ToString());
     }
 }

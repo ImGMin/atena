@@ -16,13 +16,14 @@ public class GameData
 
     public event Action<int> OnLvChanged;
     public event Action<int> OnExpChanged;
-    /*public event Action<int> OnEnergyChanged;
+    public event Action<int> OnEnergyChanged;
     public event Action<int> OnFriendChanged;
     public event Action<int> OnCashChanged;
     public event Action<int> OnReputationChanged;
-    public event Action<int> OnAtenaGrowthChanged;*/
+    public event Action<int> OnAtenaGrowthChanged;
+    public event Action<AtenaDate> OnAtenaDateChanged;
 
-    public int[] LvUpEXP = { 0, 20, 26, 35 };
+    public int[] LvUpEXP = { 0, 20, 26, 35, 47, 62, 80, 101, 1000000};
 
     public GameData()
     {
@@ -30,7 +31,7 @@ public class GameData
         exp = 0;
         energy = 100;
         friends = 0;
-        cash = 0;
+        cash = 100000;
         reputation = 0;
         atenaGrowth = 0;
         curTime = new AtenaDate(2025, 1, 1);
@@ -42,5 +43,33 @@ public class GameData
         OnExpChanged?.Invoke(exp);
     }
 
+    public void ChangeEnergy()
+    {
+        OnEnergyChanged?.Invoke(energy);
+    }
 
+    public void ChangeFriend()
+    {
+        OnFriendChanged?.Invoke(friends);
+    }
+
+    public void ChangeCash()
+    {
+        OnCashChanged?.Invoke(cash);
+    }
+
+    public void ChangeReputation()
+    {
+        OnReputationChanged?.Invoke(reputation);
+    }
+
+    public void ChangeAtenaGrowth()
+    {
+        OnAtenaGrowthChanged?.Invoke(atenaGrowth);
+    }
+    
+    public void ChangeAtenaDate()
+    {
+        OnAtenaDateChanged?.Invoke(curTime);
+    }
 }

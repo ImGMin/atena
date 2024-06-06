@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class LvUI : MonoBehaviour
+public class AtenaGrowthUI : MonoBehaviour
 {
     private TMP_Text thisText;
 
@@ -11,17 +11,17 @@ public class LvUI : MonoBehaviour
     private void Awake()
     {
         thisText = GetComponent<TMP_Text>();
-        UpdateText(GameManager.Instance.gameData.level);
+        UpdateText(GameManager.Instance.gameData.atenaGrowth);
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.gameData.OnLvChanged += UpdateText;
+        GameManager.Instance.gameData.OnAtenaGrowthChanged += UpdateText;
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.gameData.OnLvChanged -= UpdateText;
+        GameManager.Instance.gameData.OnAtenaGrowthChanged -= UpdateText;
     }
 
     private void UpdateText(int newText)

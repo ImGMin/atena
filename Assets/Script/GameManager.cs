@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Unity.VisualScripting;
 
@@ -10,6 +11,10 @@ public class GameManager : MonoBehaviour
     public GameData gameData;
 
     private string dataPath;
+
+    public delegate void func();
+
+    public List<func> fList;
 
     // ΩÃ±€≈œ
     public static GameManager Instance
@@ -44,6 +49,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        fList = new List<func>()
+        {
+            gameData.ChangeLvExp,
+            gameData.ChangeEnergy,
+            gameData.ChangeFriend,
+            gameData.ChangeCash,
+            gameData.ChangeReputation,
+            gameData.ChangeAtenaGrowth,
+            gameData.ChangeAtenaDate
+        };
+    }
+
     //¿˙¿Â
     public void SaveGameData()
     {
@@ -70,7 +89,17 @@ public class GameManager : MonoBehaviour
     {
         gameData.exp = 0;
         gameData.level = 1;
-        gameData.ChangeLvExp();
+        gameData.energy = 100;
+        gameData.friends = 0;
+        gameData.cash = 0;
+        gameData.reputation = 0;
+        gameData.atenaGrowth = 0;
+        gameData.curTime = new AtenaDate(2025,1,1);
+        
+        foreach (var f in fList)
+        {
+            f();
+        }
     }
 
     public void LevelUp()
@@ -86,8 +115,10 @@ public class GameManager : MonoBehaviour
     int? exp = null,
     int? energy = null,
     int? friends = null,
+    int? cash = null,
     int? reputation = null,
-    int? atenaGrowth = null
+    int? atenaGrowth = null,
+    int? curTime = null
     )
     {
         if (exp.HasValue)
@@ -97,24 +128,41 @@ public class GameManager : MonoBehaviour
             gameData.ChangeLvExp();
         }
 
-        /*if (energy.HasValue)
+        if (energy.HasValue)
         {
             gameData.energy += energy.Value;
+            gameData.ChangeEnergy();
         }
 
         if (friends.HasValue)
         {
             gameData.friends += friends.Value;
+            gameData.ChangeFriend();
+        }
+
+        if (cash.HasValue)
+        {
+            gameData.cash += cash.Value;
+            gameData.ChangeCash();
         }
 
         if (reputation.HasValue)
         {
-            gameData.exp = reputation.Value; 
+            gameData.exp = reputation.Value;
+            gameData.ChangeReputation();
         }
 
         if (atenaGrowth.HasValue)
         {
             gameData.atenaGrowth += atenaGrowth.Value;
-        }*/
+            gameData.ChangeAtenaGrowth();
+        }
+
+        if (curTime.HasValue)
+        {
+            gameData.curTime.day += curTime.Value;
+            gameData.curTime.UpdateDate();
+            gameData.ChangeAtenaDate();
+        }
     }
 }
