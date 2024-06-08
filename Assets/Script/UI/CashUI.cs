@@ -8,6 +8,9 @@ public class CashUI : MonoBehaviour
     [SerializeField]
     private string format = "{0}";
 
+    [SerializeField]
+    private bool useCommaSep = true;
+
     private void Awake()
     {
         thisText = GetComponent<TMP_Text>();
@@ -26,6 +29,13 @@ public class CashUI : MonoBehaviour
 
     private void UpdateText(int newText)
     {
-        thisText.text = string.Format(format, newText);
+        if (useCommaSep)
+        {
+            thisText.text = string.Format(format, newText.ToString("N0"));
+        }
+        else
+        {
+            thisText.text = string.Format(format, newText.ToString());
+        }
     }
 }

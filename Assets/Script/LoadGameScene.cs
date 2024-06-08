@@ -10,7 +10,6 @@ public class LoadGameScene : MonoBehaviour
             SceneManager.LoadScene("SampleScene");
         }
 
-        //테스트 씬 이동
         if (Input.GetKeyDown(KeyCode.T)) {
             SceneManager.LoadScene("TestScene");
         }

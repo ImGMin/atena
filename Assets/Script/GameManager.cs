@@ -3,7 +3,6 @@ using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +15,6 @@ public class GameManager : MonoBehaviour
 
     public List<func> fList;
 
-    // 싱글턴
     public static GameManager Instance
     {
         get
@@ -33,19 +31,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //싱글턴 인스턴스 초기화
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // 씬 로딩 시 인스턴스 유지
+            DontDestroyOnLoad(gameObject); 
             dataPath = Path.Combine(Application.persistentDataPath, "gameData.json");
             LoadGameData();
         }
         else if (instance != this)
         {
-            Destroy(gameObject); // 중복 인스턴스 제거
+            Destroy(gameObject); 
         }
     }
 
@@ -63,14 +60,12 @@ public class GameManager : MonoBehaviour
         };
     }
 
-    //저장
     public void SaveGameData()
     {
         string jsonData = JsonConvert.SerializeObject(gameData, Formatting.Indented);
         File.WriteAllText(dataPath, jsonData);
     }
 
-    //불러오기
     public void LoadGameData()
     {
         if (File.Exists(dataPath))
@@ -84,14 +79,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //초기화
     public void InitGameData()
     {
         gameData.exp = 0;
         gameData.level = 1;
         gameData.energy = 100;
         gameData.friends = 0;
-        gameData.cash = 0;
+        gameData.cash = 100000;
         gameData.reputation = 0;
         gameData.atenaGrowth = 0;
         gameData.curTime = new AtenaDate(2025,1,1);
@@ -111,14 +105,8 @@ public class GameManager : MonoBehaviour
         }
         return;
     }
-    public void ChangeValue(
-    int? exp = null,
-    int? energy = null,
-    int? friends = null,
-    int? cash = null,
-    int? reputation = null,
-    int? atenaGrowth = null,
-    int? curTime = null
+
+    public void ChangeValue(int? exp = null, int? energy = null, int? friends = null, int? cash = null, int? reputation = null, int? atenaGrowth = null, int? curTime = null
     )
     {
         if (exp.HasValue)
