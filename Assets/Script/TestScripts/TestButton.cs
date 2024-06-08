@@ -16,8 +16,6 @@ public class TestButton : MonoBehaviour
     public void DayUp()
     {
         GameManager.Instance.ChangeValue(curTime: 1);
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentSceneName);
     }
     
 

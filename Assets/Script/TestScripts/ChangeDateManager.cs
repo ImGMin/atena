@@ -35,6 +35,6 @@ public class ChangeDateManager : MonoBehaviour
 
     void UpdateSchedule()
     {
-
+        GetComponent<ScheduleCSV>().UpdateSchedule();
     }
 }

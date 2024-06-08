@@ -36,6 +36,7 @@ public class GameData
         reputation = 0;
         atenaGrowth = 0;
         curTime = new AtenaDate(2025, 1, 1);
+        Schedule = new (int, int)[5];
     }
 
     public void ChangeLvExp()
