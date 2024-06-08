@@ -12,7 +12,7 @@ public class AtenaDateUI : MonoBehaviour
     [SerializeField]
     private bool useFullYear = true;
 
-    private List<string> weekday = new List<string>() { "¿ù", "È­", "¼ö", "¸ñ", "±Ý" };
+    private List<string> weekday = new List<string>() { "ì›”", "í™”", "ìˆ˜", "ëª©", "ê¸ˆ" };
 
     private void Awake()
     {
