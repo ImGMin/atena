@@ -17,4 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ScheduleScene.unity
     guid: 19209e279e146fb47887fc48ac8f2d6e
+  - enabled: 1
+    path: Assets/Scenes/PhoneScene.unity
+    guid: 0a67958dc5d62134596c64b98af9035d
+  - enabled: 1
+    path: Assets/Scenes/ChangeDate.unity
+    guid: 291f4d0b0c7d61447b2c2373561b2e46
   m_configObjects: {}

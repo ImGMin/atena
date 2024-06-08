@@ -23,7 +23,7 @@ public class AtenaDate
     {
         if (day > 20)
         {
-            day -= 5;
+            day = 20;
             month += 1;
         }
 

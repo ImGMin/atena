@@ -3,6 +3,7 @@ using System.IO;
 using UnityEngine;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class GameManager : MonoBehaviour
     public delegate void func();
 
     public List<func> fList;
+
+    public bool Tutorial = false;
+
+    public int earnings = 0;
 
     public static GameManager Instance
     {
@@ -81,19 +86,10 @@ public class GameManager : MonoBehaviour
 
     public void InitGameData()
     {
-        gameData.exp = 0;
-        gameData.level = 1;
-        gameData.energy = 100;
-        gameData.friends = 0;
-        gameData.cash = 100000;
-        gameData.reputation = 0;
-        gameData.atenaGrowth = 0;
-        gameData.curTime = new AtenaDate(2025,1,1);
-        
-        foreach (var f in fList)
-        {
-            f();
-        }
+        gameData = new GameData();
+        SaveGameData();
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
     }
 
     public void LevelUp()
@@ -106,44 +102,51 @@ public class GameManager : MonoBehaviour
         return;
     }
 
-    public void ChangeValue(int? exp = null, int? energy = null, int? friends = null, int? cash = null, int? reputation = null, int? atenaGrowth = null, int? curTime = null
-    )
+    public void ChangeValue(int? exp = null, int? energy = null, int? friends = null, int? cash = null, int? reputation = null, int? atenaGrowth = null, int? curTime = null)
     {
+        bool flag = false;
+
         if (exp.HasValue)
         {
             gameData.exp += exp.Value;
             LevelUp();
             gameData.ChangeLvExp();
+            flag = true;
         }
 
         if (energy.HasValue)
         {
             gameData.energy += energy.Value;
             gameData.ChangeEnergy();
+            flag = true;
         }
 
         if (friends.HasValue)
         {
             gameData.friends += friends.Value;
             gameData.ChangeFriend();
+            flag = true;
         }
 
         if (cash.HasValue)
         {
             gameData.cash += cash.Value;
             gameData.ChangeCash();
+            flag = true;
         }
 
         if (reputation.HasValue)
         {
             gameData.exp = reputation.Value;
             gameData.ChangeReputation();
+            flag = true;
         }
 
         if (atenaGrowth.HasValue)
         {
             gameData.atenaGrowth += atenaGrowth.Value;
             gameData.ChangeAtenaGrowth();
+            flag = true;
         }
 
         if (curTime.HasValue)
@@ -151,6 +154,14 @@ public class GameManager : MonoBehaviour
             gameData.curTime.day += curTime.Value;
             gameData.curTime.UpdateDate();
             gameData.ChangeAtenaDate();
+            flag = true;
+        }
+
+        if (flag) 
+        {
+            SaveGameData(); 
         }
     }
+
+    
 }

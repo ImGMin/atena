@@ -13,6 +13,7 @@ public class GameData
     public int reputation { get; set; }
     public int atenaGrowth { get; set; }
     public AtenaDate curTime { get; set; }
+    public (int,int)[] Schedule = new (int,int)[5];
 
     public event Action<int> OnLvChanged;
     public event Action<int> OnExpChanged;

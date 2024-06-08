@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadStartScene : MonoBehaviour
+public class TestButton : MonoBehaviour
 {
     public void StartScene()
     {
@@ -11,19 +11,18 @@ public class LoadStartScene : MonoBehaviour
     public void ExpUp()
     {
         GameManager.Instance.ChangeValue(exp: 5);
-        GameManager.Instance.SaveGameData();
     }
 
     public void DayUp()
     {
         GameManager.Instance.ChangeValue(curTime: 1);
-        GameManager.Instance.SaveGameData();
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
     }
     
 
     public void Init()
     {
         GameManager.Instance.InitGameData();
-        GameManager.Instance.SaveGameData();
     }
 }
