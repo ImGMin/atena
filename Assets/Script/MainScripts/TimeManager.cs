@@ -9,6 +9,7 @@ public class TimeManager : MonoBehaviour
 {
     int situ;
     int work;
+    int cur;
     AtenaDate GameDataToday;
 
     public Image cooldownMask;
@@ -24,6 +25,7 @@ public class TimeManager : MonoBehaviour
 
     void Awake()
     {
+        cur = GameManager.Instance.gameData.curTime.day;
         GameDataToday = GameManager.Instance.gameData.curTime;
         GameDataToday.hour = 0;
 
@@ -84,6 +86,10 @@ public class TimeManager : MonoBehaviour
             GameDataToday.hour = 0f;
             cooldownMask.fillAmount = 1f;
             GameManager.Instance.ChangeValue(curTime: 1); 
+        }
+
+        if (GameDataToday.day != cur)
+        {
             SceneManager.LoadScene("ChangeDate");
         }
     }
