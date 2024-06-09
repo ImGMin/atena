@@ -24,7 +24,7 @@ public class Timer : MonoBehaviour
     {
         if (time.hour < maxTime)
         {
-            time.hour += Time.deltaTime;
+            time.hour += Time.deltaTime*(12f/300f);
             cooldownMask.fillAmount = time.hour / maxTime;
 
             countDown = Mathf.CeilToInt(maxTime - time.hour);

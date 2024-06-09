@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System.Text;
 
 public class ScheduleCSV : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class ScheduleCSV : MonoBehaviour
         int idx = start;
         while (start==idx || (idx-1)%5 != 0)
         {
+            Debug.Log(idx);
+            Debug.Log(data.Count);
             string str = data[idx-1]["상황ID"];
             if (str == "Situ_Idle")
             {
@@ -44,7 +47,7 @@ public class ScheduleCSV : MonoBehaviour
         if (File.Exists(filePath))
         {
             // CSV 파일의 모든 줄을 읽기
-            string[] lines = File.ReadAllLines(filePath);
+            string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
 
             if (lines.Length > 0)
             {

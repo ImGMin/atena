@@ -15,6 +15,7 @@ public class TimeManager : MonoBehaviour
         Debug.Log(gameObject.name);
         cur = GameManager.Instance.gameData.curTime.day;
         GameDataToday = GameManager.Instance.gameData.curTime;
+        GameDataToday.hour = 0;
 
         (situ, work) = GameManager.Instance.gameData.Schedule[GameDataToday.weekday];
         if (situ != 0)
@@ -27,7 +28,7 @@ public class TimeManager : MonoBehaviour
             if (work == 1)
             {
                 GameManager.Instance.earnings += 15000;
-                GameManager.Instance.gameData.curTime.hour += 3;
+                GameDataToday.hour += 3;
             }
         }
         else
