@@ -1,19 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class TimeManager : MonoBehaviour
 {
-    int cur;
     int situ;
     int work;
     AtenaDate GameDataToday;
 
+    public Image cooldownMask;
+    public TMP_Text text;
+
+    private float maxTime = 12f;
+    private int countDown = 12;
+
+    public GameObject home;
+    public GameObject arbeitScene;
+    int arbeit = 0;
+    bool arbeitFlag = true;
+
     void Awake()
     {
-        Debug.Log(gameObject.name);
-        cur = GameManager.Instance.gameData.curTime.day;
         GameDataToday = GameManager.Instance.gameData.curTime;
         GameDataToday.hour = 0;
 
@@ -28,7 +38,7 @@ public class TimeManager : MonoBehaviour
             if (work == 1)
             {
                 GameManager.Instance.earnings += 15000;
-                GameDataToday.hour += 3;
+                arbeit = 3;
             }
         }
         else
@@ -37,10 +47,43 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        cooldownMask.fillAmount = 0f;
+        home.SetActive(false);
+        arbeitScene.SetActive(true);
+    }
+
     void Update()
     {
-        if (cur != GameDataToday.day)
+        if (GameDataToday.hour < maxTime)
         {
+            if (GameDataToday.hour < arbeit)
+            {
+                GameDataToday.hour += Time.deltaTime*arbeit;
+
+            }
+            else
+            {
+                if (arbeitFlag)
+                {
+                    home.SetActive(true);
+                    arbeitScene.SetActive(false);
+                    arbeitFlag = false;
+                }
+
+                GameDataToday.hour += Time.deltaTime * (12f / 300f);
+            }
+            cooldownMask.fillAmount = GameDataToday.hour / maxTime;
+
+            countDown = Mathf.CeilToInt(maxTime - GameDataToday.hour);
+            text.text = $"{countDown}";
+        }
+        else
+        {
+            GameDataToday.hour = 0f;
+            cooldownMask.fillAmount = 1f;
+            GameManager.Instance.ChangeValue(curTime: 1); 
             SceneManager.LoadScene("ChangeDate");
         }
     }
