@@ -23,7 +23,12 @@ public class TimeManager : MonoBehaviour
         }
         else if (work != 0)
         {
-            Debug.Log($"즐거운 알바 {work}");
+            Debug.Log($"즐거운 알바 {work}, 3시간 15000원");
+            if (work == 1)
+            {
+                GameManager.Instance.earnings += 15000;
+                GameManager.Instance.gameData.curTime.hour += 3;
+            }
         }
         else
         {

@@ -80,6 +80,9 @@ public class ScheduleManager : MonoBehaviour
              }
         }
 
+        //튜토리얼 : 월요일 제외
+        if (GameManager.Instance.Tutorial && index == 0) { return ; }
+
         if (SelectIdx == index)
         {
             SelectIdx = -1;

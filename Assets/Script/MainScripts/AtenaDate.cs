@@ -7,7 +7,7 @@ public class AtenaDate
     public int year;
     public int month;
     public int day;
-    public int hour;
+    public float hour;
     public int weekday;
 
     public AtenaDate(int year, int month, int day)
@@ -15,7 +15,7 @@ public class AtenaDate
         this.year = year;
         this.month = month;
         this.day = day;
-        hour = 0;
+        hour = 0f;
         weekday = (day-1)%5;
     }
 
