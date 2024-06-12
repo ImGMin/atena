@@ -26,7 +26,7 @@ public class JasmineManager : MonoBehaviour
 
     bool autoPlaying = false;
     float autoTime = 0f;
-    float maxAutoTime = 5f;
+    float maxAutoTime = 0.5f;
 
     bool playing = false;
     float time = 0f;
@@ -187,7 +187,8 @@ public class JasmineManager : MonoBehaviour
         else
         {
             SelectIdx = index;
-            SelectRect.rectTransform.anchoredPosition = clickedButton.GetComponent<RectTransform>().anchoredPosition + new Vector2(0,70);
+            SelectRect.transform.SetParent(clickedButton.transform);
+            SelectRect.rectTransform.anchoredPosition = new Vector2(0,0);
             SelectRect.gameObject.SetActive(true);
         }
     }
@@ -207,7 +208,7 @@ public class JasmineManager : MonoBehaviour
 
     public void OnAutoButtonClick()
     {
-        if (!playing) return;
+        if (!playing || autoPlaying) return;
 
         GameManager.Instance.ChangeValue(cash: -300);
         autoImage.gameObject.SetActive(true);
@@ -224,6 +225,7 @@ public class JasmineManager : MonoBehaviour
             int growth = int.Parse(data[LastPlayIdx.Item1]["성장도"]);
             int exp = int.Parse(data[LastPlayIdx.Item1]["경험치"]);
 
+            Debug.Log($"{growth},{exp}");
             GameManager.Instance.ChangeValue(exp:exp, atenaGrowth:growth);
 
             Init();

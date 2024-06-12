@@ -17,6 +17,7 @@ public class ReputationUI : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.gameData.OnReputationChanged += UpdateText;
+        UpdateText(GameManager.Instance.gameData.reputation);
     }
 
     private void OnDisable()

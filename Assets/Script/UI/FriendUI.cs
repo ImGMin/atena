@@ -17,6 +17,7 @@ public class FriendUI : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.gameData.OnFriendChanged += UpdateText;
+        UpdateText(GameManager.Instance.gameData.friends);
     }
 
     private void OnDisable()

@@ -17,6 +17,7 @@ public class LvUI : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.gameData.OnLvChanged += UpdateText;
+        UpdateText(GameManager.Instance.gameData.level);
     }
 
     private void OnDisable()

@@ -17,6 +17,7 @@ public class EnergyUI : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.gameData.OnEnergyChanged += UpdateText;
+        UpdateText(GameManager.Instance.gameData.energy);
     }
 
     private void OnDisable()

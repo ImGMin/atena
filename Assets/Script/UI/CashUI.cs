@@ -20,6 +20,7 @@ public class CashUI : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.gameData.OnCashChanged += UpdateText;
+        UpdateText(GameManager.Instance.gameData.cash);
     }
 
     private void OnDisable()

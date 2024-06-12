@@ -23,6 +23,7 @@ public class AtenaDateUI : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.gameData.OnAtenaDateChanged += UpdateText;
+        UpdateText(GameManager.Instance.gameData.curTime);
     }
 
     private void OnDisable()

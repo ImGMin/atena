@@ -17,6 +17,7 @@ public class AtenaGrowthUI : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.gameData.OnAtenaGrowthChanged += UpdateText;
+        UpdateText(GameManager.Instance.gameData.atenaGrowth);
     }
 
     private void OnDisable()

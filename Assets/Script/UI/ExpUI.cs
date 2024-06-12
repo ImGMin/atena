@@ -17,6 +17,7 @@ public class ExpUI : MonoBehaviour
     private void OnEnable()
     {
         GameManager.Instance.gameData.OnExpChanged += UpdateText;
+        UpdateText(GameManager.Instance.gameData.exp);
     }
 
     private void OnDisable()
