@@ -17,6 +17,11 @@ public class TestButton : MonoBehaviour
     {
         GameManager.Instance.ChangeValue(curTime: 1);
     }
+
+    public void HourUp()
+    {
+        GameManager.Instance.gameData.curTime.hour++;
+    }
     
 
     public void Init()

@@ -5,9 +5,9 @@ public class LoadGameScene : MonoBehaviour
 {
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && SceneManager.GetActiveScene().name == "StartScene")
         {
-            SceneManager.LoadScene("SampleScene");
+            SceneManager.LoadScene("ChangeDate");
         }
 
         if (Input.GetKeyDown(KeyCode.T)) {
