@@ -21,12 +21,20 @@ public class JasmineManager : MonoBehaviour
     public TMP_Text playMusicName;
     public Slider slider;
 
+    public Image autoImage;
+    public Button autoButton;
+
+    bool autoPlaying = false;
+    float autoTime = 0f;
+    float maxAutoTime = 5f;
+
     bool playing = false;
-    float time = 0;
+    float time = 0f;
     float maxTime = 10f;
 
     public Image SelectRect;
     (int,int) SelectIdx = (-1,-1);
+    (int, int) LastPlayIdx = (-1, -1);
 
     private void Awake()
     {
@@ -34,6 +42,7 @@ public class JasmineManager : MonoBehaviour
         GenAlbumList();
 
         playButton.onClick.AddListener(() => OnPlayButtonClick());
+        autoButton.onClick.AddListener(() => OnAutoButtonClick());
     }
 
 
@@ -46,6 +55,7 @@ public class JasmineManager : MonoBehaviour
     void Update()
     {
         PlayMusic();
+        AutoPlay();
         UpdateSlider();
     }
 
@@ -185,10 +195,23 @@ public class JasmineManager : MonoBehaviour
     public void OnPlayButtonClick()
     {
         if (SelectIdx == (-1, -1)) return;
+        if (playing) return;
+        LastPlayIdx = SelectIdx;
+
+        GameManager.Instance.ChangeValue(cash: -300);
 
         Music playMusic = albums[SelectIdx.Item1].included[SelectIdx.Item2];
         playMusicName.text = playMusic.name;
         playing = true;
+    }
+
+    public void OnAutoButtonClick()
+    {
+        if (!playing) return;
+
+        GameManager.Instance.ChangeValue(cash: -300);
+        autoImage.gameObject.SetActive(true);
+        autoPlaying = true;
     }
 
     void PlayMusic()
@@ -198,14 +221,32 @@ public class JasmineManager : MonoBehaviour
         time += Time.deltaTime;
         if (time > maxTime)
         {
-            int growth = int.Parse(data[SelectIdx.Item1]["성장도"]);
-            int exp = int.Parse(data[SelectIdx.Item1]["경험치"]);
+            int growth = int.Parse(data[LastPlayIdx.Item1]["성장도"]);
+            int exp = int.Parse(data[LastPlayIdx.Item1]["경험치"]);
 
             GameManager.Instance.ChangeValue(exp:exp, atenaGrowth:growth);
 
             Init();
         }
     }
+
+    void AutoPlay()
+    {
+        if (playing || !autoPlaying) return;
+
+        autoTime += Time.deltaTime;
+        if (autoTime > maxAutoTime)
+        {
+
+            GameManager.Instance.ChangeValue(cash: -300);
+
+            Music playMusic = albums[LastPlayIdx.Item1].included[LastPlayIdx.Item2];
+            playMusicName.text = playMusic.name;
+            playing = true;
+            autoTime = 0f;
+        }
+    }
+
     void UpdateSlider()
     {
         // time의 값이 0에서 10 사이일 때 슬라이더를 time만큼 채우기
@@ -217,7 +258,7 @@ public class JasmineManager : MonoBehaviour
         playMusicName.text = "";
         SelectRect.gameObject.SetActive(false);
 
-        time = 0; 
+        time = 0f; 
         playing = false; 
         SelectIdx = (-1, -1); 
     }
