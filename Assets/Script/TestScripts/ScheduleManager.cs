@@ -29,7 +29,7 @@ public class ScheduleManager : MonoBehaviour
             if (GameManager.Instance.gameData.Schedule[i].Item1 != 0)
             {
                 TMP_Text buttonText = WeekDayButtonList[i].GetComponentInChildren<TMP_Text>();
-                buttonText.text = $"상황{GameManager.Instance.gameData.Schedule[i].Item1}";
+                buttonText.text = $"상황{GameManager.Instance.NumToSitu[GameManager.Instance.gameData.Schedule[i].Item1]}";
                 check[i] = true;
             }
         }

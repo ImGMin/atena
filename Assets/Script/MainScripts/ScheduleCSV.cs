@@ -20,21 +20,15 @@ public class ScheduleCSV : MonoBehaviour
         int idx = start;
         while (start==idx || (idx-1)%5 != 0)
         {
-            Debug.Log(idx);
-            Debug.Log(data.Count);
             string str = data[idx-1]["상황ID"];
-            if (str == "Situ_Idle")
+
+            if (!GameManager.Instance.SituToNum.ContainsKey(str))
             {
-                GameManager.Instance.gameData.Schedule[(idx - 1) % 5].Item1 = 0;
+                GameManager.Instance.SituToNum[str] = GameManager.Instance.SituToNum.Count;
+                GameManager.Instance.NumToSitu.Add(str);
             }
-            else if (str == "Situ_11_01")
-            {
-                GameManager.Instance.gameData.Schedule[(idx - 1) % 5].Item1 = 1;
-            }
-            else
-            {
-                GameManager.Instance.gameData.Schedule[(idx - 1) % 5].Item1 = 3;
-            }
+
+            GameManager.Instance.gameData.Schedule[(idx - 1) % 5].Item1 = GameManager.Instance.SituToNum[str];
             idx++;
         }
     }
@@ -54,10 +48,6 @@ public class ScheduleCSV : MonoBehaviour
             {
                 // 첫 번째 줄은 헤더로 사용
                 string[] headers = lines[0].Split(',');
-                for (int i = 0; i < headers.Length; i++)
-                {
-                    Debug.Log(headers[i]);
-                }
 
                 // 각 행의 데이터를 딕셔너리에 저장
                 for (int i = 1; i < lines.Length; i++)

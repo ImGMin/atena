@@ -1,0 +1,13 @@
+이름,상황ID,게시글세트ID,선택지세트ID
+일반1,Situ_Idle,Set_post_idle1,Set_choice_idle1
+일반2,Situ_Idle,Set_post_idle2,Set_choice_idle2
+일반3,Situ_Idle,Set_post_idle3,Set_choice_idle3
+콘서트1,Situ_01_01,Set_post_01_01,Set_choice_01_01
+팬싸인회1-1,Situ_02_0101,Set_post_02_0101,Set_choice_02_0101
+음악방송1-1,Situ_04_0101,Set_post_04_0101,Set_choice_04_0101
+연말무대1,Situ_05_01,Set_post_05_01,Set_choice_05_01
+하나생일1,Situ_11_01,Set_post_11_01,Set_choice_11_01
+컴백1,Situ_03_01,Set_post_03_01,Set_choice_03_01
+팬미팅1,Situ_06_01,Set_post_06_01,Set_choice_06_01
+마이튜브라이브1,Situ_07_01,Set_post_07_01,Set_choice_07_01
+미정1,Situ_08_01,Set_post_08_01,Set_choice_08_01

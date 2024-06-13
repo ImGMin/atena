@@ -13,6 +13,9 @@ public class GameData
     public int reputation { get; set; }
     public int atenaGrowth { get; set; }
     public AtenaDate curTime { get; set; }
+    public string playerName {  get; set; }
+
+    //1번은 상황ID, 2번은 근무ID
     public (int,int)[] Schedule = new (int,int)[5];
 
     public event Action<int> OnLvChanged;
@@ -37,6 +40,15 @@ public class GameData
         atenaGrowth = 0;
         curTime = new AtenaDate(2025, 1, 1);
         Schedule = new (int, int)[5];
+        /*if (playerName != null)
+        {
+            this.playerName = playerName;
+        }
+        else
+        {
+            this.playerName = "민규";
+        }*/
+        playerName = "민규";
     }
 
     public void ChangeLvExp()

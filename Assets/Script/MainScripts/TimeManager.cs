@@ -32,7 +32,7 @@ public class TimeManager : MonoBehaviour
         (situ, work) = GameManager.Instance.gameData.Schedule[GameDataToday.weekday];
         if (situ != 0)
         {
-            Debug.Log($"오프라인 이벤트 {situ}");
+            Debug.Log($"오프라인 이벤트 {GameManager.Instance.NumToSitu[situ]}");
         }
         else if (work != 0)
         {

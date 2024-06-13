@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
 
     public int earnings = 0;
 
+    public List<string> NumToSitu = new List<string> { "Situ_Idle"};
+    public Dictionary<string,int> SituToNum = new Dictionary<string, int> { { "Situ_Idle", 0 } };
+
     public static GameManager Instance
     {
         get
