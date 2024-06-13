@@ -220,15 +220,17 @@ public class JasmineManager : MonoBehaviour
             return;
         }
 
-        if (GameManager.Instance.gameData.cash < 600)
-        {
-            return;
-        }
-
         if (!playing)
         {
+            if (GameManager.Instance.gameData.cash < 600) return;
             OnPlayButtonClick();
         }
+        else
+        {
+            if (GameManager.Instance.gameData.cash < 300) return;
+        }
+
+        if (!playing) return;
         
         GameManager.Instance.ChangeValue(cash: -300);
         autoImage.SetActive(true);
