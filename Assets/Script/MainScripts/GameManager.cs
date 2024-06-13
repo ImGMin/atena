@@ -120,6 +120,15 @@ public class GameManager : MonoBehaviour
         if (energy.HasValue)
         {
             gameData.energy += energy.Value;
+            if (gameData.energy < 0)
+            {
+                gameData.energy = 0;
+            }
+            if (gameData.energy > 1000)
+            {
+                gameData.energy = 1000;
+            }
+
             gameData.ChangeEnergy();
             flag = true;
         }
@@ -127,6 +136,15 @@ public class GameManager : MonoBehaviour
         if (friends.HasValue)
         {
             gameData.friends += friends.Value;
+            if (gameData.friends < 0)
+            {
+                gameData.friends = 0;
+            }
+            if (gameData.friends > 150)
+            {
+                gameData.friends = 150;
+            }
+
             gameData.ChangeFriend();
             flag = true;
         }
@@ -134,13 +152,27 @@ public class GameManager : MonoBehaviour
         if (cash.HasValue)
         {
             gameData.cash += cash.Value;
+            if (gameData.cash < 0)
+            {
+                gameData.cash = 0;
+            }
+
             gameData.ChangeCash();
             flag = true;
         }
 
         if (reputation.HasValue)
         {
-            gameData.exp = reputation.Value;
+            gameData.reputation = reputation.Value;
+            if ( gameData.reputation < -99)
+            {
+                gameData.reputation = -99;
+            }
+            if (gameData.reputation > 99)
+            {
+                gameData.reputation = 99;
+            }
+
             gameData.ChangeReputation();
             flag = true;
         }
@@ -148,6 +180,11 @@ public class GameManager : MonoBehaviour
         if (atenaGrowth.HasValue)
         {
             gameData.atenaGrowth += atenaGrowth.Value;
+            if (gameData.atenaGrowth < 0)
+            {
+                gameData.atenaGrowth = 0;
+            }
+
             gameData.ChangeAtenaGrowth();
             flag = true;
         }

@@ -1,5 +1,9 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Mathematics;
+using Unity.VisualScripting;
+using UnityEngine;
 
 class Program
 {
@@ -18,7 +22,7 @@ class Program
         }
 
         // 리스트 섞기
-        Random rand = new Random();
+        System.Random rand = new System.Random();
         for (int i = n - 1; i > 0; i--)
         {
             int j = rand.Next(i + 1);
@@ -29,5 +33,16 @@ class Program
 
         // 앞의 m개의 요소 선택
         return indices.GetRange(0, m);
+    }
+
+    public static float CalculateTextHeight(TMP_Text tmpText)
+    {
+        float preferredHeight = tmpText.preferredHeight;
+
+        // 현재 텍스트 박스의 크기
+        RectTransform textRectTransform = tmpText.GetComponent<RectTransform>();
+        float textBoxHeight = textRectTransform.sizeDelta.y;
+
+        return Mathf.Max(preferredHeight,textBoxHeight);
     }
 }

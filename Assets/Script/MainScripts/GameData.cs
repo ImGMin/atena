@@ -15,6 +15,8 @@ public class GameData
     public AtenaDate curTime { get; set; }
     public string playerName {  get; set; }
 
+    public string myFavorite {  get; set; }
+
     //1번은 상황ID, 2번은 근무ID
     public (int,int)[] Schedule = new (int,int)[5];
 
@@ -49,6 +51,7 @@ public class GameData
             this.playerName = "민규";
         }*/
         playerName = "민규";
+        myFavorite = "신냐";
     }
 
     public void ChangeLvExp()
