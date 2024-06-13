@@ -21,12 +21,12 @@ public class JasmineManager : MonoBehaviour
     public TMP_Text playMusicName;
     public Slider slider;
 
-    public Image autoImage;
+    public GameObject autoImage;
     public Button autoButton;
 
     bool autoPlaying = false;
     float autoTime = 0f;
-    float maxAutoTime = 0.5f;
+    float maxAutoTime = 1f;
 
     bool playing = false;
     float time = 0f;
@@ -43,6 +43,7 @@ public class JasmineManager : MonoBehaviour
 
         playButton.onClick.AddListener(() => OnPlayButtonClick());
         autoButton.onClick.AddListener(() => OnAutoButtonClick());
+        autoImage.GetComponent<Button>().onClick.AddListener(() => OnAutoUIClick());
     }
 
 
@@ -199,6 +200,11 @@ public class JasmineManager : MonoBehaviour
         if (playing) return;
         LastPlayIdx = SelectIdx;
 
+
+        if (GameManager.Instance.gameData.cash < 300)
+        {
+            return;
+        }
         GameManager.Instance.ChangeValue(cash: -300);
 
         Music playMusic = albums[SelectIdx.Item1].included[SelectIdx.Item2];
@@ -208,11 +214,26 @@ public class JasmineManager : MonoBehaviour
 
     public void OnAutoButtonClick()
     {
-        if (!playing || autoPlaying) return;
+        if (autoPlaying)
+        {
+            OnAutoUIClick();
+            return;
+        }
 
+        if (!playing) return;
+        if (GameManager.Instance.gameData.cash < 300)
+        {
+            return;
+        }
         GameManager.Instance.ChangeValue(cash: -300);
-        autoImage.gameObject.SetActive(true);
+        autoImage.SetActive(true);
         autoPlaying = true;
+    }
+
+    public void OnAutoUIClick()
+    {
+        autoImage.SetActive(false);
+        autoPlaying = false;
     }
 
     void PlayMusic()
@@ -235,11 +256,15 @@ public class JasmineManager : MonoBehaviour
     void AutoPlay()
     {
         if (playing || !autoPlaying) return;
+        if (GameManager.Instance.gameData.cash < 300)
+        {
+            autoPlaying = false;
+            return;
+        }
 
         autoTime += Time.deltaTime;
         if (autoTime > maxAutoTime)
         {
-
             GameManager.Instance.ChangeValue(cash: -300);
 
             Music playMusic = albums[LastPlayIdx.Item1].included[LastPlayIdx.Item2];
