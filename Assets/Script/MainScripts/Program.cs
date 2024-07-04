@@ -7,6 +7,20 @@ using UnityEngine;
 
 class Program
 {
+    public static List<int> GetRandomSampleWithReplacement(int n, int m)
+    {
+        List<int> Sample = new List<int>(n);
+
+        System.Random rand = new System.Random();
+        for (int i = 0; i < n; i++) 
+        {
+            Sample[i] = rand.Next(m);
+        }
+
+        return Sample;
+    }
+
+
     public static List<int> GetRandomIndices(int n, int m)
     {
         if (m > n)
