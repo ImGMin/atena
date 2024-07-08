@@ -3,26 +3,30 @@ using TMPro;
 
 public class LvUI : MonoBehaviour
 {
-    private TMP_Text LvText;
+    private TMP_Text thisText;
+
+    [SerializeField]
+    private string format = "{0}";
 
     private void Awake()
     {
-        LvText = GetComponent<TMP_Text>();
-        UpdateLvText(GameManager.Instance.gameData.level);
+        thisText = GetComponent<TMP_Text>();
+        UpdateText(GameManager.Instance.gameData.level);
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.gameData.OnLvChanged += UpdateLvText;
+        GameManager.Instance.gameData.OnLvChanged += UpdateText;
+        UpdateText(GameManager.Instance.gameData.level);
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.gameData.OnLvChanged -= UpdateLvText;
+        GameManager.Instance.gameData.OnLvChanged -= UpdateText;
     }
 
-    private void UpdateLvText(int newLv)
+    private void UpdateText(int newText)
     {
-        LvText.text = $"·¹º§ : {newLv}";
+        thisText.text = string.Format(format, newText);
     }
 }

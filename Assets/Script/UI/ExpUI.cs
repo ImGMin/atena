@@ -3,26 +3,30 @@ using TMPro;
 
 public class ExpUI : MonoBehaviour
 {
-    private TMP_Text ExpText;
+    private TMP_Text thisText;
+
+    [SerializeField]
+    private string format = "{0}";
 
     private void Awake()
     {
-        ExpText = GetComponent<TMP_Text>();
-        UpdateExpText(GameManager.Instance.gameData.exp);
+        thisText = GetComponent<TMP_Text>();
+        UpdateText(GameManager.Instance.gameData.exp);
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.gameData.OnExpChanged += UpdateExpText;
+        GameManager.Instance.gameData.OnExpChanged += UpdateText;
+        UpdateText(GameManager.Instance.gameData.exp);
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.gameData.OnExpChanged -= UpdateExpText;
+        GameManager.Instance.gameData.OnExpChanged -= UpdateText;
     }
 
-    private void UpdateExpText(int newExp)
+    private void UpdateText(int newText)
     {
-        ExpText.text = $"°æÇèÄ¡ : {newExp}";
+        thisText.text = string.Format(format, newText);
     }
 }
