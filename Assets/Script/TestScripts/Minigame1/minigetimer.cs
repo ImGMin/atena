@@ -25,7 +25,7 @@ public class SliderTimer : MonoBehaviour
         else
         {
             timerValue = 0;
-            Debug.Log("0000000000000000000000000");
+            Debug.Log("30초 끝");
         }
     }
 }
