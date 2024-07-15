@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UI;
+using TMPro;
 
-public class ResizeUI : EditorWindow
+public class ResizeUIEditor : EditorWindow
 {
     [MenuItem("Window/Resize UI")]
     public static void ShowWindow()
     {
-        GetWindow<ResizeUI>("Resize UI");
+        GetWindow<ResizeUIEditor>("Resize UI");
     }
 
     void OnGUI()
@@ -39,6 +41,19 @@ public class ResizeUI : EditorWindow
                 // 변경 사항을 저장합니다.
                 EditorUtility.SetDirty(rectTransform);
             }
+
+            TextMeshProUGUI tmpText = go.GetComponent<TextMeshProUGUI>();
+            if (tmpText != null)
+            {
+                // 현재 폰트 크기를 가져옵니다.
+                float currentFontSize = tmpText.fontSize;
+
+                // 폰트 크기를 2배로 설정합니다.
+                tmpText.fontSize = currentFontSize * 2;
+
+                // 변경 사항을 저장합니다.
+                EditorUtility.SetDirty(tmpText);
+            }
         }
 
         // 변경 사항을 저장합니다.
@@ -63,6 +78,19 @@ public class ResizeUI : EditorWindow
 
                 // 변경 사항을 저장합니다.
                 EditorUtility.SetDirty(rectTransform);
+            }
+
+            TextMeshProUGUI tmpText = go.GetComponent<TextMeshProUGUI>();
+            if (tmpText != null)
+            {
+                // 현재 폰트 크기를 가져옵니다.
+                float currentFontSize = tmpText.fontSize;
+
+                // 폰트 크기를 2배로 설정합니다.
+                tmpText.fontSize = currentFontSize / 2;
+
+                // 변경 사항을 저장합니다.
+                EditorUtility.SetDirty(tmpText);
             }
         }
 
