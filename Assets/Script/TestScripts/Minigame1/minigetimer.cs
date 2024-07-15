@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;   // Silder class 사용하기 위해 추가합니다.
 public class SliderTimer : MonoBehaviour
