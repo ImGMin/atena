@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;   // Silder class 사용하기 위해 추가합니다.
-public class SliderTimer : MonoBehaviour
+using UnityEngine.UI;
+
+public class minigametimer : MonoBehaviour
 {
     public Slider timerSlider;
     private float timerValue;
@@ -21,12 +21,29 @@ public class SliderTimer : MonoBehaviour
         if (timerValue > 0)
         {
             timerValue -= Time.deltaTime;
-            timerSlider.value = timerValue;
+            UpdateSlider();
         }
         else
         {
             timerValue = 0;
+            UpdateSlider();
             Debug.Log("30초 끝");
         }
+    }
+
+    public void ReduceTime(float amount)
+    {
+        timerValue -= amount;
+        if (timerValue < 0)
+        {
+            timerValue = 0;
+        }
+        UpdateSlider();
+    }
+
+    private void UpdateSlider()
+    {
+        timerSlider.value = timerValue;
+        Debug.Log("타이머 업데이트: " + timerValue);
     }
 }

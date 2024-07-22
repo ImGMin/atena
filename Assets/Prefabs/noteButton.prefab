@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 6384315343629076630}
   - component: {fileID: 8077948952573046919}
   - component: {fileID: 1328908176630649554}
+  - component: {fileID: 8605766987007358665}
   m_Layer: 5
   m_Name: noteButton
   m_TagString: Untagged
@@ -255,3 +256,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8605766987007358665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5636971806630027104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fe534ef6b6281946bf9706964cefc05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noteType: 0
+  buttonText: {fileID: 3159243494494517227}
