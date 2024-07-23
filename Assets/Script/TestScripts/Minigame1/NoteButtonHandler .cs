@@ -10,6 +10,7 @@ public class NoteButtonHandler : MonoBehaviour
     public Button rightNoteButton; // Rightnote 버튼
     public PatternButtonGenerator buttonGenerator; // PatternButtonGenerator 스크립트 참조
     public minigametimer sliderTimer; // minigametimer 스크립트 참조
+    public GameObject minigame1PopupOb;
 
     private Dictionary<NoteType, List<NoteButton>> noteButtonMapping = new Dictionary<NoteType, List<NoteButton>>();
     private List<NoteButton> orderedButtons = new List<NoteButton>(); // 순서대로 버튼을 저장할 리스트
@@ -56,9 +57,9 @@ public class NoteButtonHandler : MonoBehaviour
 
     void AssignGeneratedButtonsToNotes()
     {
-        Debug.Log("AssignGeneratedButtonsToNotes 호출됨");
-        Debug.Log("buttonGenerator: " + buttonGenerator);
-        Debug.Log("buttonGenerator.generatedButtons: " + buttonGenerator.generatedButtons);
+        // Debug.Log("AssignGeneratedButtonsToNotes 호출됨");
+        // Debug.Log("buttonGenerator: " + buttonGenerator);
+        // Debug.Log("buttonGenerator.generatedButtons: " + buttonGenerator.generatedButtons);
 
         // Initialize the dictionary
         foreach (NoteType noteType in System.Enum.GetValues(typeof(NoteType)))
@@ -70,25 +71,25 @@ public class NoteButtonHandler : MonoBehaviour
         // generatedButtons 리스트가 null인지 확인
         if (buttonGenerator.generatedButtons == null)
         {
-            Debug.LogError("generatedButtons 리스트가 null입니다.");
+            // Debug.LogError("generatedButtons 리스트가 null입니다.");
             return;
         }
 
         // 생성된 버튼 리스트가 비어있는지 확인
         if (buttonGenerator.generatedButtons.Count == 0)
         {
-            Debug.LogError("생성된 버튼 리스트가 비어있습니다.");
+            // Debug.LogError("생성된 버튼 리스트가 비어있습니다.");
             return;
         }
 
         // 생성된 버튼 리스트 출력
         foreach (var button in buttonGenerator.generatedButtons)
         {
-            Debug.Log("생성된 버튼: " + button.name + " 타입: " + button.noteType);
+            //Debug.Log("생성된 버튼: " + button.name + " 타입: " + button.noteType);
         }
 
         // Shuffle the generated buttons list
-        Debug.Log("Shuffling buttons");
+        // Debug.Log("Shuffling buttons");
         List<NoteButton> shuffledButtons = new List<NoteButton>(buttonGenerator.generatedButtons);
         for (int i = 0; i < shuffledButtons.Count; i++)
         {
@@ -97,7 +98,7 @@ public class NoteButtonHandler : MonoBehaviour
             shuffledButtons[i] = shuffledButtons[randomIndex];
             shuffledButtons[randomIndex] = temp;
         }
-        Debug.Log("Buttons shuffled");
+        // Debug.Log("Buttons shuffled");
 
         // Assign shuffled buttons to note types
         orderedButtons.Clear();
@@ -106,7 +107,7 @@ public class NoteButtonHandler : MonoBehaviour
             NoteType noteType = (NoteType)(i % 4); // Cycle through the NoteTypes
             noteButtonMapping[noteType].Add(shuffledButtons[i]);
             orderedButtons.Add(shuffledButtons[i]);
-            Debug.Log("버튼 할당됨: " + shuffledButtons[i].name + " to " + noteType);
+            //Debug.Log("버튼 할당됨: " + shuffledButtons[i].name + " to " + noteType);
         }
 
         // 아래에 있는 노트부터 위로 정렬
@@ -115,7 +116,7 @@ public class NoteButtonHandler : MonoBehaviour
         // Debug output
         foreach (var entry in noteButtonMapping)
         {
-            Debug.Log(entry.Key + "에 " + entry.Value.Count + "개의 버튼이 할당되었습니다.");
+            //Debug.Log(entry.Key + "에 " + entry.Value.Count + "개의 버튼이 할당되었습니다.");
         }
     }
 
@@ -125,7 +126,7 @@ public class NoteButtonHandler : MonoBehaviour
 
         if (!noteButtonMapping.ContainsKey(noteType))
         {
-            Debug.LogError("NoteType " + noteType + "에 할당된 버튼이 없습니다.");
+            // Debug.LogError("NoteType " + noteType + "에 할당된 버튼이 없습니다.");
             return;
         }
 
@@ -142,6 +143,11 @@ public class NoteButtonHandler : MonoBehaviour
         {
             Debug.Log("잘못된 버튼이 클릭되었습니다.");
             sliderTimer.ReduceTime(5f); // 잘못된 버튼을 클릭할 때 5초 감소
+        }
+
+        if (orderedButtons.Count == 0)
+        {
+            minigame1PopupOb.SetActive(false);
         }
     }
 

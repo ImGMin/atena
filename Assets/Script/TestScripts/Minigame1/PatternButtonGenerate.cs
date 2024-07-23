@@ -17,13 +17,13 @@ void Start()
     {
         if (noteButtonPrefab == null || parentTransform == null)
         {
-            Debug.LogError("NoteButtonPrefab 또는 ParentTransform이 설정되지 않았습니다.");
+            //Debug.LogError("NoteButtonPrefab 또는 ParentTransform이 설정되지 않았습니다.");
             return;
         }
 
         if (buttonPositions == null || buttonPositions.Length == 0)
         {
-            Debug.LogError("buttonPositions 배열이 비어 있습니다.");
+            //Debug.LogError("buttonPositions 배열이 비어 있습니다.");
             return;
         }
 
@@ -50,11 +50,11 @@ void GeneratePatternButtons()
                 noteButton.noteType = randomNoteType;
                 noteButton.buttonText.text = randomNoteType.ToString();
                 generatedButtons.Add(noteButton);
-                Debug.Log("생성된 버튼 리스트에 추가됨: " + noteButton.name + " 타입: " + noteButton.noteType);
+                //Debug.Log("생성된 버튼 리스트에 추가됨: " + noteButton.name + " 타입: " + noteButton.noteType);
             }
             else
             {
-                Debug.LogError("NoteButton 컴포넌트를 찾을 수 없습니다.");
+                //Debug.LogError("NoteButton 컴포넌트를 찾을 수 없습니다.");
             }
             // 버튼 클릭 이벤트를 설정
             Button buttonComponent = newButton.GetComponent<Button>();
@@ -64,12 +64,12 @@ void GeneratePatternButtons()
             }
             else
             {
-                Debug.LogError("Button 컴포넌트를 찾을 수 없습니다.");
+                //Debug.LogError("Button 컴포넌트를 찾을 수 없습니다.");
             }
         }
         else
         {
-            Debug.LogError("Button RectTransform not found on prefab.");
+            //Debug.LogError("Button RectTransform not found on prefab.");
         }
     }
 

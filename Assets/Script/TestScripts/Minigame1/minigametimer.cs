@@ -2,18 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using Unity.VisualScripting;
 
 public class minigametimer : MonoBehaviour
 {
-    public Slider timerSlider;
-    private float timerValue;
+
+    public GameObject StartImage;
+    public GameObject timerSliderOb;
+    private Image timerSlider;
+    public float timerValue;
     private float timerDuration = 30f;
+    public GameObject minigame1PopupOb;
+
+    void OnEnable() {
+        GameObject gm = Instantiate(StartImage);
+        gm.transform.SetParent(this.transform);
+        gm.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,0);
+        gm.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "start";
+
+        timerValue = timerDuration;
+    }
 
     void Start()
     {
-        timerValue = timerDuration;
-        timerSlider.maxValue = timerDuration;
-        timerSlider.value = timerDuration;
+        timerSlider = timerSliderOb.GetComponent<Image>();
+        
+        //timerSlider.maxValue = timerDuration;
+        //timerSlider.value = timerDuration;
     }
 
     void Update()
@@ -28,6 +44,8 @@ public class minigametimer : MonoBehaviour
             timerValue = 0;
             UpdateSlider();
             Debug.Log("30초 끝");
+            minigame1PopupOb.SetActive(false);
+            //Debug.Log("없어짐");
         }
     }
 
@@ -38,12 +56,17 @@ public class minigametimer : MonoBehaviour
         {
             timerValue = 0;
         }
+        Debug.Log(timerValue);
         UpdateSlider();
+        Canvas.ForceUpdateCanvases();
     }
 
     private void UpdateSlider()
     {
-        timerSlider.value = timerValue;
-        Debug.Log("타이머 업데이트: " + timerValue);
+        float tmp = timerSlider.fillAmount - timerValue / timerDuration;
+        timerSlider.fillAmount -= tmp;
+        
+        //Debug.Log("타이머 업데이트: " + timerValue);
     }
 }
+
