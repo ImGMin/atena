@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class testbuttonsccript : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Button testButton;
+    public GameObject minigame2Ob;
     void Start()
+    {
+        testButton = GetComponent<Button>();
+        testButton.onClick.AddListener(onButtonClick);
+    }
+
+    void Update()
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    void onButtonClick()
     {
-        
+        Debug.Log("입력");
+        minigame2Ob.SetActive(true);
     }
 }
