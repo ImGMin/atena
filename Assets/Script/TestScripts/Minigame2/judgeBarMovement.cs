@@ -2,7 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+
+public enum AttemptResult
+{
+    Fail,
+    Success,
+    bigSuccess
+}
 
 public class JudgeBarController : MonoBehaviour
 {
@@ -17,12 +23,12 @@ public class JudgeBarController : MonoBehaviour
     public Transform attemptsPanel; // 기회 이미지를 배치할 패널
     public GameObject popupPanel; // 팝업 패널 오브젝트
     private int attempts = 3; // 남은 기회 수
-    private GameObject[] attemptImages; // 기회 이미지를 저장할 배열
+    private GameObject[] attemptImages; // 기회 이미지 저장 배열
 
-    private List<bool> attemptResults; // 시도 결과를 저장할 리스트
+    private List<AttemptResult> attemptResults; // 시도 결과 저장 리스트
 
-    // 클론 생성 위치를 지정할 배열 (필요에 따라 위치를 설정하세요)
-    public Vector2[] clonePositions = new Vector2[] 
+    // 클론 생성 위치 배열
+    public Vector2[] clonePositions = new Vector2[]
     {
         new Vector2(-200, 0), // 첫 번째 클론 위치
         new Vector2(0, 0),    // 두 번째 클론 위치
@@ -42,7 +48,7 @@ public class JudgeBarController : MonoBehaviour
             attemptImages[i] = attemptImage;
         }
 
-        attemptResults = new List<bool>(); // 시도 결과 리스트 초기화
+        attemptResults = new List<AttemptResult>(); // 시도 결과 리스트 초기화
     }
 
     void Update()
@@ -56,7 +62,7 @@ public class JudgeBarController : MonoBehaviour
         if (movingRight)
         {
             judgeBar.anchoredPosition += new Vector2(step, 0);
-            if (judgeBar.anchoredPosition.x >= (GetComponent<RectTransform>().rect.width / 3 ))
+            if (judgeBar.anchoredPosition.x >= (GetComponent<RectTransform>().rect.width / 3))
             {
                 movingRight = false;
             }
@@ -64,7 +70,7 @@ public class JudgeBarController : MonoBehaviour
         else
         {
             judgeBar.anchoredPosition -= new Vector2(step, 0);
-            if (judgeBar.anchoredPosition.x <= -(GetComponent<RectTransform>().rect.width / 3 ))
+            if (judgeBar.anchoredPosition.x <= -(GetComponent<RectTransform>().rect.width / 3))
             {
                 movingRight = true;
             }
@@ -76,86 +82,107 @@ public class JudgeBarController : MonoBehaviour
         float judgeBarX = judgeBar.anchoredPosition.x;
         float successMin = success.anchoredPosition.x - (success.rect.width / 2);
         float successMax = success.anchoredPosition.x + (success.rect.width / 2);
-        float greatSuccessMin = bigSuccess.anchoredPosition.x - (bigSuccess.rect.width / 2);
-        float greatSuccessMax = bigSuccess.anchoredPosition.x + (bigSuccess.rect.width / 2);
+        float bigSuccessMin = bigSuccess.anchoredPosition.x - (bigSuccess.rect.width / 2);
+        float bigSuccessMax = bigSuccess.anchoredPosition.x + (bigSuccess.rect.width / 2);
 
-        bool isSuccess = false;
+        AttemptResult result = AttemptResult.Fail;
 
-        if (judgeBarX >= greatSuccessMin && judgeBarX <= greatSuccessMax)
+        if (judgeBarX >= bigSuccessMin && judgeBarX <= bigSuccessMax)
         {
-            Debug.Log("Great Success!");
-            isSuccess = true;
+            Debug.Log("대성공!");
+            result = AttemptResult.bigSuccess;
         }
         else if (judgeBarX >= successMin && judgeBarX <= successMax)
         {
-            Debug.Log("Success!");
-            isSuccess = true;
+            Debug.Log("성공!");
+            result = AttemptResult.Success;
         }
         else
         {
-            Debug.Log("Fail");
-            isSuccess = false;
+            Debug.Log("실패..");
+            result = AttemptResult.Fail;
         }
 
-        attemptResults.Add(isSuccess); // 시도 결과를 리스트에 추가
-        UpdateAttempts(isSuccess);
+        attemptResults.Add(result); // 시도 결과를 리스트에 추가
+        UpdateAttempts(result);
 
         // 모든 시도가 끝났는지 확인
         if (attempts == 0)
         {
             Debug.Log(string.Join(", ", attemptResults));
             resultMessage();
-            ClosePopup();
+            //ClosePopup();
         }
     }
 
-    void UpdateAttempts(bool isSuccess)
+void UpdateAttempts(AttemptResult result)
+{
+    if (attempts > 0)
     {
-        if (attempts > 0)
+        int attemptIndex = 3 - attempts; // 현재 시도 인덱스 계산
+        Image attemptImage = attemptImages[attemptIndex].GetComponent<Image>();
+        Color color;
+        switch (result)
         {
-            int attemptIndex = 3 - attempts; // 현재 시도 인덱스 계산
-            Image attemptImage = attemptImages[attemptIndex].GetComponent<Image>();
-            if (isSuccess)
-            {
-                Color yellowColor;
-                if (ColorUtility.TryParseHtmlString("#FFEC41", out yellowColor))
+            case AttemptResult.bigSuccess:
+                if (ColorUtility.TryParseHtmlString("#FFB400", out color)) // 대성공 시 귤색
                 {
-                    attemptImage.color = yellowColor; // 성공 시 색상 변경
+                    attemptImage.color = color;
                 }
-            }
-            attempts--;
+                break;
+            case AttemptResult.Success:
+                if (ColorUtility.TryParseHtmlString("#FFDD00", out color)) // 성공 시 노란색
+                {
+                    attemptImage.color = color;
+                }
+                break;
+            case AttemptResult.Fail:
+                if (ColorUtility.TryParseHtmlString("#808080", out color)) // 실패 시 회색
+                {
+                    attemptImage.color = color;
+                }
+                break;
         }
+        attempts--;
     }
+}
 
-    void ClosePopup()
-    {
-        popupPanel.SetActive(false); // 팝업 패널 비활성화
-    }
+
+    // void ClosePopup()
+    // {
+    //     popupPanel.SetActive(false); // 팝업 패널 비활성화
+    // }
 
     void resultMessage()
     {
-        int truecount = 0;
-        foreach (bool item in attemptResults)
+        int bigSuccessCount = 0;
+        int successCount = 0;
+
+        foreach (AttemptResult result in attemptResults)
         {
-            if (item == true)
+            if (result == AttemptResult.bigSuccess)
             {
-                truecount += 1;
+                bigSuccessCount++;
+            }
+            else if (result == AttemptResult.Success)
+            {
+                successCount++;
             }
         }
-        
-        if (truecount == 3)
+
+        if (successCount == 3)
         {
             Debug.Log("A");
         }
-        else if (truecount == 2)
+        else if (successCount == 2)
         {
             Debug.Log("B");
         }
-        else if (truecount == 1)
+        else if (successCount == 1)
         {
             Debug.Log("C");
         }
-        else if (truecount == 0)
+        else
         {
             Debug.Log("실패");
         }
