@@ -37,6 +37,7 @@ public class ResizeUIEditor : EditorWindow
 
                 // 크기를 2배로 설정합니다.
                 rectTransform.sizeDelta = currentSize * 2;
+                rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y) * 2;
 
                 // 변경 사항을 저장합니다.
                 EditorUtility.SetDirty(rectTransform);
@@ -50,6 +51,8 @@ public class ResizeUIEditor : EditorWindow
 
                 // 폰트 크기를 2배로 설정합니다.
                 tmpText.fontSize = currentFontSize * 2;
+                //tmpText.rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y);
+
 
                 // 변경 사항을 저장합니다.
                 EditorUtility.SetDirty(tmpText);
@@ -75,6 +78,7 @@ public class ResizeUIEditor : EditorWindow
 
                 // 크기를 2배로 설정합니다.
                 rectTransform.sizeDelta = currentSize / 2;
+                rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y) / 2;
 
                 // 변경 사항을 저장합니다.
                 EditorUtility.SetDirty(rectTransform);
@@ -88,6 +92,7 @@ public class ResizeUIEditor : EditorWindow
 
                 // 폰트 크기를 2배로 설정합니다.
                 tmpText.fontSize = currentFontSize / 2;
+                //tmpText.rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y) / 2;
 
                 // 변경 사항을 저장합니다.
                 EditorUtility.SetDirty(tmpText);
