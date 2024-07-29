@@ -12,6 +12,7 @@ public enum AttemptResult
 
 public class JudgeBarController : MonoBehaviour
 {
+    public GameObject minigame2Ob; //미니게임2 전체
     public RectTransform judgeBar; // 판정바 RectTransform
     public RectTransform success; // 성공 범위 RectTransform
     public RectTransform bigSuccess; // 대성공 범위 RectTransform
