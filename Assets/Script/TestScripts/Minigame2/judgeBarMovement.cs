@@ -148,10 +148,10 @@ void UpdateAttempts(AttemptResult result)
 }
 
 
-    // void ClosePopup()
-    // {
-    //     popupPanel.SetActive(false); // 팝업 패널 비활성화
-    // }
+    void ClosePopup()
+    {
+        popupPanel.SetActive(false); // 팝업 패널 비활성화
+    }
 
     void resultMessage()
     {
@@ -170,7 +170,7 @@ void UpdateAttempts(AttemptResult result)
             }
         }
 
-        if (successCount == 3)
+        if (successCount == 3 || bigSuccessCount ==1)
         {
             Debug.Log("A");
         }
