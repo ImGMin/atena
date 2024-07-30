@@ -28,6 +28,10 @@ public class JudgeBarController : MonoBehaviour
 
     private List<AttemptResult> attemptResults; // 시도 결과 저장 리스트
 
+    public Sprite failSprite; // 실패결과 이미지
+    public Sprite successSprite; //성공결과 이미지
+    public Sprite bigSuccessSprite; //대성공결과 이미지
+
     // 클론 생성 위치 배열
     public Vector2[] clonePositions = new Vector2[]
     {
@@ -122,27 +126,19 @@ void UpdateAttempts(AttemptResult result)
     {
         int attemptIndex = 3 - attempts; // 현재 시도 인덱스 계산
         Image attemptImage = attemptImages[attemptIndex].GetComponent<Image>();
-        Color color;
         switch (result)
         {
-            case AttemptResult.bigSuccess:
-                if (ColorUtility.TryParseHtmlString("#FFB400", out color)) // 대성공 시 귤색
-                {
-                    attemptImage.color = color;
-                }
-                break;
-            case AttemptResult.Success:
-                if (ColorUtility.TryParseHtmlString("#FFDD00", out color)) // 성공 시 노란색
-                {
-                    attemptImage.color = color;
-                }
-                break;
-            case AttemptResult.Fail:
-                if (ColorUtility.TryParseHtmlString("#808080", out color)) // 실패 시 회색
-                {
-                    attemptImage.color = color;
-                }
-                break;
+                case AttemptResult.bigSuccess:
+                    attemptImage.sprite = bigSuccessSprite; // 대성공 시 이미지 변경
+                    break;
+
+                case AttemptResult.Success:
+                    attemptImage.sprite = successSprite; // 성공 시 이미지 변경
+                    break;
+
+                case AttemptResult.Fail:
+                    attemptImage.sprite = failSprite; // 실패 시 이미지 변경
+                    break;
         }
         attempts--;
     }
