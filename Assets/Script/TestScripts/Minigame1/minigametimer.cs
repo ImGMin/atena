@@ -15,7 +15,8 @@ public class minigametimer : MonoBehaviour
     private float timerDuration = 30f;
     public GameObject minigame1PopupOb;
 
-    void OnEnable() {
+    void OnEnable()
+        {
         GameObject gm = Instantiate(StartImage);
         gm.transform.SetParent(this.transform);
         gm.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,0);

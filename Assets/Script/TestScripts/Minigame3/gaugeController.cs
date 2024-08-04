@@ -2,24 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEditor;
 
 public class gaugeController : MonoBehaviour
 {
     public GameObject minigame3Ob; //미니게임3 전체
     public Image gauge; //게이지 이미지
     public Button button; //클릭버튼
+    public GameObject startImage; //시작이미지팝업
 
     public Image memberImage; //멤버이미지 컴포넌트
     public Sprite memberImage1; //멤버 좌측 이미지
     public Sprite memberImage2; //멤버 우측 이미지
     public Sprite memberImage3; //멤버 정면 이미지
-
     public Image playerImage; //플레이어이미지 컴포넌트
     public Sprite playerImage1; //플레이어 일반이미지
     public Sprite playerImage2; //손을 반 올린 이미지
     public Sprite playerImage3; //완전히 올린 이미지
 
-
+    public float time = 15f; //제한시간
     private float fillAmount = 0f; // 초기 게이지 양
     private float decreaseRate = 0.1f; //1초마다 줄어드는 게이지 양
     private bool isActive = true;   // 게이지 동작 활성화 여부
@@ -28,6 +30,12 @@ public class gaugeController : MonoBehaviour
     private Coroutine imageCoroutine; //이미지 변경 코루틴 임시
 
 
+    void OnEnable()
+    {
+        GameObject gm = Instantiate(startImage);
+        gm.transform.SetParent(this.transform);
+        gm.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,0);
+    }
     void Start()
     {
         button.onClick.AddListener(OnButtonClick);
@@ -39,10 +47,32 @@ public class gaugeController : MonoBehaviour
     {
         if (isActive)
         {
+            //게이지 1 미만일때만 시간 감소
+            if (fillAmount < 1f)
+            {
+                time -= Time.deltaTime; //타이머 감소
+                Debug.Log(time);
+                if (time <= 0f)
+                {
+                    if (imageCoroutine != null)
+                    {
+                        StopCoroutine(imageCoroutine); //멤버이미지변경 코루틴 멈춤
+                        imageCoroutine = null;
+                    }
+
+                    Debug.Log("@@@@@@@@@@시간 끝@@@@@@@@@@@@");
+                    isActive = false;
+                    // minigame3Ob.SetActive(false);
+                    // ClosePopup();
+                    return;
+                }
+            }
+
             if (fillAmount >= 1f)
             {
                 return;
             }
+
             if (fillAmount > 0f) //1초마다 게이지 줄어듦
             {
                 fillAmount -= decreaseRate * Time.deltaTime;
@@ -119,7 +149,6 @@ public class gaugeController : MonoBehaviour
         }
     }
 
-
     //클릭 횟수 결정함수
     int GetClickPerIncrement()
     {
@@ -131,5 +160,4 @@ public class gaugeController : MonoBehaviour
     {
         minigame3Ob.SetActive(false); // 팝업 패널 비활성화
     }
-
 }

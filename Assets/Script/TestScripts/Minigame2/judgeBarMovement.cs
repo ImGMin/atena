@@ -13,6 +13,7 @@ public enum AttemptResult
 public class JudgeBarController : MonoBehaviour
 {
     public GameObject minigame2Ob; //미니게임2 전체
+    private bool isActive =true; //게임활성화 여부
     public RectTransform judgeBar; // 판정바 RectTransform
     public RectTransform success; // 성공 범위 RectTransform
     public RectTransform bigSuccess; // 대성공 범위 RectTransform
@@ -25,7 +26,6 @@ public class JudgeBarController : MonoBehaviour
     public GameObject popupPanel; // 팝업 패널 오브젝트
     private int attempts = 3; // 남은 기회 수
     private GameObject[] attemptImages; // 기회 이미지 저장 배열
-
     private List<AttemptResult> attemptResults; // 시도 결과 저장 리스트
 
     public Sprite failSprite; // 실패결과 이미지
@@ -58,26 +58,36 @@ public class JudgeBarController : MonoBehaviour
 
     void Update()
     {
-        MoveJudgeBar();
+        if (isActive)
+        {
+            MoveJudgeBar();
+            if (attempts == 0)
+            {
+                isActive = false;
+            }
+        }
     }
 
     void MoveJudgeBar()
     {
-        float step = speed * Time.deltaTime;
-        if (movingRight)
+        if (isActive)
         {
-            judgeBar.anchoredPosition += new Vector2(step, 0);
-            if (judgeBar.anchoredPosition.x >= (GetComponent<RectTransform>().rect.width / 3))
+            float step = speed * Time.deltaTime;
+            if (movingRight)
             {
-                movingRight = false;
+                judgeBar.anchoredPosition += new Vector2(step, 0);
+                if (judgeBar.anchoredPosition.x >= (GetComponent<RectTransform>().rect.width / 3))
+                {
+                    movingRight = false;
+                }
             }
-        }
-        else
-        {
-            judgeBar.anchoredPosition -= new Vector2(step, 0);
-            if (judgeBar.anchoredPosition.x <= -(GetComponent<RectTransform>().rect.width / 3))
+            else
             {
-                movingRight = true;
+                judgeBar.anchoredPosition -= new Vector2(step, 0);
+                if (judgeBar.anchoredPosition.x <= -(GetComponent<RectTransform>().rect.width / 3))
+                {
+                    movingRight = true;
+                }
             }
         }
     }
@@ -122,26 +132,30 @@ public class JudgeBarController : MonoBehaviour
 
 void UpdateAttempts(AttemptResult result)
 {
-    if (attempts > 0)
+    if (isActive)
     {
-        int attemptIndex = 3 - attempts; // 현재 시도 인덱스 계산
-        Image attemptImage = attemptImages[attemptIndex].GetComponent<Image>();
-        switch (result)
+        if (attempts > 0)
         {
-                case AttemptResult.bigSuccess:
-                    attemptImage.sprite = bigSuccessSprite; // 대성공 시 이미지 변경
-                    break;
+            int attemptIndex = 3 - attempts; // 현재 시도 인덱스 계산
+            Image attemptImage = attemptImages[attemptIndex].GetComponent<Image>();
+            switch (result)
+            {
+                    case AttemptResult.bigSuccess:
+                        attemptImage.sprite = bigSuccessSprite; // 대성공 시 이미지 변경
+                        break;
 
-                case AttemptResult.Success:
-                    attemptImage.sprite = successSprite; // 성공 시 이미지 변경
-                    break;
+                    case AttemptResult.Success:
+                        attemptImage.sprite = successSprite; // 성공 시 이미지 변경
+                        break;
 
-                case AttemptResult.Fail:
-                    attemptImage.sprite = failSprite; // 실패 시 이미지 변경
-                    break;
+                    case AttemptResult.Fail:
+                        attemptImage.sprite = failSprite; // 실패 시 이미지 변경
+                        break;
+            }
+            attempts--;
         }
-        attempts--;
     }
+
 }
 
 
