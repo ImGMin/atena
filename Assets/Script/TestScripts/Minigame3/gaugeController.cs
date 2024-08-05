@@ -8,6 +8,7 @@ using UnityEditor;
 public class gaugeController : MonoBehaviour
 {
     public GameObject minigame3Ob; //미니게임3 전체
+    public ImageController imageController; //시작,실패,성공이미지 컨트롤러
     public Image gauge; //게이지 이미지
     public Button button; //클릭버튼
     public GameObject startImage; //시작이미지팝업
@@ -30,14 +31,10 @@ public class gaugeController : MonoBehaviour
     private Coroutine imageCoroutine; //이미지 변경 코루틴 임시
 
 
-    void OnEnable()
-    {
-        GameObject gm = Instantiate(startImage);
-        gm.transform.SetParent(this.transform);
-        gm.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,0);
-    }
+
     void Start()
     {
+        StartCoroutine(imageController.ShowImageForSeconds("StartImage", 5.0f)); // 이름이 "StartImage"인 이미지 5초 동안 표시
         button.onClick.AddListener(OnButtonClick);
         imageCoroutine = StartCoroutine(CycleMemberImages()); //멤버 이미지 변경 코루틴
         SetGaugeValue(fillAmount); //시작시 플레이어 이미지 업데이트
@@ -51,8 +48,8 @@ public class gaugeController : MonoBehaviour
             if (fillAmount < 1f)
             {
                 time -= Time.deltaTime; //타이머 감소
-                Debug.Log(time);
-                if (time <= 0f)
+                //Debug.Log(time);
+                if (time <= 0f) //제한시간 끝났을 때
                 {
                     if (imageCoroutine != null)
                     {
@@ -63,7 +60,9 @@ public class gaugeController : MonoBehaviour
                     Debug.Log("@@@@@@@@@@시간 끝@@@@@@@@@@@@");
                     isActive = false;
                     // minigame3Ob.SetActive(false);
-                    // ClosePopup();
+                    DelayManager.ExecuteAfterDelay(this, 3f, () => {
+                        ClosePopup();
+                    });
                     return;
                 }
             }
@@ -98,7 +97,11 @@ public class gaugeController : MonoBehaviour
                 if (fillAmount >= 1f) //게이지 값이 1이상
                 {
                     Debug.Log("@@@@@@@@@@@@@@@@게이지 꽉 참@@@@@@@@@@@@@@@@@@@@");
-                    //ClosePopup();
+                    Debug.Log("얻은 에너지: (time+5)/5");
+                    //3초 후 팝업닫힘
+                    DelayManager.ExecuteAfterDelay(this, 3f, () => { 
+                        ClosePopup();
+                    });
                 } 
                 clickCount = 0;
             }

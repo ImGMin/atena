@@ -126,7 +126,11 @@ public class JudgeBarController : MonoBehaviour
         {
             Debug.Log(string.Join(", ", attemptResults));
             resultMessage();
-            //ClosePopup();
+            DelayManager.ExecuteAfterDelay(this, 3f, () => {
+                Debug.Log("3초 후 팝업 닫힘");
+                ClosePopup();
+            });
+            
         }
     }
 

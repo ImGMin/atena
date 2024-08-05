@@ -45,8 +45,11 @@ public class minigametimer : MonoBehaviour
             timerValue = 0;
             UpdateSlider();
             Debug.Log("30초 끝");
-            minigame1PopupOb.SetActive(false);
-            //Debug.Log("없어짐");
+            //2초 딜레이 후 팝업제거
+            DelayManager.ExecuteAfterDelay(this, 2f, () => {
+                minigame1PopupOb.SetActive(false);
+            });
+            Debug.Log("없어짐");
         }
     }
 
@@ -57,7 +60,7 @@ public class minigametimer : MonoBehaviour
         {
             timerValue = 0;
         }
-        Debug.Log(timerValue);
+        Debug.Log($"남은시간 : {timerValue}");
         UpdateSlider();
         Canvas.ForceUpdateCanvases();
     }

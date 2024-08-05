@@ -147,7 +147,10 @@ public class NoteButtonHandler : MonoBehaviour
 
         if (orderedButtons.Count == 0)
         {
-            minigame1PopupOb.SetActive(false);
+            DelayManager.ExecuteAfterDelay(this, 2f, () => {
+                minigame1PopupOb.SetActive(false);
+            });
+            
         }
     }
 
