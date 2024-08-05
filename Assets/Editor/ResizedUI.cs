@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class ResizeUIEditor : EditorWindow
 {
@@ -43,6 +44,55 @@ public class ResizeUIEditor : EditorWindow
             FuncRev();
         }
     }
+
+    void FindChildOj(Transform parent, HashSet<Transform> checkedObjects, bool flag)
+    {
+        if (checkedObjects.Contains(parent))
+            return;
+
+        checkedObjects.Add(parent);
+
+        //flag |= !parent.gameObject.activeSelf;
+        if (flag)
+        {
+            RectTransform rectTransform = parent.GetComponent<RectTransform>();
+            if (rectTransform != null)
+            {
+                // 현재 크기를 가져옵니다.
+                Vector2 currentSize = rectTransform.sizeDelta;
+
+                // 크기를 2배로 설정합니다.
+                rectTransform.sizeDelta = currentSize * 2;
+                rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y) * 2;
+
+                // 변경 사항을 저장합니다.
+                EditorUtility.SetDirty(rectTransform);
+            }
+
+            TextMeshProUGUI tmpText = parent.GetComponent<TextMeshProUGUI>();
+            if (tmpText != null)
+            {
+                // 현재 폰트 크기를 가져옵니다.
+                float currentFontSize = tmpText.fontSize;
+
+                // 폰트 크기를 2배로 설정합니다.
+                tmpText.fontSize = currentFontSize * 2;
+                //tmpText.rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y);
+                tmpText.font = newFont;
+
+                // 변경 사항을 저장합니다.
+                EditorUtility.SetDirty(tmpText);
+            }
+        }
+
+        Transform[] allTransforms = parent.GetComponentsInChildren<Transform>(true);
+
+        foreach (Transform child in allTransforms)
+        {
+            FindChildOj(child, checkedObjects, flag);
+        }
+    }
+
     void FuncRev()
     {
         GameObject[] allGameObjects = Resources.FindObjectsOfTypeAll<GameObject>();
@@ -90,14 +140,16 @@ public class ResizeUIEditor : EditorWindow
     }
     void Func()
     {
+        HashSet<Transform> checkedObjects = new HashSet<Transform>();
+
         GameObject[] allGameObjects = Resources.FindObjectsOfTypeAll<GameObject>();
 
         foreach (GameObject go in allGameObjects)
         {
-            if (go.activeSelf)
-                continue;
+            if (!go.activeSelf)
+                FindChildOj(go.transform, checkedObjects, true);
 
-            RectTransform rectTransform = go.GetComponent<RectTransform>();
+            /*RectTransform rectTransform = go.GetComponent<RectTransform>();
             if (rectTransform != null)
             {
                 // 현재 크기를 가져옵니다.
@@ -124,7 +176,7 @@ public class ResizeUIEditor : EditorWindow
 
                 // 변경 사항을 저장합니다.
                 EditorUtility.SetDirty(tmpText);
-            }
+            }*/
 
 
         }
