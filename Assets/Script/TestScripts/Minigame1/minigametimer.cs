@@ -10,10 +10,12 @@ public class minigametimer : MonoBehaviour
 
     public GameObject StartImage;
     public GameObject timerSliderOb;
-    private Image timerSlider;
+    private Image timerSlider; //타이머 이미지
     public float timerValue;
-    private float timerDuration = 30f;
-    public GameObject minigame1PopupOb;
+    private float timerDuration = 30f; //제한시간
+    public GameObject minigame1PopupOb; //미니게임1 팝업
+    private bool isTimerRunning = true; //타이머 작동여부
+
 
     void OnEnable()
         {
@@ -35,21 +37,18 @@ public class minigametimer : MonoBehaviour
 
     void Update()
     {
-        if (timerValue > 0)
+        if (isTimerRunning && timerValue > 0)
         {
             timerValue -= Time.deltaTime;
             UpdateSlider();
         }
-        else
+        else if (timerValue <= 0 && isTimerRunning)
         {
             timerValue = 0;
             UpdateSlider();
+            StopTimer();
             Debug.Log("30초 끝");
-            //2초 딜레이 후 팝업제거
-            DelayManager.ExecuteAfterDelay(this, 2f, () => {
-                minigame1PopupOb.SetActive(false);
-            });
-            Debug.Log("없어짐");
+            Debug.Log("@@@@@@@@@2실패@@@@@@@@@@@@");
         }
     }
 
@@ -65,6 +64,12 @@ public class minigametimer : MonoBehaviour
         Canvas.ForceUpdateCanvases();
     }
 
+    public void StopTimer() //타이머 멈춤
+    {
+        Canvas.ForceUpdateCanvases();
+        isTimerRunning = false;
+        Debug.Log($"게임종료, 남은시간:{timerValue}");
+    }
     private void UpdateSlider()
     {
         float tmp = timerSlider.fillAmount - timerValue / timerDuration;

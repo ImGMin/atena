@@ -10,10 +10,11 @@ public class NoteButtonHandler : MonoBehaviour
     public Button rightNoteButton; // Rightnote 버튼
     public PatternButtonGenerator buttonGenerator; // PatternButtonGenerator 스크립트 참조
     public minigametimer sliderTimer; // minigametimer 스크립트 참조
-    public GameObject minigame1PopupOb;
+    public GameObject minigame1PopupOb; //미니게임1 팝업
+    public GameObject markNote; //마크노트이미지
 
     private Dictionary<NoteType, List<NoteButton>> noteButtonMapping = new Dictionary<NoteType, List<NoteButton>>();
-    private List<NoteButton> orderedButtons = new List<NoteButton>(); // 순서대로 버튼을 저장할 리스트
+    public List<NoteButton> orderedButtons = new List<NoteButton>(); // 순서대로 버튼을 저장할 리스트
 
     void Start()
     {
@@ -112,6 +113,11 @@ public class NoteButtonHandler : MonoBehaviour
 
         // 아래에 있는 노트부터 위로 정렬
         orderedButtons.Sort((a, b) => a.transform.position.y.CompareTo(b.transform.position.y));
+        //markNote 초기위치
+        if (orderedButtons.Count > 0)
+        {
+            markNote.transform.position = orderedButtons[0].transform.position;
+        }
 
         // Debug output
         foreach (var entry in noteButtonMapping)
@@ -138,6 +144,12 @@ public class NoteButtonHandler : MonoBehaviour
             noteButtonMapping[noteType].Remove(firstButton);
             Debug.Log("NoteType " + noteType + "의 버튼이 올바르게 클릭되었습니다: " + firstButton.transform.position);
             Destroy(firstButton.gameObject);
+
+            //markNote위치이동
+            if (orderedButtons.Count > 0)
+            {
+                markNote.transform.position = orderedButtons[0].transform.position;
+            }
         }
         else
         {
@@ -147,10 +159,9 @@ public class NoteButtonHandler : MonoBehaviour
 
         if (orderedButtons.Count == 0)
         {
-            DelayManager.ExecuteAfterDelay(this, 2f, () => {
-                minigame1PopupOb.SetActive(false);
-            });
-            
+            sliderTimer.StopTimer(); //타이머 멈춤
+            Destroy(markNote);
+            Debug.Log("@@@@@@@@@@@@@@@@@@@@성공@@@@@@@@@@@@@@@@@@@");
         }
     }
 
