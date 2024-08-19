@@ -10,22 +10,22 @@ public class TestButton : MonoBehaviour
 
     public void ExpUp()
     {
-        GameManager.Instance.ChangeValue(exp: 5);
+        GameManager_prev.Instance.ChangeValue(exp: 5);
     }
 
     public void DayUp()
     {
-        GameManager.Instance.ChangeValue(curTime: 1);
+        GameManager_prev.Instance.ChangeValue(curTime: 1);
     }
 
     public void HourUp()
     {
-        GameManager.Instance.gameData.curTime.hour++;
+        GameManager_prev.Instance.gameData.curTime.hour++;
     }
     
 
     public void Init()
     {
-        GameManager.Instance.InitGameData();
+        GameManager_prev.Instance.InitGameData();
     }
 }

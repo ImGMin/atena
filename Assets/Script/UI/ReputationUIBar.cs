@@ -8,18 +8,18 @@ public class ReputationUIBar : MonoBehaviour
     private void Awake()
     {
         thisImage = GetComponent<Image>();
-        UpdateImage(GameManager.Instance.gameData.reputation);
+        UpdateImage(GameManager_prev.Instance.gameData.reputation);
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.gameData.OnReputationChanged += UpdateImage;
-        UpdateImage(GameManager.Instance.gameData.reputation);
+        GameManager_prev.Instance.gameData.OnReputationChanged += UpdateImage;
+        UpdateImage(GameManager_prev.Instance.gameData.reputation);
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.gameData.OnReputationChanged -= UpdateImage;
+        GameManager_prev.Instance.gameData.OnReputationChanged -= UpdateImage;
     }
 
     private void UpdateImage(int newValue)

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameData
+public class GameData_prev
 {
     public int level { get; set; }
     public int exp { get; set; }
@@ -31,7 +31,7 @@ public class GameData
 
     public int[] LvUpEXP = { 0, 20, 26, 35, 47, 62, 80, 101, 1000000};
 
-    public GameData()
+    public GameData_prev()
     {
         level = 1;
         exp = 0;

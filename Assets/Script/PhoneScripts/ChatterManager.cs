@@ -46,8 +46,8 @@ public class ChatterManager : MonoBehaviour
         ChoiceIDData = ReadChoiceIDCSV();
 
         //오늘의 상황ID의 번호, ID
-        situNum = GameManager.Instance.gameData.Schedule[GameManager.Instance.gameData.curTime.weekday].Item1;
-        situID = GameManager.Instance.NumToSitu[situNum];
+        situNum = GameManager_prev.Instance.gameData.Schedule[GameManager_prev.Instance.gameData.curTime.weekday].Item1;
+        situID = GameManager_prev.Instance.NumToSitu[situNum];
 
         //랜덤하게 게시글세트, 선택지세트의 ID 추출
         (postSetID, choiceSetID) = SituIDData[situID][Program.GetRandomIndices(SituIDData[situID].Count, 1)[0]];
@@ -229,7 +229,7 @@ public class ChatterManager : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             ChoiceButtonList[i].transform.Find("Post").GetComponent<TMP_Text>().text = 
-                ChoiceIDData[choiceSetID][choiceIdx[i]]["내용"].Replace("@최애", $"@{GameManager.Instance.gameData.myFavorite}");
+                ChoiceIDData[choiceSetID][choiceIdx[i]]["내용"].Replace("@최애", $"@{GameManager_prev.Instance.gameData.myFavorite}");
 
             ChoiceButtonList[i].transform.Find("Resource").GetComponent<TMP_Text>().text = PenaltyString(i);
         }
@@ -254,7 +254,7 @@ public class ChatterManager : MonoBehaviour
         }
         else
         {
-            SelectText.text = ChoiceIDData[choiceSetID][choiceIdx[index]]["내용"].Replace("@최애", $"@{GameManager.Instance.gameData.myFavorite}");
+            SelectText.text = ChoiceIDData[choiceSetID][choiceIdx[index]]["내용"].Replace("@최애", $"@{GameManager_prev.Instance.gameData.myFavorite}");
             SelectIdx = index;
         }
     }
@@ -272,13 +272,13 @@ public class ChatterManager : MonoBehaviour
         int energy = int.Parse(tmp["에너지"]);
         int cash = int.Parse(tmp["현금"]);
 
-        GameManager.Instance.ChangeValue(exp: exp, energy: energy,friends:friends , cash: cash, reputation: reputation, atenaGrowth:atenaGrowth);
+        GameManager_prev.Instance.ChangeValue(exp: exp, energy: energy,friends:friends , cash: cash, reputation: reputation, atenaGrowth:atenaGrowth);
 
         GameObject postOb = Instantiate(postPrefab, transform.position, transform.rotation);
-        postOb.transform.Find("Name").GetComponent<TMP_Text>().text = GameManager.Instance.gameData.playerName;
+        postOb.transform.Find("Name").GetComponent<TMP_Text>().text = GameManager_prev.Instance.gameData.playerName;
 
         TMP_Text postText = postOb.transform.Find("Post").GetComponent<TMP_Text>();
-        postText.text = tmp["내용"].Replace("@최애", $"@{GameManager.Instance.gameData.myFavorite}");
+        postText.text = tmp["내용"].Replace("@최애", $"@{GameManager_prev.Instance.gameData.myFavorite}");
 
         float height = Program.CalculateTextHeight(postText);
         RectTransform rect = postOb.GetComponent<RectTransform>();
@@ -296,8 +296,8 @@ public class ChatterManager : MonoBehaviour
         int energy = int.Parse(tmp["에너지"]);
         int cash = int.Parse(tmp["현금"]);
 
-        if (GameManager.Instance.gameData.energy < energy) return false;
-        if (GameManager.Instance.gameData.cash < cash) return false;
+        if (GameManager_prev.Instance.gameData.energy < energy) return false;
+        if (GameManager_prev.Instance.gameData.cash < cash) return false;
 
         return true;
     }

@@ -11,18 +11,18 @@ public class AtenaGrowthUI : MonoBehaviour
     private void Awake()
     {
         thisText = GetComponent<TMP_Text>();
-        UpdateText(GameManager.Instance.gameData.atenaGrowth);
+        UpdateText(GameManager_prev.Instance.gameData.atenaGrowth);
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.gameData.OnAtenaGrowthChanged += UpdateText;
-        UpdateText(GameManager.Instance.gameData.atenaGrowth);
+        GameManager_prev.Instance.gameData.OnAtenaGrowthChanged += UpdateText;
+        UpdateText(GameManager_prev.Instance.gameData.atenaGrowth);
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.gameData.OnAtenaGrowthChanged -= UpdateText;
+        GameManager_prev.Instance.gameData.OnAtenaGrowthChanged -= UpdateText;
     }
 
     private void UpdateText(int newText)

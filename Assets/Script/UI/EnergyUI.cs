@@ -11,18 +11,18 @@ public class EnergyUI : MonoBehaviour
     private void Awake()
     {
         thisText = GetComponent<TMP_Text>();
-        UpdateText(GameManager.Instance.gameData.energy);
+        UpdateText(GameManager_prev.Instance.gameData.energy);
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.gameData.OnEnergyChanged += UpdateText;
-        UpdateText(GameManager.Instance.gameData.energy);
+        GameManager_prev.Instance.gameData.OnEnergyChanged += UpdateText;
+        UpdateText(GameManager_prev.Instance.gameData.energy);
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.gameData.OnEnergyChanged -= UpdateText;
+        GameManager_prev.Instance.gameData.OnEnergyChanged -= UpdateText;
     }
 
     private void UpdateText(int newText)

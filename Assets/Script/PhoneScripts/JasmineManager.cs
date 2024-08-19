@@ -123,7 +123,7 @@ public class JasmineManager : MonoBehaviour
         {
             albumDate = ParseAtenaDate(data[i]["발매일"]);
 
-            if (GameManager.Instance.gameData.curTime < albumDate)
+            if (GameManager_prev.Instance.gameData.curTime < albumDate)
             {
                 break;
             }
@@ -201,11 +201,11 @@ public class JasmineManager : MonoBehaviour
         LastPlayIdx = SelectIdx;
 
 
-        if (GameManager.Instance.gameData.cash < 300)
+        if (GameManager_prev.Instance.gameData.cash < 300)
         {
             return;
         }
-        GameManager.Instance.ChangeValue(cash: -300);
+        GameManager_prev.Instance.ChangeValue(cash: -300);
 
         Music playMusic = albums[SelectIdx.Item1].included[SelectIdx.Item2];
         playMusicName.text = playMusic.name;
@@ -222,17 +222,17 @@ public class JasmineManager : MonoBehaviour
 
         if (!playing)
         {
-            if (GameManager.Instance.gameData.cash < 600) return;
+            if (GameManager_prev.Instance.gameData.cash < 600) return;
             OnPlayButtonClick();
         }
         else
         {
-            if (GameManager.Instance.gameData.cash < 300) return;
+            if (GameManager_prev.Instance.gameData.cash < 300) return;
         }
 
         if (!playing) return;
         
-        GameManager.Instance.ChangeValue(cash: -300);
+        GameManager_prev.Instance.ChangeValue(cash: -300);
         autoImage.SetActive(true);
         autoPlaying = true;
     }
@@ -254,7 +254,7 @@ public class JasmineManager : MonoBehaviour
             int exp = int.Parse(data[LastPlayIdx.Item1]["경험치"]);
 
             Debug.Log($"{growth},{exp}");
-            GameManager.Instance.ChangeValue(exp:exp, atenaGrowth:growth);
+            GameManager_prev.Instance.ChangeValue(exp:exp, atenaGrowth:growth);
 
             Init();
         }
@@ -263,7 +263,7 @@ public class JasmineManager : MonoBehaviour
     void AutoPlay()
     {
         if (playing || !autoPlaying) return;
-        if (GameManager.Instance.gameData.cash < 300)
+        if (GameManager_prev.Instance.gameData.cash < 300)
         {
             autoPlaying = false;
             return;
@@ -272,7 +272,7 @@ public class JasmineManager : MonoBehaviour
         autoTime += Time.deltaTime;
         if (autoTime > maxAutoTime)
         {
-            GameManager.Instance.ChangeValue(cash: -300);
+            GameManager_prev.Instance.ChangeValue(cash: -300);
 
             Music playMusic = albums[LastPlayIdx.Item1].included[LastPlayIdx.Item2];
             playMusicName.text = playMusic.name;
