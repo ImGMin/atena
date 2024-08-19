@@ -8,11 +8,8 @@ using System.IO;
 public class GameManager : MonoBehaviour
 {
     public GameData gameData;
-    
-    public Dictionary<string, IIndexer<object>> tables = new Dictionary<string, IIndexer<object>>()
-    {
-        {"GameData", new GameData() }
-    };
+
+    public Dictionary<string, IIndexer<object>> tables = new Dictionary<string, IIndexer<object>>();
     
 
     private static GameManager _instance;
@@ -53,8 +50,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitGameData();
-        //LoadGameData();
+        //InitGameData();
+        LoadGameData();
     }
 
     // Update is called once per frame
@@ -90,23 +87,23 @@ public class GameManager : MonoBehaviour
         {
             connection.Open();
 
-            //string[] tables = new string[] { "gameData"};
+            string[] nameList = new string[] { "GameData", "AtenaDate"};
 
             using (var command = connection.CreateCommand())
             {
-
-                command.CommandText = "SELECT * FROM info";
-                using (IDataReader reader = command.ExecuteReader())
+                foreach (string name in nameList)
                 {
-
-                    while (reader.Read())
+                    command.CommandText = $"SELECT * FROM {name}";
+                    using (IDataReader reader = command.ExecuteReader())
                     {
-                        Debug.Log(", Name: " + reader["field1"] + ", Score: " + reader["field2"]);
+                        while (reader.Read())
+                        {
+                            Debug.Log("Name: " + reader["name"] + ", Value: " + reader["value"] + ", Type: " + reader["type"]);
+                        }
                     }
                 }
             }
         }
-
     }
 }
 

@@ -11,6 +11,7 @@ public class GameData : IIndexer<object>
     public int cash { get; set; }
     public int reputation { get; set; }
     public int atenaGrowth { get; set; }
+    public int favor { get; set; }
 
     public int[] LvUpEXP = { 0, 20, 26, 35, 47, 62, 80, 101, 1000000 };
 
@@ -18,7 +19,7 @@ public class GameData : IIndexer<object>
 
     public GameData()
     {
-        data = new object[] {level, exp, energy, friends, cash, reputation, atenaGrowth};
+        data = new object[] {level, exp, energy, friends, cash, reputation, atenaGrowth, favor};
     }
 
     public object this[int index] 
