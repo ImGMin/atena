@@ -22391,9 +22391,9 @@ MonoBehaviour:
   memberImage2: {fileID: 21300000, guid: 2ca18ed7f6cffb747899be7cee6f4772, type: 3}
   memberImage3: {fileID: 21300000, guid: a807ddaf30726d544af839775d8ef94d, type: 3}
   playerImage: {fileID: 281943582}
-  playerImage1: {fileID: 21300000, guid: bbe6d714f4802b8459eeaeddfeaef52d, type: 3}
-  playerImage2: {fileID: 21300000, guid: 8e9d47dd8620da240a77be30e1fcd127, type: 3}
-  playerImage3: {fileID: 21300000, guid: 2cf868e211b208e4683f71ef304b969b, type: 3}
+  playerImage1: {fileID: 21300000, guid: 0bb2e4b5cd9ce1245a370fddb85f31e5, type: 3}
+  playerImage2: {fileID: 21300000, guid: 4ca790618bf872f4db2f3440eef26b49, type: 3}
+  playerImage3: {fileID: 21300000, guid: e208c68f7b11f0749a5879ca479c1670, type: 3}
   time: 15
 --- !u!1 &1937071871
 GameObject:
