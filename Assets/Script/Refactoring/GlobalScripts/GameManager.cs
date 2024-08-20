@@ -8,17 +8,9 @@ using System.IO;
 public class GameManager : MonoBehaviour
 {
     public GameData gameData;
-<<<<<<< Updated upstream
 
     public Dictionary<string, IIndexer<object>> tables = new Dictionary<string, IIndexer<object>>();
-=======
-    
-    public Dictionary<string, IIndexer<object>> tables = new Dictionary<string, IIndexer<object>>()
-    {
-        {"GameData", new GameData() }
-    };
->>>>>>> Stashed changes
-    
+
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -28,7 +20,7 @@ public class GameManager : MonoBehaviour
             if (!_instance)
             {
                 _instance = FindAnyObjectByType(typeof(GameManager)) as GameManager;
-                
+
                 if (_instance == null)
                 {
                     GameObject singletonObject = new GameObject();
@@ -58,19 +50,14 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-<<<<<<< Updated upstream
-        //InitGameData();
-        LoadGameData();
-=======
         InitGameData();
         //LoadGameData();
->>>>>>> Stashed changes
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void InitGameData()
@@ -92,7 +79,7 @@ public class GameManager : MonoBehaviour
         {
             string streamingFilePath = Application.streamingAssetsPath + "/test.db";
             File.Copy(streamingFilePath, filePath);
-            
+
             Debug.Log("connect new database at " + streamingFilePath);
         }
 
@@ -100,8 +87,7 @@ public class GameManager : MonoBehaviour
         {
             connection.Open();
 
-<<<<<<< Updated upstream
-            string[] nameList = new string[] { "GameData", "AtenaDate"};
+            string[] nameList = new string[] { "GameData", "AtenaDate" };
 
             using (var command = connection.CreateCommand())
             {
@@ -114,28 +100,11 @@ public class GameManager : MonoBehaviour
                         {
                             Debug.Log("Name: " + reader["name"] + ", Value: " + reader["value"] + ", Type: " + reader["type"]);
                         }
-=======
-            //string[] tables = new string[] { "gameData"};
 
-            using (var command = connection.CreateCommand())
-            {
-
-                command.CommandText = "SELECT * FROM info";
-                using (IDataReader reader = command.ExecuteReader())
-                {
-
-                    while (reader.Read())
-                    {
-                        Debug.Log(", Name: " + reader["field1"] + ", Score: " + reader["field2"]);
->>>>>>> Stashed changes
                     }
                 }
             }
         }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     }
 }
 
