@@ -7,7 +7,7 @@ public class ChangeDateManager : MonoBehaviour
 {
 
     float time;
-    AtenaDate date;
+    AtenaDate_prev date;
 
     void Start()
     {

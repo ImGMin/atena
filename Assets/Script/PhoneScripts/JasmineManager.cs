@@ -11,7 +11,7 @@ public class JasmineManager : MonoBehaviour
     List<Dictionary<string, string>> data;
     List<Album> albums = new List<Album>();
     List<List<Button>> buttons = new List<List<Button>>();
-    AtenaDate albumDate;
+    AtenaDate_prev albumDate;
 
     public GameObject content;
     public GameObject albumPrefab;
@@ -103,7 +103,7 @@ public class JasmineManager : MonoBehaviour
         return data;
     }
 
-    AtenaDate ParseAtenaDate(string dateString)
+    AtenaDate_prev ParseAtenaDate(string dateString)
     {
         // "년", "월", "일"을 기준으로 문자열을 분리
         string[] parts = dateString.Split(new char[] { '년', '월', '일' }, StringSplitOptions.RemoveEmptyEntries);
@@ -114,7 +114,7 @@ public class JasmineManager : MonoBehaviour
         int day = int.Parse(parts[2].Trim());
 
         // AtenaDate 객체 생성 및 반환
-        return new AtenaDate(year, month, day);
+        return new AtenaDate_prev(year, month, day);
     }
 
     void GenAlbumList()

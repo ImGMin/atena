@@ -4,10 +4,13 @@ using UnityEngine;
 using System.Data;
 using Mono.Data.Sqlite;
 using System.IO;
+using UnityEditor.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
-    public GameData gameData;
+    public GameData gameData = new GameData();
+    public AtenaDate atenaDate = new AtenaDate();
 
     public Dictionary<string, IIndexer<object>> tables = new Dictionary<string, IIndexer<object>>();
 
@@ -44,14 +47,13 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     // Start is called before the first frame update
     void Start()
     {
         InitGameData();
-        //LoadGameData();
+        LoadGameData();
     }
 
     // Update is called once per frame
@@ -88,19 +90,44 @@ public class GameManager : MonoBehaviour
             connection.Open();
 
             string[] nameList = new string[] { "GameData", "AtenaDate" };
+            IIndexer<object>[] dataList = new IIndexer<object>[] {gameData, atenaDate};
 
             using (var command = connection.CreateCommand())
             {
-                foreach (string name in nameList)
+                for (int i = 0; i < nameList.Length; i++)
                 {
+                    string name = nameList[i];
+                    IIndexer<object> data = dataList[i];
+
                     command.CommandText = $"SELECT * FROM {name}";
                     using (IDataReader reader = command.ExecuteReader())
                     {
+                        int idx = 0;
                         while (reader.Read())
                         {
                             Debug.Log("Name: " + reader["name"] + ", Value: " + reader["value"] + ", Type: " + reader["type"]);
-                        }
+                            switch (reader["type"])
+                            {
+                                case "int":
+                                    data[idx] = Convert.ToInt32(reader["value"]);
+                                    break;
 
+                                case "float":
+                                    data[idx] = Convert.ToSingle(reader["value"]);
+                                    break;
+
+                                case "string":
+                                    data[idx] = Convert.ToString(reader["value"]);
+                                    break;
+
+                                default:
+                                    Debug.Log("typeError");
+                                    break;
+
+                            }
+                            
+                            idx++;
+                        }
                     }
                 }
             }

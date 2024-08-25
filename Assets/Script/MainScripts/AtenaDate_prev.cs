@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class AtenaDate : IComparable<AtenaDate>
+public class AtenaDate_prev : IComparable<AtenaDate_prev>
 {
     public int year;
     public int month;
@@ -12,7 +12,7 @@ public class AtenaDate : IComparable<AtenaDate>
     public float hour;
     public int weekday;
 
-    public AtenaDate(int year, int month, int day)
+    public AtenaDate_prev(int year, int month, int day)
     {
         if (year < 100) year += 2000;
         this.year = year;
@@ -39,7 +39,7 @@ public class AtenaDate : IComparable<AtenaDate>
         weekday = (day-1) % 5;
     }
 
-    public int CompareTo(AtenaDate other)
+    public int CompareTo(AtenaDate_prev other)
     {
         if (other == null) return 1;
 
@@ -56,22 +56,22 @@ public class AtenaDate : IComparable<AtenaDate>
     }
 
     // 연산자 오버로딩
-    public static bool operator <(AtenaDate lhs, AtenaDate rhs)
+    public static bool operator <(AtenaDate_prev lhs, AtenaDate_prev rhs)
     {
         return lhs.CompareTo(rhs) < 0;
     }
 
-    public static bool operator >(AtenaDate lhs, AtenaDate rhs)
+    public static bool operator >(AtenaDate_prev lhs, AtenaDate_prev rhs)
     {
         return lhs.CompareTo(rhs) > 0;
     }
 
-    public static bool operator <=(AtenaDate lhs, AtenaDate rhs)
+    public static bool operator <=(AtenaDate_prev lhs, AtenaDate_prev rhs)
     {
         return lhs.CompareTo(rhs) <= 0;
     }
 
-    public static bool operator >=(AtenaDate lhs, AtenaDate rhs)
+    public static bool operator >=(AtenaDate_prev lhs, AtenaDate_prev rhs)
     {
         return lhs.CompareTo(rhs) >= 0;
     }

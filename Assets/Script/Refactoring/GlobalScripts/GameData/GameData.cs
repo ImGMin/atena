@@ -32,5 +32,4 @@ public class GameData : IIndexer<object>
     {
         get { return data.Length; }
     }
-
 }

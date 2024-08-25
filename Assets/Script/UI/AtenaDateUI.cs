@@ -31,7 +31,7 @@ public class AtenaDateUI : MonoBehaviour
         GameManager_prev.Instance.gameData.OnAtenaDateChanged -= UpdateText;
     }
 
-    private void UpdateText(AtenaDate newText)
+    private void UpdateText(AtenaDate_prev newText)
     {
         int formatYear;
         if (useFullYear)

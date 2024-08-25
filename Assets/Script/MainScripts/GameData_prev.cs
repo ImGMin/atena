@@ -12,7 +12,7 @@ public class GameData_prev
     public int cash { get; set; }
     public int reputation { get; set; }
     public int atenaGrowth { get; set; }
-    public AtenaDate curTime { get; set; }
+    public AtenaDate_prev curTime { get; set; }
     public string playerName {  get; set; }
 
     public string myFavorite {  get; set; }
@@ -27,7 +27,7 @@ public class GameData_prev
     public event Action<int> OnCashChanged;
     public event Action<int> OnReputationChanged;
     public event Action<int> OnAtenaGrowthChanged;
-    public event Action<AtenaDate> OnAtenaDateChanged;
+    public event Action<AtenaDate_prev> OnAtenaDateChanged;
 
     public int[] LvUpEXP = { 0, 20, 26, 35, 47, 62, 80, 101, 1000000};
 
@@ -40,7 +40,7 @@ public class GameData_prev
         cash = 100000;
         reputation = 0;
         atenaGrowth = 0;
-        curTime = new AtenaDate(2025, 1, 1);
+        curTime = new AtenaDate_prev(2025, 1, 1);
         Schedule = new (int, int)[5];
         /*if (playerName != null)
         {

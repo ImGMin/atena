@@ -10,7 +10,7 @@ public class TimeManager : MonoBehaviour
     int situ;
     int work;
     int cur;
-    AtenaDate GameDataToday;
+    AtenaDate_prev GameDataToday;
 
     public Image cooldownMask;
     public TMP_Text text;
