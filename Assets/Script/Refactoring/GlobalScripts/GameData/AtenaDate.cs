@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System.Reflection;
 
 public class AtenaDate : IIndexer<object>//, IComparable<AtenaDate_prev>
 {
@@ -22,11 +23,11 @@ public class AtenaDate : IIndexer<object>//, IComparable<AtenaDate_prev>
     public float hour { get; set; }
     public int weekday { get; set; }
 
-    private object[] data;
-    
+    private readonly PropertyInfo[] fields;
+
     public AtenaDate()
     {
-        data = new object[] { year, month, day, hour };
+        fields = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
     }
     public void UpdateDate()
     {
@@ -47,12 +48,12 @@ public class AtenaDate : IIndexer<object>//, IComparable<AtenaDate_prev>
 
     public object this[int index]
     {
-        get { return data[index]; }
-        set { data[index] = value; }
+        get { return fields[index].GetValue(this); }
+        set { fields[index].SetValue(this, value); }
     }
 
     public int Length
     {
-        get { return data.Length; }
+        get { return fields.Length; }
     }
 }
