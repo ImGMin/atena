@@ -7,12 +7,26 @@ public class PatternButtonGenerator : MonoBehaviour
 {
     public GameObject noteButtonPrefab; // 노트 버튼 프리팹
     public Transform parentTransform; // 버튼이 배치될 부모 객체
-    public Vector2[] buttonPositions; // 버튼의 위치 배열
+    //public Vector2[] buttonPositions; // 버튼의 위치 배열
     public List<NoteButton> generatedButtons = new List<NoteButton>(); // 생성된 버튼 리스트
 
     public delegate void ButtonsGeneratedHandler();
     public event ButtonsGeneratedHandler OnButtonsGenerated;
 
+    // 200x200 좌표계에서의 버튼 배치 좌표
+    private Vector2[] buttonPositions = new Vector2[]
+    {
+        new Vector2(-226, 293),
+        new Vector2(-136, 233),
+        new Vector2(-46, 173),
+        new Vector2(44, 113),
+        new Vector2(134, 53),
+        new Vector2(224, -7),
+        new Vector2(140, -107),
+        new Vector2(50, -167),
+        new Vector2(-40, -227),
+        new Vector2(-130, -287)
+    };
 void Start()
     {
         if (noteButtonPrefab == null || parentTransform == null)
@@ -50,6 +64,27 @@ void GeneratePatternButtons()
                 noteButton.noteType = randomNoteType;
                 noteButton.buttonText.text = randomNoteType.ToString();
                 generatedButtons.Add(noteButton);
+
+            // 이미지 회전 처리
+                Image noteImage = newButton.GetComponent<Image>();
+                if (noteImage != null)
+                {
+                    switch (randomNoteType)
+                    {
+                        case NoteType.Up:
+                            noteImage.rectTransform.rotation = Quaternion.Euler(0, 0, 0); // 기본 회전
+                            break;
+                        case NoteType.Down:
+                            noteImage.rectTransform.rotation = Quaternion.Euler(0, 0, 180); // Z축 180도 회전
+                            break;
+                        case NoteType.Left:
+                            noteImage.rectTransform.rotation = Quaternion.Euler(0, 0, 90); // Z축 90도 회전
+                            break;
+                        case NoteType.Right:
+                            noteImage.rectTransform.rotation = Quaternion.Euler(0, 0, 270); // Z축 270도 회전
+                            break;
+                    }
+                }
                 //Debug.Log("생성된 버튼 리스트에 추가됨: " + noteButton.name + " 타입: " + noteButton.noteType);
             }
             else
