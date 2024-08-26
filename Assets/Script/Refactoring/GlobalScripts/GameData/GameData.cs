@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Reflection;
 
 public class GameData : IIndexer<object>
 {
@@ -15,21 +15,21 @@ public class GameData : IIndexer<object>
 
     public int[] LvUpEXP = { 0, 20, 26, 35, 47, 62, 80, 101, 1000000 };
 
-    private object[] data;
+    private readonly PropertyInfo[] fields;
 
     public GameData()
     {
-        data = new object[] {level, exp, energy, friends, cash, reputation, atenaGrowth, favor};
+        fields = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
     }
 
     public object this[int index] 
     { 
-        get { return data[index]; }
-        set { data[index] = value; }
+        get { return fields[index].GetValue(this); }
+        set { fields[index].SetValue(this, value); }
     }
 
     public int Length
     {
-        get { return data.Length; }
+        get { return fields.Length; }
     }
 }
