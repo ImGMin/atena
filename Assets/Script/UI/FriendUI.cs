@@ -11,18 +11,18 @@ public class FriendUI : MonoBehaviour
     private void Awake()
     {
         thisText = GetComponent<TMP_Text>();
-        UpdateText(GameManager.Instance.gameData.friends);
+        UpdateText(GameManager_prev.Instance.gameData.friends);
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.gameData.OnFriendChanged += UpdateText;
-        UpdateText(GameManager.Instance.gameData.friends);
+        GameManager_prev.Instance.gameData.OnFriendChanged += UpdateText;
+        UpdateText(GameManager_prev.Instance.gameData.friends);
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.gameData.OnFriendChanged -= UpdateText;
+        GameManager_prev.Instance.gameData.OnFriendChanged -= UpdateText;
     }
 
     private void UpdateText(int newText)

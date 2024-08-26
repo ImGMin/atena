@@ -10,7 +10,7 @@ public class TimeManager : MonoBehaviour
     int situ;
     int work;
     int cur;
-    AtenaDate GameDataToday;
+    AtenaDate_prev GameDataToday;
 
     public Image cooldownMask;
     public TMP_Text text;
@@ -25,21 +25,21 @@ public class TimeManager : MonoBehaviour
 
     void Awake()
     {
-        cur = GameManager.Instance.gameData.curTime.day;
-        GameDataToday = GameManager.Instance.gameData.curTime;
+        cur = GameManager_prev.Instance.gameData.curTime.day;
+        GameDataToday = GameManager_prev.Instance.gameData.curTime;
         GameDataToday.hour = 0;
 
-        (situ, work) = GameManager.Instance.gameData.Schedule[GameDataToday.weekday];
+        (situ, work) = GameManager_prev.Instance.gameData.Schedule[GameDataToday.weekday];
         if (situ != 0)
         {
-            Debug.Log($"오프라인 이벤트 {GameManager.Instance.NumToSitu[situ]}");
+            Debug.Log($"오프라인 이벤트 {GameManager_prev.Instance.NumToSitu[situ]}");
         }
         else if (work != 0)
         {
             Debug.Log($"즐거운 알바 {work}, 3시간 15000원");
             if (work == 1)
             {
-                GameManager.Instance.earnings += 15000;
+                GameManager_prev.Instance.earnings += 15000;
                 arbeit = 3;
             }
         }
@@ -85,7 +85,7 @@ public class TimeManager : MonoBehaviour
         {
             GameDataToday.hour = 0f;
             cooldownMask.fillAmount = 1f;
-            GameManager.Instance.ChangeValue(curTime: 1); 
+            GameManager_prev.Instance.ChangeValue(curTime: 1); 
         }
 
         if (GameDataToday.day != cur)

@@ -14,18 +14,18 @@ public class CashUI : MonoBehaviour
     private void Awake()
     {
         thisText = GetComponent<TMP_Text>();
-        UpdateText(GameManager.Instance.gameData.cash);
+        UpdateText(GameManager_prev.Instance.gameData.cash);
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.gameData.OnCashChanged += UpdateText;
-        UpdateText(GameManager.Instance.gameData.cash);
+        GameManager_prev.Instance.gameData.OnCashChanged += UpdateText;
+        UpdateText(GameManager_prev.Instance.gameData.cash);
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.gameData.OnCashChanged -= UpdateText;
+        GameManager_prev.Instance.gameData.OnCashChanged -= UpdateText;
     }
 
     private void UpdateText(int newText)

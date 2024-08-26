@@ -11,18 +11,18 @@ public class ReputationUI : MonoBehaviour
     private void Awake()
     {
         thisText = GetComponent<TMP_Text>();
-        UpdateText(GameManager.Instance.gameData.reputation);
+        UpdateText(GameManager_prev.Instance.gameData.reputation);
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.gameData.OnReputationChanged += UpdateText;
-        UpdateText(GameManager.Instance.gameData.reputation);
+        GameManager_prev.Instance.gameData.OnReputationChanged += UpdateText;
+        UpdateText(GameManager_prev.Instance.gameData.reputation);
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.gameData.OnReputationChanged -= UpdateText;
+        GameManager_prev.Instance.gameData.OnReputationChanged -= UpdateText;
     }
 
     private void UpdateText(int newText)

@@ -11,18 +11,18 @@ public class ExpUI : MonoBehaviour
     private void Awake()
     {
         thisText = GetComponent<TMP_Text>();
-        UpdateText(GameManager.Instance.gameData.exp);
+        UpdateText(GameManager_prev.Instance.gameData.exp);
     }
 
     private void OnEnable()
     {
-        GameManager.Instance.gameData.OnExpChanged += UpdateText;
-        UpdateText(GameManager.Instance.gameData.exp);
+        GameManager_prev.Instance.gameData.OnExpChanged += UpdateText;
+        UpdateText(GameManager_prev.Instance.gameData.exp);
     }
 
     private void OnDisable()
     {
-        GameManager.Instance.gameData.OnExpChanged -= UpdateText;
+        GameManager_prev.Instance.gameData.OnExpChanged -= UpdateText;
     }
 
     private void UpdateText(int newText)

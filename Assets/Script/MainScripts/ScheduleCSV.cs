@@ -16,19 +16,19 @@ public class ScheduleCSV : MonoBehaviour
 
     public void UpdateSchedule()
     {
-        int start = GameManager.Instance.gameData.curTime.day;
+        int start = GameManager_prev.Instance.gameData.curTime.day;
         int idx = start;
         while (start==idx || (idx-1)%5 != 0)
         {
             string str = data[idx-1]["상황ID"];
 
-            if (!GameManager.Instance.SituToNum.ContainsKey(str))
+            if (!GameManager_prev.Instance.SituToNum.ContainsKey(str))
             {
-                GameManager.Instance.SituToNum[str] = GameManager.Instance.SituToNum.Count;
-                GameManager.Instance.NumToSitu.Add(str);
+                GameManager_prev.Instance.SituToNum[str] = GameManager_prev.Instance.SituToNum.Count;
+                GameManager_prev.Instance.NumToSitu.Add(str);
             }
 
-            GameManager.Instance.gameData.Schedule[(idx - 1) % 5].Item1 = GameManager.Instance.SituToNum[str];
+            GameManager_prev.Instance.gameData.Schedule[(idx - 1) % 5].Item1 = GameManager_prev.Instance.SituToNum[str];
             idx++;
         }
     }

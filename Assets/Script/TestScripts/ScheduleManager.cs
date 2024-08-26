@@ -21,15 +21,15 @@ public class ScheduleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.Instance.ChangeValue(cash: GameManager.Instance.earnings);
-        GameManager.Instance.earnings = 0;
+        GameManager_prev.Instance.ChangeValue(cash: GameManager_prev.Instance.earnings);
+        GameManager_prev.Instance.earnings = 0;
 
         for (int i = 0; i < WeekDayButtonList.Length; i++)
         {
-            if (GameManager.Instance.gameData.Schedule[i].Item1 != 0)
+            if (GameManager_prev.Instance.gameData.Schedule[i].Item1 != 0)
             {
                 TMP_Text buttonText = WeekDayButtonList[i].GetComponentInChildren<TMP_Text>();
-                buttonText.text = $"상황{GameManager.Instance.NumToSitu[GameManager.Instance.gameData.Schedule[i].Item1]}";
+                buttonText.text = $"상황{GameManager_prev.Instance.NumToSitu[GameManager_prev.Instance.gameData.Schedule[i].Item1]}";
                 check[i] = true;
             }
         }
@@ -81,14 +81,14 @@ public class ScheduleManager : MonoBehaviour
         }
 
         //튜토리얼 : 월요일 제외
-        if (GameManager.Instance.Tutorial && index == 0) { return ; }
+        if (GameManager_prev.Instance.Tutorial && index == 0) { return ; }
 
         if (SelectIdx == index)
         {
             SelectIdx = -1;
             SelectRect.gameObject.SetActive(false);
         }
-        else if (GameManager.Instance.gameData.Schedule[index].Item1 == 0)
+        else if (GameManager_prev.Instance.gameData.Schedule[index].Item1 == 0)
         {
             SelectIdx = index;
             SelectRect.rectTransform.anchoredPosition = clickedButton.GetComponent<RectTransform>().anchoredPosition;
@@ -110,7 +110,7 @@ public class ScheduleManager : MonoBehaviour
             }
         }
 
-        GameManager.Instance.gameData.Schedule[SelectIdx].Item2 = index;
+        GameManager_prev.Instance.gameData.Schedule[SelectIdx].Item2 = index;
         TMP_Text buttonText = WeekDayButtonList[SelectIdx].GetComponentInChildren<TMP_Text>();
         if (index == 0)
         {

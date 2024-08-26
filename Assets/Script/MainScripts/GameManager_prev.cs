@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager_prev : MonoBehaviour
 {
-    private static GameManager instance;
-    public GameData gameData;
+    private static GameManager_prev instance;
+    public GameData_prev gameData;
 
     private string dataPath;
 
@@ -23,16 +23,16 @@ public class GameManager : MonoBehaviour
     public List<string> NumToSitu = new List<string> { "Situ_Idle"};
     public Dictionary<string,int> SituToNum = new Dictionary<string, int> { { "Situ_Idle", 0 } };
 
-    public static GameManager Instance
+    public static GameManager_prev Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = FindObjectOfType<GameManager>();
+                instance = FindObjectOfType<GameManager_prev>();
                 if (instance == null)
                 {
-                    instance = new GameObject("GameManager").AddComponent<GameManager>();
+                    instance = new GameObject("GameManager_prev").AddComponent<GameManager_prev>();
                 }
             }
             return instance;
@@ -134,11 +134,11 @@ public class GameManager : MonoBehaviour
         if (File.Exists(dataPath))
         {
             string jsonData = File.ReadAllText(dataPath);
-            gameData = JsonConvert.DeserializeObject<GameData>(jsonData);
+            gameData = JsonConvert.DeserializeObject<GameData_prev>(jsonData);
         }
         else
         {
-            gameData = new GameData();
+            gameData = new GameData_prev();
         }
 
 
@@ -146,7 +146,7 @@ public class GameManager : MonoBehaviour
 
     public void InitGameData()
     {
-        gameData = new GameData();
+        gameData = new GameData_prev();
         SaveGameData();
         string currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(currentSceneName);

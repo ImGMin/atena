@@ -7,12 +7,12 @@ public class ChangeDateManager : MonoBehaviour
 {
 
     float time;
-    AtenaDate date;
+    AtenaDate_prev date;
 
     void Start()
     {
         time = 0;
-        date = GameManager.Instance.gameData.curTime;
+        date = GameManager_prev.Instance.gameData.curTime;
     }
 
     void Update()
@@ -20,7 +20,7 @@ public class ChangeDateManager : MonoBehaviour
         time += Time.deltaTime;
         if (time > 1)
         {
-            if ((date.day % 5 == 1 && !GameManager.Instance.Tutorial) || (date.day == 2 && GameManager.Instance.Tutorial))
+            if ((date.day % 5 == 1 && !GameManager_prev.Instance.Tutorial) || (date.day == 2 && GameManager_prev.Instance.Tutorial))
             {
                 UpdateSchedule();
                 SceneManager.LoadScene("ScheduleScene");
