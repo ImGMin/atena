@@ -10,6 +10,11 @@ public class BaseTimeManager : MonoBehaviour
 
     private float baseTimeScale = 1 / 30f;
 
+    protected virtual void Start()
+    {
+
+    }
+
     protected virtual void Update()
     {
         if (timeFlag)
