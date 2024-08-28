@@ -6,6 +6,7 @@ using Mono.Data.Sqlite;
 using System.IO;
 using UnityEditor.SceneManagement;
 using System;
+using Unity.Collections.LowLevel.Unsafe;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public Dictionary<string, IIndexer<object>> tables = new Dictionary<string, IIndexer<object>>();
 
+    private string[] gameDataName = new string[] { "level", "exp", "energy", "friends", "cash", "reputation", "atenaGrowth", "favor" };
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -52,8 +54,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitGameData();
-        LoadGameData();
+        //InitGameData();
+        //LoadGameData();
+        SaveGameData();
     }
 
     // Update is called once per frame
@@ -123,7 +126,6 @@ public class GameManager : MonoBehaviour
                                 default:
                                     Debug.Log("typeError");
                                     break;
-
                             }
                             
                             idx++;
@@ -132,6 +134,76 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    void SaveGameData()
+    {
+        string filePath = Application.persistentDataPath + "/test.db";
+
+        using (var connection = new SqliteConnection("URI=file:" + filePath))
+        {
+            connection.Open();
+
+            string[] nameList = new string[] { "GameData", "AtenaDate" };
+            IIndexer<object>[] dataList = new IIndexer<object>[] { gameData, atenaDate };
+
+            using (var command = connection.CreateCommand())
+            {
+                for (int i = 0; i < nameList.Length; i++)
+                {
+                    string name = nameList[i];
+                    IIndexer<object> data = dataList[i];
+
+                    command.CommandText = $"SELECT * FROM {name}";
+                    using (var reader = command.ExecuteReader())
+                    {
+                        int idx = 0;
+                        while (reader.Read())
+                        {
+                            // 고유 식별자 (예: ID) 및 현재 value 값을 읽어옴
+                            string rowName = reader.GetString(reader.GetOrdinal("name")); // 'name' 칼럼의 값
+
+                            // 새로운 value 값을 계산 또는 설정 
+                            string newValue = data[idx].ToString();
+
+                            // 행 업데이트를 위한 SQL 명령어
+                            using (var updateCommand = connection.CreateCommand())
+                            {
+                                updateCommand.CommandText = $"UPDATE {name} SET value = @newValue WHERE name = @rowName";
+                                updateCommand.Parameters.Add(new SqliteParameter("@newValue", newValue));
+                                updateCommand.Parameters.Add(new SqliteParameter("@rowName", rowName));
+                                updateCommand.ExecuteNonQuery();
+                            }
+
+                            idx++;
+                        }
+                    }
+                }
+            }
+        }
+
+        Debug.Log("done");
+    }
+
+    public void ChangeValue(string name, int value)
+    {
+        int idx = -1;
+        for (int i = 0; i < gameDataName.Length; i++)
+        {
+            if (gameDataName[i] == name)
+            {
+                idx = i;
+                break;
+            }
+        }
+
+        if (idx == -1)
+        {
+            Debug.Assert(false);
+            return;
+        }
+
+        gameData[idx] = (int)gameData[idx] + value;
     }
 }
 

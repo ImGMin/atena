@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 public class GameData : IIndexer<object>
@@ -19,7 +20,9 @@ public class GameData : IIndexer<object>
 
     public GameData()
     {
-        fields = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        fields = GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .Where(p => p.PropertyType == typeof(int))
+            .ToArray();
     }
 
     public object this[int index] 
