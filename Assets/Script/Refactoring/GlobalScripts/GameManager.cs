@@ -48,7 +48,10 @@ public class GameManager : MonoBehaviour
         else if (_instance != this)
         {
             Destroy(gameObject);
+            return;
         }
+
+        LoadGameData();
     }
 
     // Start is called before the first frame update
@@ -56,13 +59,13 @@ public class GameManager : MonoBehaviour
     {
         //InitGameData();
         //LoadGameData();
-        SaveGameData();
+        //SaveGameData();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     void InitGameData()
@@ -108,7 +111,7 @@ public class GameManager : MonoBehaviour
                         int idx = 0;
                         while (reader.Read())
                         {
-                            Debug.Log("Name: " + reader["name"] + ", Value: " + reader["value"] + ", Type: " + reader["type"]);
+                            //Debug.Log("Name: " + reader["name"] + ", Value: " + reader["value"] + ", Type: " + reader["type"]);
                             switch (reader["type"])
                             {
                                 case "int":
@@ -204,6 +207,19 @@ public class GameManager : MonoBehaviour
         }
 
         gameData[idx] = (int)gameData[idx] + value;
+        gameData.ChangeValue(idx);
+    }
+
+    public void ChangeValue(int idx, int value)
+    {
+        if (idx == -1)
+        {
+            Debug.Assert(false);
+            return;
+        }
+
+        gameData[idx] = (int)gameData[idx] + value;
+        gameData.ChangeValue(idx);
     }
 }
 

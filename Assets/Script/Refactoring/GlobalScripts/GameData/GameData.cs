@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ public class GameData : IIndexer<object>
     public int favor { get; set; }
 
     public int[] LvUpEXP = { 0, 20, 26, 35, 47, 62, 80, 101, 1000000 };
+
+    public event Action<int,int> OnValueChanged;
 
     private readonly PropertyInfo[] fields;
 
@@ -34,5 +37,10 @@ public class GameData : IIndexer<object>
     public int Length
     {
         get { return fields.Length; }
+    }
+
+    public void ChangeValue(int idx)
+    {
+        OnValueChanged?.Invoke(idx, (int)fields[idx].GetValue(this));
     }
 }
