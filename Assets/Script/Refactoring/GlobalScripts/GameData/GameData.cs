@@ -19,6 +19,8 @@ public class GameData : IIndexer<object>
 
     public event Action<int,int> OnValueChanged;
 
+    public event Action<int> LvUpEvent;
+
     private readonly PropertyInfo[] fields;
 
     public GameData()
@@ -42,5 +44,17 @@ public class GameData : IIndexer<object>
     public void ChangeValue(int idx)
     {
         OnValueChanged?.Invoke(idx, (int)fields[idx].GetValue(this));
+    }
+
+    public void LvUp()
+    {
+        while (exp >= LvUpEXP[level])
+        {
+            exp -= LvUpEXP[level];
+            level++;
+        }
+        ChangeValue(0);
+        ChangeValue(1);
+        LvUpEvent?.Invoke(level);
     }
 }

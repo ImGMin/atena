@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BaseTimeManager : MonoBehaviour
 {
-
     protected bool timeFlag = true; //시간 흐름 여부
     protected float timeScale = 1f;  // 시간 배율
 

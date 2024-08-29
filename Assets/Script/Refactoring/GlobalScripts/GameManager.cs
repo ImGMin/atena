@@ -208,6 +208,8 @@ public class GameManager : MonoBehaviour
 
         gameData[idx] = (int)gameData[idx] + value;
         gameData.ChangeValue(idx);
+
+        if (name == "exp") gameData.LvUp();
     }
 
     public void ChangeValue(int idx, int value)
@@ -220,12 +222,7 @@ public class GameManager : MonoBehaviour
 
         gameData[idx] = (int)gameData[idx] + value;
         gameData.ChangeValue(idx);
+
+        if (idx == 1) gameData.LvUp();
     }
-}
-
-
-
-public interface IIndexer<T>
-{
-    T this[int index] { get; set; }
 }
