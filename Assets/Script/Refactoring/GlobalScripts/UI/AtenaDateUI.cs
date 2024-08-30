@@ -17,21 +17,21 @@ public class AtenaDateUI : MonoBehaviour
     private void Awake()
     {
         thisText = GetComponent<TMP_Text>();
-        UpdateText(GameManager_prev.Instance.gameData.curTime);
+        UpdateText(GameManager.Instance.atenaDate);
     }
 
     private void OnEnable()
     {
-        GameManager_prev.Instance.gameData.OnAtenaDateChanged += UpdateText;
-        UpdateText(GameManager_prev.Instance.gameData.curTime);
+        //GameManager_prev.Instance.gameData.OnAtenaDateChanged += UpdateText;
+        UpdateText(GameManager.Instance.atenaDate);
     }
 
     private void OnDisable()
     {
-        GameManager_prev.Instance.gameData.OnAtenaDateChanged -= UpdateText;
+        //GameManager_prev.Instance.gameData.OnAtenaDateChanged -= UpdateText;
     }
 
-    private void UpdateText(AtenaDate_prev newText)
+    private void UpdateText(AtenaDate newText)
     {
         int formatYear;
         if (useFullYear)
