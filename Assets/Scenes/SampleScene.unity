@@ -3336,6 +3336,81 @@ MonoBehaviour:
   timerSliderOb: {fileID: 1759246335}
   timerValue: 0
   minigame1PopupOb: {fileID: 1937071871}
+--- !u!1 &234529920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 234529921}
+  - component: {fileID: 234529923}
+  - component: {fileID: 234529922}
+  m_Layer: 5
+  m_Name: BackgroundImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &234529921
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234529920}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1137384640}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 18.439995}
+  m_SizeDelta: {x: 600, y: 609.12}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &234529922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234529920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &234529923
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234529920}
+  m_CullTransparentMesh: 1
 --- !u!1 &251034108
 GameObject:
   m_ObjectHideFlags: 0
@@ -3793,6 +3868,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1937071872}
     m_Modifications:
+    - target: {fileID: 2256447245563246572, guid: f679b8b4cdbff8349add8099929152ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3072650730707450757, guid: f679b8b4cdbff8349add8099929152ce, type: 3}
       propertyPath: m_Type
       value: 0
@@ -11759,6 +11838,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1937071872}
     m_Modifications:
+    - target: {fileID: 2256447245563246572, guid: f679b8b4cdbff8349add8099929152ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3072650730707450757, guid: f679b8b4cdbff8349add8099929152ce, type: 3}
       propertyPath: m_Type
       value: 0
@@ -13252,6 +13335,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 234529921}
   - {fileID: 1837333963}
   - {fileID: 2080140152}
   m_Father: {fileID: 1563590697}
@@ -14436,7 +14520,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: d7c578ee0b9c5414895f01bba81f1fdb, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17350,7 +17434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1563590697
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17372,7 +17456,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2990, y: 91}
+  m_AnchoredPosition: {x: 1943, y: 73}
   m_SizeDelta: {x: 640, y: 1300}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1563590698
@@ -20571,7 +20655,7 @@ GameObject:
   - component: {fileID: 1837333965}
   - component: {fileID: 1837333964}
   m_Layer: 5
-  m_Name: oshi
+  m_Name: OshiImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20593,8 +20677,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 29.619995}
-  m_SizeDelta: {x: 600, y: 586.76}
+  m_AnchoredPosition: {x: 0, y: 18.439995}
+  m_SizeDelta: {x: 400, y: 609.12}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1837333964
 MonoBehaviour:
@@ -20616,7 +20700,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: ca5ddaf9eb3e0194d9bf94ebb08f8168, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -21669,6 +21753,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1937071872}
     m_Modifications:
+    - target: {fileID: 2256447245563246572, guid: f679b8b4cdbff8349add8099929152ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3072650730707450757, guid: f679b8b4cdbff8349add8099929152ce, type: 3}
       propertyPath: m_Type
       value: 0
@@ -22477,9 +22565,9 @@ MonoBehaviour:
   button: {fileID: 609175916}
   startImage: {fileID: 1198442460449982561, guid: 9b036dd3e40d4dc4988310cf1dc952e6, type: 3}
   memberImage: {fileID: 793960381}
-  memberImage1: {fileID: 21300000, guid: daf248c2f84e61848b526a36f579498d, type: 3}
-  memberImage2: {fileID: 21300000, guid: 2ca18ed7f6cffb747899be7cee6f4772, type: 3}
-  memberImage3: {fileID: 21300000, guid: a807ddaf30726d544af839775d8ef94d, type: 3}
+  memberImage1: {fileID: 21300000, guid: ab968ca60aae036439f7113d2a83b811, type: 3}
+  memberImage2: {fileID: 21300000, guid: 44469bd2fb1b4bb4cbc150b3880a8def, type: 3}
+  memberImage3: {fileID: 21300000, guid: 7b0eff7567947e14596ecbace29a1cc8, type: 3}
   playerImage: {fileID: 281943582}
   playerImage1: {fileID: 21300000, guid: 0bb2e4b5cd9ce1245a370fddb85f31e5, type: 3}
   playerImage2: {fileID: 21300000, guid: 4ca790618bf872f4db2f3440eef26b49, type: 3}
@@ -23646,7 +23734,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2080140151}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24442,6 +24530,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1937071872}
     m_Modifications:
+    - target: {fileID: 2256447245563246572, guid: f679b8b4cdbff8349add8099929152ce, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3072650730707450757, guid: f679b8b4cdbff8349add8099929152ce, type: 3}
       propertyPath: m_Type
       value: 0
@@ -24774,7 +24866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3159243494494517227, guid: 3259cf26f9b45784ea3dd198f903e551, type: 3}
       propertyPath: m_fontSize
-      value: 24
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3159243494494517227, guid: 3259cf26f9b45784ea3dd198f903e551, type: 3}
       propertyPath: m_fontAsset
@@ -24782,12 +24874,16 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: ccbb04fe1af7093458b7a7b381e4f519, type: 2}
     - target: {fileID: 3159243494494517227, guid: 3259cf26f9b45784ea3dd198f903e551, type: 3}
       propertyPath: m_fontSizeBase
-      value: 24
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3159243494494517227, guid: 3259cf26f9b45784ea3dd198f903e551, type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 9222133049045404682, guid: ccbb04fe1af7093458b7a7b381e4f519, type: 2}
+    - target: {fileID: 4183569600761403244, guid: 3259cf26f9b45784ea3dd198f903e551, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5636971806630027104, guid: 3259cf26f9b45784ea3dd198f903e551, type: 3}
       propertyPath: m_Name
       value: noteButton
