@@ -55,7 +55,7 @@ void GeneratePatternButtons()
         if (buttonRectTransform != null)
         {
             buttonRectTransform.anchoredPosition = buttonPositions[i];
-            buttonRectTransform.sizeDelta = new Vector2(70, 70); // 버튼 크기 설정
+            buttonRectTransform.sizeDelta = new Vector2(140, 140); // 버튼 크기 설정
             // 랜덤한 노트 타입 할당
             NoteType randomNoteType = (NoteType)Random.Range(0, System.Enum.GetValues(typeof(NoteType)).Length);
             NoteButton noteButton = newButton.GetComponent<NoteButton>();
