@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class BaseTimeManager : MonoBehaviour
     protected float timeScale = 1f;  // 시간 배율
 
     private float baseTimeScale = 1 / 30f;
+
+    //public event Action<AtenaDate> OnDayChanged;
 
     protected virtual void Start()
     {
@@ -23,6 +26,7 @@ public class BaseTimeManager : MonoBehaviour
         {
             GameManager.Instance.atenaDate.hour = 0;
             GameManager.Instance.atenaDate.day += 1;
+            //OnDayChanged?.Invoke(GameManager.Instance.atenaDate);
         }
     }
     

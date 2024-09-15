@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-public class CashUI : MonoBehaviour
+public class CashUI_prev : MonoBehaviour
 {
     private TMP_Text thisText;
 

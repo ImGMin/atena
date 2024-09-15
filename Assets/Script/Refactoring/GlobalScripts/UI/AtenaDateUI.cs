@@ -12,23 +12,29 @@ public class AtenaDateUI : MonoBehaviour
     [SerializeField]
     private bool useFullYear = true;
 
+    ///public BaseTimeManager timeManager;
+
     private List<string> weekday = new List<string>() { "월", "화", "수", "목", "금" };
 
     private void Awake()
     {
         thisText = GetComponent<TMP_Text>();
+    }
+
+    private void Start()
+    {
         UpdateText(GameManager.Instance.atenaDate);
     }
 
     private void OnEnable()
     {
-        //GameManager_prev.Instance.gameData.OnAtenaDateChanged += UpdateText;
+        //timeManager.OnDayChanged += UpdateText;
         UpdateText(GameManager.Instance.atenaDate);
     }
 
     private void OnDisable()
     {
-        //GameManager_prev.Instance.gameData.OnAtenaDateChanged -= UpdateText;
+        //timeManager.OnDayChanged -= UpdateText;
     }
 
     private void UpdateText(AtenaDate newText)
