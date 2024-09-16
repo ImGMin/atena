@@ -4,9 +4,7 @@ using UnityEngine;
 using System.Data;
 using Mono.Data.Sqlite;
 using System.IO;
-using UnityEditor.SceneManagement;
 using System;
-using Unity.Collections.LowLevel.Unsafe;
 
 public class GameManager : MonoBehaviour
 {
