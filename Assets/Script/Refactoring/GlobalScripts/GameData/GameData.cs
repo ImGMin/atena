@@ -46,6 +46,11 @@ public class GameData : IIndexer<object>
         OnValueChanged?.Invoke(idx, (int)fields[idx].GetValue(this));
     }
 
+    public void EventDiscard()
+    {
+        OnValueChanged = null;
+    }
+
     public void LvUp()
     {
         while (exp >= LvUpEXP[level])
