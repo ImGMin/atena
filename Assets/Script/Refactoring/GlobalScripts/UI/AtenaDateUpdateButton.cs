@@ -16,8 +16,19 @@ public class AtenaDateUpdateButton : MonoBehaviour
     void Start()
     {
         timeManager = FindObjectOfType<BaseTimeManager>();
-        button = GetComponent<Button>();
+    }
+
+    private void OnEnable()
+    {
+        if (button == null)
+            button = GetComponent<Button>();
+        
         button.onClick.AddListener(SetTimeScale);
+    }
+
+    private void OnDisable()
+    {
+        button.onClick.RemoveListener(SetTimeScale);
     }
 
     private void SetTimeScale()

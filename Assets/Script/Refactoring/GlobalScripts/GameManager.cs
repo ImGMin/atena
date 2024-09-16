@@ -5,6 +5,7 @@ using System.Data;
 using Mono.Data.Sqlite;
 using System.IO;
 using System;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -20,24 +21,37 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            if (!_instance)
+            if (_instance == null)
             {
                 _instance = FindAnyObjectByType(typeof(GameManager)) as GameManager;
 
-                if (_instance == null)
-                {
+                if (_instance == null) {
+                    if (applicationIsQuitting)
+                    {
+                        return null;
+                    }
+
                     GameObject singletonObject = new GameObject();
                     _instance = singletonObject.AddComponent<GameManager>();
                     singletonObject.name = typeof(GameManager).ToString();
                     DontDestroyOnLoad(singletonObject);
                 }
             }
+
             return _instance;
         }
     }
 
+    private static bool applicationIsQuitting = false;
+    public void OnDestroy()
+    {
+        applicationIsQuitting = true;
+        gameData.EventDiscard();
+    }
+
     private void Awake()
     {
+        applicationIsQuitting = false;
         if (_instance == null)
         {
             _instance = this;
@@ -48,16 +62,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         LoadGameData();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        //InitGameData();
-        //LoadGameData();
-        //SaveGameData();
+
     }
 
     // Update is called once per frame
@@ -66,7 +77,7 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void InitGameData()
+    public void InitGameData()
     {
         string filePath = Application.persistentDataPath + "/test.db";
         if (File.Exists(filePath))
@@ -74,6 +85,10 @@ public class GameManager : MonoBehaviour
             File.Delete(filePath);
             Debug.Log("파일 제거 완료");
         }
+
+        LoadGameData();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
         return;
     }
 
@@ -140,6 +155,11 @@ public class GameManager : MonoBehaviour
     void SaveGameData()
     {
         string filePath = Application.persistentDataPath + "/test.db";
+
+        if (!File.Exists(filePath))
+        {
+            LoadGameData();
+        }
 
         using (var connection = new SqliteConnection("URI=file:" + filePath))
         {
@@ -208,6 +228,8 @@ public class GameManager : MonoBehaviour
         gameData.ChangeValue(idx);
 
         if (name == "exp") gameData.LvUp();
+
+        SaveGameData();
     }
 
     public void ChangeValue(int idx, int value)
@@ -222,5 +244,7 @@ public class GameManager : MonoBehaviour
         gameData.ChangeValue(idx);
 
         if (idx == 1) gameData.LvUp();
+
+        SaveGameData();
     }
 }

@@ -14,6 +14,7 @@ public class GameDataUI : MonoBehaviour
     protected virtual void Awake()
     {
         thisText = GetComponent<TMP_Text>();
+        GameManager.Instance.gameData.OnValueChanged += OnValueChanged;
     }
 
     protected virtual void Start() 
@@ -21,15 +22,10 @@ public class GameDataUI : MonoBehaviour
         UpdateText((int)GameManager.Instance.gameData[resourceIndex]);
     }
 
-    protected virtual void OnEnable()
+    protected virtual void OnDestroy()
     {
-        GameManager.Instance.gameData.OnValueChanged += OnValueChanged;
-        UpdateText((int)GameManager.Instance.gameData[resourceIndex]);
-    }
-
-    protected virtual void OnDisable()
-    {
-        GameManager.Instance.gameData.OnValueChanged -= OnValueChanged;
+        if (GameManager.Instance != null)
+            GameManager.Instance.gameData.OnValueChanged -= OnValueChanged;
     }
 
     protected virtual void OnValueChanged(int index, int newValue)

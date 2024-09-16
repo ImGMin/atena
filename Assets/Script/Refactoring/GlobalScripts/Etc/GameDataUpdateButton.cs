@@ -13,10 +13,17 @@ public class GameDataUpdateButton : MonoBehaviour
 
     private Button button;
 
-    public void Start()
+    private void OnEnable()
     {
-        button = GetComponent<Button>();
+        if (button == null)
+            button = GetComponent<Button>();
+
         button.onClick.AddListener(UpdateValue);
+    }
+
+    private void OnDisable()
+    {
+        button.onClick.RemoveListener(UpdateValue);
     }
 
     public void UpdateValue()
