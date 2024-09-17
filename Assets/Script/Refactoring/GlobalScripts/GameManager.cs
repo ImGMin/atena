@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
 
     public void InitGameData()
     {
-        string filePath = Application.persistentDataPath + "/test.db";
+        string filePath = Application.persistentDataPath + "/GameData.db";
         if (File.Exists(filePath))
         {
             File.Delete(filePath);
@@ -94,11 +94,11 @@ public class GameManager : MonoBehaviour
 
     void LoadGameData()
     {
-        string filePath = Application.persistentDataPath + "/test.db";
+        string filePath = Application.persistentDataPath + "/GameData.db";
 
         if (!File.Exists(filePath))
         {
-            string streamingFilePath = Application.streamingAssetsPath + "/test.db";
+            string streamingFilePath = Application.streamingAssetsPath + "/GameData.db";
             File.Copy(streamingFilePath, filePath);
 
             Debug.Log("connect new database at " + streamingFilePath);
@@ -152,9 +152,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void SaveGameData()
+    public void SaveGameData()
     {
-        string filePath = Application.persistentDataPath + "/test.db";
+        string filePath = Application.persistentDataPath + "/GameData.db";
 
         if (!File.Exists(filePath))
         {

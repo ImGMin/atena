@@ -42,11 +42,11 @@ public class AtenaDateUI : MonoBehaviour
         int formatYear;
         if (useFullYear)
         {
-            formatYear = newText.year;
+            formatYear = newText.year + 2000;
         }
         else
         {
-            formatYear = newText.year % 100;
+            formatYear = newText.year;
         }
 
         string processedFormat = format.Replace("\\n", "\n");

@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class BaseTimeManager : MonoBehaviour
 {
+    [SerializeField]
     protected bool timeFlag = true; //시간 흐름 여부
+
+    [SerializeField]
     protected float timeScale = 1f;  // 시간 배율
 
     private float baseTimeScale = 1 / 30f;

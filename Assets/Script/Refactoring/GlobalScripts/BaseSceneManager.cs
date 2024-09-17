@@ -21,6 +21,7 @@ public class BaseSceneManager : MonoBehaviour
     {
         if (Today != GameManager.Instance.atenaDate.day)
         {
+            GameManager.Instance.SaveGameData();
             SceneManager.LoadScene(nextSceneName);
         }
     }
