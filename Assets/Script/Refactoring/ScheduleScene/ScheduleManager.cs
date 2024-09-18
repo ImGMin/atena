@@ -9,9 +9,9 @@ using UnityEngine.UI;
 
 public class ScheduleManager : MonoBehaviour
 {
-    private List<string> situList = new List<string>();
+    private string[] situList = new string[5];
     private string[] workList = new string[5] { "Rest", "Rest", "Rest", "Rest", "Rest" };
-    private List<bool> canWork = new List<bool>();
+    private bool[] canWork = new bool[5];
     
 
     public Button[] WeekDayButtonList = new Button[5];
@@ -77,17 +77,20 @@ public class ScheduleManager : MonoBehaviour
                 command.CommandText = $"SELECT * FROM {name} WHERE 일 >= {day} AND 일 < {day+5}";
                 using (IDataReader reader = command.ExecuteReader())
                 {
+
+                    int idx = 0;
                     while (reader.Read())
                     {
-                        situList.Add(reader["상황ID"].ToString());
+                        situList[idx] = (reader["상황ID"].ToString());
                         if (reader["근무ID"].ToString() == "TRUE")
                         {
-                            canWork.Add(true);
+                            canWork[idx] = true;
                         }
                         else
                         {
-                            canWork.Add(false);
+                            canWork[idx] = false;
                         }
+                        idx++;
                     }
                 }
             }
@@ -96,10 +99,8 @@ public class ScheduleManager : MonoBehaviour
 
     void ButtonSetting()
     {
-        for (int i = 0; i < canWork.Count; i++)
+        for (int i = 0; i < canWork.Length; i++)
         {
-            Debug.Log(canWork[i]);
-            Debug.Log(situList[i]);
             if (canWork[i])
                 continue;
 
@@ -199,8 +200,14 @@ public class ScheduleManager : MonoBehaviour
             return;
         }
 
+        for (int i = 0; i < workList.Length; i++)
+        {
+            GameManager.Instance.situData[i] = situList[i];
+            GameManager.Instance.workData[i] = workList[i];
+        }
+
         GameManager.Instance.SaveGameData("WeekData");
-        if (situList[(GameManager.Instance.atenaDate.day-1)%5] == "")
+        if (situList[(GameManager.Instance.atenaDate.day-1)%5] == "Situ_02_01_01")
         {
             SceneManager.LoadScene("OfflineScene");
         }

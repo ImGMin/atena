@@ -362,10 +362,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Managers
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6140513035331296147, guid: 2565cb6b68fc96540b474d684876414d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4108964465821416842, guid: 2565cb6b68fc96540b474d684876414d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1385644317}
   m_SourcePrefab: {fileID: 100100000, guid: 2565cb6b68fc96540b474d684876414d, type: 3}
 --- !u!1001 &651258751
 PrefabInstance:
@@ -843,6 +847,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1385644315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4108964465821416842, guid: 2565cb6b68fc96540b474d684876414d, type: 3}
+  m_PrefabInstance: {fileID: 487753521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1385644317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385644315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c601a822aebeb174cbbbd840e4e33509, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextSceneName: ScheduleScene
+  nextSceneName2: OfflineScene
+  nextSceneName3: MainScene
 --- !u!1001 &1667330468
 PrefabInstance:
   m_ObjectHideFlags: 0

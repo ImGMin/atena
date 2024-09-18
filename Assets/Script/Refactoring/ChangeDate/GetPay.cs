@@ -11,6 +11,7 @@ public class GetPay : MonoBehaviour
         {
             GameManager.Instance.ChangeValue("cash", GameManager.Instance.payData.pay);
             GameManager.Instance.payData.pay = 0;
+            GameManager.Instance.SaveGameData("WeekData");
         }
     }
 }

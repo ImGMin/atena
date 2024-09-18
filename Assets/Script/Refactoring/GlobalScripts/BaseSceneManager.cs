@@ -9,7 +9,7 @@ public class BaseSceneManager : MonoBehaviour
     protected int Today;
 
     [SerializeField]
-    private string nextSceneName = "NewTestScene";
+    protected string nextSceneName = "NewTestScene";
 
     // Start is called before the first frame update
     protected virtual void Start()
