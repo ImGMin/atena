@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,7 +22,7 @@ public class BaseSceneManager : MonoBehaviour
     {
         if (Today != GameManager.Instance.atenaDate.day)
         {
-            GameManager.Instance.SaveGameData();
+            GameManager.Instance.SaveAllData();
             SceneManager.LoadScene(nextSceneName);
         }
     }

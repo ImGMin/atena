@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class ScheduleManager : MonoBehaviour
+public class ScheduleManager_prev : MonoBehaviour
 {
     public Button[] WeekDayButtonList = new Button[5];
     public Image SelectRect;

@@ -22,6 +22,6 @@ public class InitGameData : MonoBehaviour
 
     public void UpdateValue()
     {
-        GameManager.Instance.InitGameData();
+        GameManager.Instance.InitAllData();
     }
 }

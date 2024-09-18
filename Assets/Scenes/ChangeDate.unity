@@ -475,6 +475,7 @@ GameObject:
   - component: {fileID: 1092543515}
   - component: {fileID: 1092543516}
   - component: {fileID: 1092543517}
+  - component: {fileID: 1092543518}
   m_Layer: 0
   m_Name: ChangeDateManager
   m_TagString: Untagged
@@ -519,6 +520,18 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8689b7c379702e4c92516d980871172, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1092543518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092543514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b23a11cd9666f848b44a857f5ab74e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1118824046

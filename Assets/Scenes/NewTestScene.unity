@@ -829,6 +829,7 @@ GameObject:
   - component: {fileID: 846796054}
   - component: {fileID: 846796057}
   - component: {fileID: 846796056}
+  - component: {fileID: 846796058}
   - component: {fileID: 846796055}
   m_Layer: 5
   m_Name: Text (TMP)
@@ -967,6 +968,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 846796053}
   m_CullTransparentMesh: 1
+--- !u!114 &846796058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846796053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5d25a35783a8d949bd3bdd405556c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  format: '{0}'
+  resourceIndex: 1
+  text: {fileID: 4734061336365517821, guid: f508c107817a7b247b6e467bd1e4077f, type: 3}
 --- !u!1 &1018072239
 GameObject:
   m_ObjectHideFlags: 0
@@ -1953,6 +1969,7 @@ GameObject:
   - component: {fileID: 1791082632}
   - component: {fileID: 1791082635}
   - component: {fileID: 1791082634}
+  - component: {fileID: 1791082636}
   - component: {fileID: 1791082633}
   m_Layer: 5
   m_Name: Exit
@@ -2075,6 +2092,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791082631}
   m_CullTransparentMesh: 1
+--- !u!114 &1791082636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1791082631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11f21070e95654a4c8aec1580326aa42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneName: StartScene
 --- !u!1 &1861094580
 GameObject:
   m_ObjectHideFlags: 0
@@ -2454,10 +2484,6 @@ PrefabInstance:
     - target: {fileID: 5302975466293440145, guid: a4f011507c8de1946ab0b18e16c03cb6, type: 3}
       propertyPath: m_Name
       value: ResourceCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 8280765189159027409, guid: a4f011507c8de1946ab0b18e16c03cb6, type: 3}
-      propertyPath: m_UiScaleMode
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -9,10 +9,17 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    
     public GameData gameData = new GameData();
     public AtenaDate atenaDate = new AtenaDate();
 
-    public Dictionary<string, IIndexer<object>> tables = new Dictionary<string, IIndexer<object>>();
+    public SituData situData = new SituData();
+    public WorkData workData = new WorkData();
+    public PayData payData = new PayData();
+
+    public Dictionary<string, List<(string,IIndexer<object>)>> tables = new Dictionary<string, List<(string, IIndexer<object>)>>();
+
+    private string[] dbNameList = new string[] { "GameData", "WeekData" };
 
     private string[] gameDataName = new string[] { "level", "exp", "energy", "friends", "cash", "reputation", "atenaGrowth", "favor" };
 
@@ -51,6 +58,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        GenTableList();
+
         applicationIsQuitting = false;
         if (_instance == null)
         {
@@ -62,7 +71,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        LoadGameData();
+        LoadAllData();
     }
 
     // Start is called before the first frame update
@@ -77,28 +86,66 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void InitGameData()
+    private void GenTableList()
     {
-        string filePath = Application.persistentDataPath + "/GameData.db";
+        tables.Add("GameData", new List<(string, IIndexer<object>)> 
+        { 
+            ("GameData", gameData), 
+            ("AtenaDate", atenaDate) }
+        );
+
+        tables.Add("WeekData", new List<(string, IIndexer<object>)> 
+        { 
+            ("SituData", situData), 
+            ("WorkData", workData), 
+            ("PayData", payData) 
+        });
+    }
+
+    public void InitAllData()
+    {
+        foreach (string dbName in dbNameList)
+        {
+            InitGameData(dbName);
+        }
+    }
+    void LoadAllData()
+    {
+        foreach (string dbName in dbNameList)
+        {
+            LoadGameData(dbName);
+        }
+    }
+    public void SaveAllData()
+    {
+        foreach (string dbName in dbNameList)
+        {
+            SaveGameData(dbName);
+        }
+    }
+
+    void InitGameData(string dbName)
+    {
+        string filePath = Application.persistentDataPath + $"/{dbName}.db";
         if (File.Exists(filePath))
         {
             File.Delete(filePath);
             Debug.Log("파일 제거 완료");
         }
 
-        LoadGameData();
+        LoadGameData(dbName);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         
         return;
     }
 
-    void LoadGameData()
+    void LoadGameData(string dbName)
     {
-        string filePath = Application.persistentDataPath + "/GameData.db";
+        string filePath = Application.persistentDataPath + $"/{dbName}.db";
 
         if (!File.Exists(filePath))
         {
-            string streamingFilePath = Application.streamingAssetsPath + "/GameData.db";
+            string streamingFilePath = Application.streamingAssetsPath + $"/{dbName}.db";
             File.Copy(streamingFilePath, filePath);
 
             Debug.Log("connect new database at " + streamingFilePath);
@@ -108,15 +155,14 @@ public class GameManager : MonoBehaviour
         {
             connection.Open();
 
-            string[] nameList = new string[] { "GameData", "AtenaDate" };
-            IIndexer<object>[] dataList = new IIndexer<object>[] {gameData, atenaDate};
+            List<(string, IIndexer<object>)> tableList = tables[dbName];
 
             using (var command = connection.CreateCommand())
             {
-                for (int i = 0; i < nameList.Length; i++)
+                for (int i = 0; i < tableList.Count; i++)
                 {
-                    string name = nameList[i];
-                    IIndexer<object> data = dataList[i];
+                    string name = tableList[i].Item1;
+                    IIndexer<object> data = tableList[i].Item2;
 
                     command.CommandText = $"SELECT * FROM {name}";
                     using (IDataReader reader = command.ExecuteReader())
@@ -143,7 +189,7 @@ public class GameManager : MonoBehaviour
                                     Debug.Log("typeError");
                                     break;
                             }
-                            
+                            //Debug.Log($"{data[idx]}");
                             idx++;
                         }
                     }
@@ -152,28 +198,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void SaveGameData()
+    public void SaveGameData(string dbName)
     {
-        string filePath = Application.persistentDataPath + "/GameData.db";
+        string filePath = Application.persistentDataPath + $"/{dbName}.db";
 
         if (!File.Exists(filePath))
         {
-            LoadGameData();
+            LoadGameData(dbName);
         }
 
         using (var connection = new SqliteConnection("URI=file:" + filePath))
         {
             connection.Open();
 
-            string[] nameList = new string[] { "GameData", "AtenaDate" };
-            IIndexer<object>[] dataList = new IIndexer<object>[] { gameData, atenaDate };
+            List<(string, IIndexer<object>)> tableList = tables[dbName];
 
             using (var command = connection.CreateCommand())
             {
-                for (int i = 0; i < nameList.Length; i++)
+                for (int i = 0; i < tableList.Count; i++)
                 {
-                    string name = nameList[i];
-                    IIndexer<object> data = dataList[i];
+                    string name = tableList[i].Item1;
+                    IIndexer<object> data = tableList[i].Item2;
 
                     command.CommandText = $"SELECT * FROM {name}";
                     using (var reader = command.ExecuteReader())
@@ -229,7 +274,7 @@ public class GameManager : MonoBehaviour
 
         if (name == "exp") gameData.LvUp();
 
-        SaveGameData();
+        SaveGameData("GameData");
     }
 
     public void ChangeValue(int idx, int value)
@@ -245,6 +290,6 @@ public class GameManager : MonoBehaviour
 
         if (idx == 1) gameData.LvUp();
 
-        SaveGameData();
+        SaveGameData("GameData");
     }
 }

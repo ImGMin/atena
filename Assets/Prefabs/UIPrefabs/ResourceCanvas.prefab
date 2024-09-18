@@ -1341,6 +1341,7 @@ GameObject:
   - component: {fileID: 8851351089150503335}
   - component: {fileID: 4321083863523993853}
   - component: {fileID: 8258605963060584891}
+  - component: {fileID: 5467905437547935216}
   - component: {fileID: 1711888771438364929}
   m_Layer: 5
   m_Name: Text (TMP) (1)
@@ -1390,6 +1391,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   format: '{0}'
   resourceIndex: 2
+--- !u!114 &5467905437547935216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958624391697673772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5d25a35783a8d949bd3bdd405556c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  format: '{0}'
+  resourceIndex: 2
+  text: {fileID: 4734061336365517821, guid: f508c107817a7b247b6e467bd1e4077f, type: 3}
 --- !u!114 &1711888771438364929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1793,6 +1809,7 @@ GameObject:
   - component: {fileID: 880581690452336446}
   - component: {fileID: 7929857831528568177}
   - component: {fileID: 3479291981607678599}
+  - component: {fileID: 3112754674135106319}
   - component: {fileID: 219763684483033957}
   m_Layer: 5
   m_Name: Text (TMP)
@@ -1843,6 +1860,21 @@ MonoBehaviour:
   format: "{0}\uC6D0"
   resourceIndex: 4
   csv: 1
+--- !u!114 &3112754674135106319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8757836673096722964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5d25a35783a8d949bd3bdd405556c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  format: '{0}'
+  resourceIndex: 4
+  text: {fileID: 4734061336365517821, guid: f508c107817a7b247b6e467bd1e4077f, type: 3}
 --- !u!114 &219763684483033957
 MonoBehaviour:
   m_ObjectHideFlags: 0
