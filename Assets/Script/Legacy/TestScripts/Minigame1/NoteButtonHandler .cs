@@ -162,9 +162,14 @@ public class NoteButtonHandler : MonoBehaviour
             sliderTimer.StopTimer(); //타이머 멈춤
             Destroy(markNote);
             Debug.Log("@@@@@@@@@@@@@@@@@@@@성공@@@@@@@@@@@@@@@@@@@");
+            ClosePopup();
         }
     }
 
+    void ClosePopup()
+    {
+        minigame1PopupOb.SetActive(false); // 팝업 패널 비활성화
+    }
     public enum noteType
     {
         Up,

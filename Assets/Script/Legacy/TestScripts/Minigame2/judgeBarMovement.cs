@@ -162,7 +162,6 @@ void UpdateAttempts(AttemptResult result)
 
 }
 
-
     void ClosePopup()
     {
         popupPanel.SetActive(false); // 팝업 패널 비활성화

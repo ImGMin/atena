@@ -49,6 +49,7 @@ public class minigametimer : MonoBehaviour
             StopTimer();
             Debug.Log("30초 끝");
             Debug.Log("@@@@@@@@@2실패@@@@@@@@@@@@");
+            ClosePopup();
         }
     }
 
@@ -76,6 +77,11 @@ public class minigametimer : MonoBehaviour
         timerSlider.fillAmount -= tmp;
         
         //Debug.Log("타이머 업데이트: " + timerValue);
+    }
+
+    void ClosePopup()
+    {
+        minigame1PopupOb.SetActive(false); // 팝업 패널 비활성화
     }
 }
 
