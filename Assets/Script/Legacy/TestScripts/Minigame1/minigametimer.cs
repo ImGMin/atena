@@ -22,7 +22,7 @@ public class minigametimer : MonoBehaviour
         GameObject gm = Instantiate(StartImage);
         gm.transform.SetParent(this.transform);
         gm.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,0);
-        gm.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "start";
+        gm.GetComponentsInChildren<TextMeshProUGUI>()[0].text = "대화 연습 시작!";
 
         timerValue = timerDuration;
     }
