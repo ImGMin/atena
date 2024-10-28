@@ -9,19 +9,27 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    
+    //GameData
     public GameData gameData = new GameData();
     public AtenaDate atenaDate = new AtenaDate();
 
+    //WeekData
     public SituData situData = new SituData();
     public WorkData workData = new WorkData();
     public PayData payData = new PayData();
+
+    //JsonData
+    public ArrayData<bool> isEventEntryDay = new ArrayData<bool>(5);
+    public ArrayData<bool> isEventDay = new ArrayData<bool>(5);
+    string filePath;
 
     public Dictionary<string, List<(string,IIndexer<object>)>> tables = new Dictionary<string, List<(string, IIndexer<object>)>>();
 
     private string[] dbNameList = new string[] { "GameData", "WeekData" };
 
     private string[] gameDataName = new string[] { "level", "exp", "energy", "friends", "cash", "reputation", "atenaGrowth", "favor" };
+
+    private string[] filaPathList = new string[] { "EventEntry", "EventDay" };
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -291,5 +299,28 @@ public class GameManager : MonoBehaviour
         if (idx == 1) gameData.LvUp();
 
         SaveGameData("GameData");
+    }
+
+    public void SaveArrayData<T>(ArrayData<T> data)
+    {
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(filePath, json);
+        Debug.Log("Data saved to " + filePath);
+    }
+
+    public ArrayData<T> LoadArrayData<T>()
+    {
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            ArrayData<T> data = JsonUtility.FromJson<ArrayData<T>>(json);
+            Debug.Log("Data loaded from " + filePath);
+            return data;
+        }
+        else
+        {
+            Debug.LogWarning("Save file not found!");
+            return null;
+        }
     }
 }
