@@ -12,7 +12,6 @@ public class ScheduleManager : MonoBehaviour
     private string[] situList = new string[5];
     private string[] workList = new string[5] { "Rest", "Rest", "Rest", "Rest", "Rest" };
     private bool[] canWork = new bool[5];
-    
 
     public Button[] WeekDayButtonList = new Button[5];
     public Image[] SituImage = new Image[5];
@@ -30,6 +29,7 @@ public class ScheduleManager : MonoBehaviour
     {
         LoadData();
         ButtonSetting();
+        LoadNextWeek();
     }
 
     // Start is called before the first frame update
@@ -67,7 +67,6 @@ public class ScheduleManager : MonoBehaviour
         {
             connection.Open();
 
-
             using (var command = connection.CreateCommand())
             {
                 string name = $"Situ{GameManager.Instance.atenaDate.year}_{GameManager.Instance.atenaDate.month}";
@@ -90,6 +89,67 @@ public class ScheduleManager : MonoBehaviour
                         {
                             canWork[idx] = false;
                         }
+                        Debug.Log($"{reader["근무ID"]}, {reader["상황ID"]}");
+                        idx++;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (situList[i].StartsWith("Situ_02") && situList[i].Length == 10 && GameManager.Instance.isEventDay.array[i] == 0)
+            {
+                canWork[i] = true;
+            }
+        }
+    }
+
+    void LoadNextWeek()
+    {
+        string streamingFilePath = Application.streamingAssetsPath + $"/DateData.db";
+
+        using (var connection = new SqliteConnection("URI=file:" + streamingFilePath))
+        {
+            connection.Open();
+
+            using (var command = connection.CreateCommand())
+            {
+                int cday = GameManager.Instance.atenaDate.day;
+                int month = GameManager.Instance.atenaDate.month;
+                int year = GameManager.Instance.atenaDate.year;
+                cday += 5;
+                if (cday > 20)
+                {
+                    cday -= 20;
+                    month += 1;
+                }
+                if (month > 12)
+                {
+                    month -= 12;
+                    year += 1;
+                }
+
+                string name = $"Situ{year}_{month}";
+                int day = (cday - 1) / 5 * 5 + 1;
+                Debug.Log(day);
+
+                command.CommandText = $"SELECT * FROM {name} WHERE 일 >= {day} AND 일 < {day + 5}";
+                using (IDataReader reader = command.ExecuteReader())
+                {
+
+                    int idx = 0;
+                    while (reader.Read())
+                    {
+                        string tmp = reader["상황ID"].ToString();
+                        if (tmp.StartsWith("Situ_02"))
+                        {
+                            GameManager.Instance.isEventEntryDay.array[idx] = true;
+                        }
+                        else
+                        {
+                            GameManager.Instance.isEventEntryDay.array[idx] = false;
+                        }
                         idx++;
                     }
                 }
@@ -106,7 +166,19 @@ public class ScheduleManager : MonoBehaviour
 
             SituImage[i].gameObject.SetActive(true);
             TMP_Text buttonText = SituImage[i].GetComponentInChildren<TMP_Text>();
-            buttonText.text = $"상황\n{situList[i]}";
+
+            if (situList[i].StartsWith("Situ_02"))
+            {
+                buttonText.text = $"팬싸인회";
+            }
+            else if (situList[i].StartsWith("Situ_tuto"))
+            {
+                buttonText.text = $"첫 날";
+            }
+            else
+            {
+                buttonText.text = $"상황\n{situList[i]}";
+            }
             check[i] = true;
         }
 

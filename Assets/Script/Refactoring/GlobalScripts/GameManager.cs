@@ -9,19 +9,26 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    
+    //GameData
     public GameData gameData = new GameData();
     public AtenaDate atenaDate = new AtenaDate();
 
+    //WeekData
     public SituData situData = new SituData();
     public WorkData workData = new WorkData();
     public PayData payData = new PayData();
+
+    //JsonData
+    public ArrayData<bool> isEventEntryDay = new ArrayData<bool>(5);
+    public ArrayData<int> isEventDay = new ArrayData<int>(5);
 
     public Dictionary<string, List<(string,IIndexer<object>)>> tables = new Dictionary<string, List<(string, IIndexer<object>)>>();
 
     private string[] dbNameList = new string[] { "GameData", "WeekData" };
 
     private string[] gameDataName = new string[] { "level", "exp", "energy", "friends", "cash", "reputation", "atenaGrowth", "favor" };
+
+    private string[] filaPathList = new string[] { "EventEntry", "EventDay" };
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -108,6 +115,9 @@ public class GameManager : MonoBehaviour
         {
             InitGameData(dbName);
         }
+
+        isEventEntryDay = InitArrayData<bool>(filaPathList[0]);
+        isEventDay = InitArrayData<int>(filaPathList[1]);
     }
     void LoadAllData()
     {
@@ -115,6 +125,9 @@ public class GameManager : MonoBehaviour
         {
             LoadGameData(dbName);
         }
+
+        isEventEntryDay = LoadArrayData<bool>(filaPathList[0]);
+        isEventDay = LoadArrayData<int>(filaPathList[1]);
     }
     public void SaveAllData()
     {
@@ -122,6 +135,9 @@ public class GameManager : MonoBehaviour
         {
             SaveGameData(dbName);
         }
+
+        SaveArrayData(isEventEntryDay, filaPathList[0]);
+        SaveArrayData(isEventDay, filaPathList[1]);
     }
 
     void InitGameData(string dbName)
@@ -291,5 +307,46 @@ public class GameManager : MonoBehaviour
         if (idx == 1) gameData.LvUp();
 
         SaveGameData("GameData");
+    }
+
+    public void SaveArrayData<T>(ArrayData<T> data, string fileName)
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, $"{fileName}.json");
+
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(filePath, json);
+        Debug.Log("Data saved to " + filePath);
+    }
+
+    public ArrayData<T> LoadArrayData<T>(string fileName)
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, $"{fileName}.json");
+
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            ArrayData<T> data = JsonUtility.FromJson<ArrayData<T>>(json);
+            Debug.Log("Data loaded from " + filePath);
+            return data;
+        }
+        else
+        {
+            Debug.Log("Save file not found!");
+            ArrayData<T> data = new ArrayData<T>(5);
+            return data;
+        }
+    }
+
+    public ArrayData<T> InitArrayData<T>(string fileName)
+    {
+        string filePath = Path.Combine(Application.persistentDataPath, $"{fileName}.json");
+
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+            Debug.Log("제거");
+        }
+
+        return LoadArrayData<T>(fileName);
     }
 }

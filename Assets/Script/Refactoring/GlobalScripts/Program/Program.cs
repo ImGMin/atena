@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 class Program
@@ -58,5 +56,19 @@ class Program
         float textBoxHeight = textRectTransform.sizeDelta.y;
 
         return Mathf.Max(preferredHeight,textBoxHeight);
+    }
+
+    private static System.Random random = new System.Random();
+
+    public static bool CheckProbability(float p)
+    {
+        // Ensure p is between 0f and 100f
+        p = Math.Clamp(p, 0f, 100f);
+
+        // Generate a random float between 0 and 100
+        float randomValue = (float)(random.NextDouble() * 100);
+
+        // Return true if randomValue is less than p, false otherwise
+        return randomValue < p;
     }
 }

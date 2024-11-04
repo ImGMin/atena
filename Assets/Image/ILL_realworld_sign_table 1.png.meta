@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: eb3dfb03b3363954ab8cb1ac508b5cd8
-=======
-guid: e39d81d30158e2d4b9814202de2be2e6
->>>>>>> 4c912c9c09f5f04c6044e08c8603f3cb1522010c
+guid: 407f4b1697acc2a458e44c81f28e9d13
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -98,8 +94,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-<<<<<<< HEAD
-=======
     buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -113,7 +107,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
->>>>>>> 4c912c9c09f5f04c6044e08c8603f3cb1522010c
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -128,7 +121,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: ILL_realworld_sign_table 1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 600
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96975b37d1990da40987e3a63533f487
+      internalID: 1202479627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ILL_realworld_sign_table 1_1
+      rect:
+        serializedVersion: 2
+        x: 489
+        y: 0
+        width: 600
+        height: 300
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5671c04cc41cd34292858a3a935a660
+      internalID: 337694493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -139,7 +174,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      ILL_realworld_sign_table 1_0: 1202479627
+      ILL_realworld_sign_table 1_1: 337694493
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

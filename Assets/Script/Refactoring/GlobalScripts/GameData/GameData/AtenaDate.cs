@@ -34,7 +34,7 @@ public class AtenaDate : IIndexer<object>//, IComparable<AtenaDate_prev>
     {
         if (day > 20)
         {
-            day = 20;
+            day -= 20;
             month += 1;
         }
 

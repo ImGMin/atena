@@ -31,7 +31,8 @@ public class ChangeDateSceneManager : BaseSceneManager
             }
             else
             {
-                if ((string)GameManager.Instance.situData[(Today-1)%5] == "Situ_02_01_01")
+                if (((string)GameManager.Instance.situData[(Today - 1) % 5]).StartsWith("Situ_02") &&
+                    GameManager.Instance.isEventDay.array[(Today - 1) % 5] == 1)
                 {
                     SceneManager.LoadScene(nextSceneName2);
                 }
