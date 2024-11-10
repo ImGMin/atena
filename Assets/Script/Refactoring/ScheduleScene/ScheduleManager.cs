@@ -132,7 +132,7 @@ public class ScheduleManager : MonoBehaviour
 
                 string name = $"Situ{year}_{month}";
                 int day = (cday - 1) / 5 * 5 + 1;
-                Debug.Log(day);
+                Debug.Log($"next week -> {day}");
 
                 command.CommandText = $"SELECT * FROM {name} WHERE 일 >= {day} AND 일 < {day + 5}";
                 using (IDataReader reader = command.ExecuteReader())

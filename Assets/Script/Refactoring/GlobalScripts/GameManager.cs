@@ -146,7 +146,6 @@ public class GameManager : MonoBehaviour
         if (File.Exists(filePath))
         {
             File.Delete(filePath);
-            Debug.Log("파일 제거 완료");
         }
 
         LoadGameData(dbName);
@@ -163,8 +162,6 @@ public class GameManager : MonoBehaviour
         {
             string streamingFilePath = Application.streamingAssetsPath + $"/{dbName}.db";
             File.Copy(streamingFilePath, filePath);
-
-            Debug.Log("connect new database at " + streamingFilePath);
         }
 
         using (var connection = new SqliteConnection("URI=file:" + filePath))
@@ -186,7 +183,6 @@ public class GameManager : MonoBehaviour
                         int idx = 0;
                         while (reader.Read())
                         {
-                            //Debug.Log("Name: " + reader["name"] + ", Value: " + reader["value"] + ", Type: " + reader["type"]);
                             switch (reader["type"])
                             {
                                 case "int":
@@ -205,7 +201,6 @@ public class GameManager : MonoBehaviour
                                     Debug.Log("typeError");
                                     break;
                             }
-                            //Debug.Log($"{data[idx]}");
                             idx++;
                         }
                     }
@@ -263,8 +258,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("done");
     }
 
     public void ChangeValue(string name, int value)
@@ -315,7 +308,6 @@ public class GameManager : MonoBehaviour
 
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(filePath, json);
-        Debug.Log("Data saved to " + filePath);
     }
 
     public ArrayData<T> LoadArrayData<T>(string fileName)
@@ -326,13 +318,15 @@ public class GameManager : MonoBehaviour
         {
             string json = File.ReadAllText(filePath);
             ArrayData<T> data = JsonUtility.FromJson<ArrayData<T>>(json);
-            Debug.Log("Data loaded from " + filePath);
             return data;
         }
         else
         {
-            Debug.Log("Save file not found!");
             ArrayData<T> data = new ArrayData<T>(5);
+            for (int i = 0; i < 5; i++)
+            {
+                Debug.Log(data.array[i]);
+            }
             return data;
         }
     }
