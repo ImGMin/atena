@@ -71,7 +71,6 @@ public class ScheduleManager : MonoBehaviour
             {
                 string name = $"Situ{GameManager.Instance.atenaDate.year}_{GameManager.Instance.atenaDate.month}";
                 int day = (GameManager.Instance.atenaDate.day-1) / 5 * 5 + 1;
-                Debug.Log(day);
 
                 command.CommandText = $"SELECT * FROM {name} WHERE 일 >= {day} AND 일 < {day+5}";
                 using (IDataReader reader = command.ExecuteReader())
@@ -89,7 +88,6 @@ public class ScheduleManager : MonoBehaviour
                         {
                             canWork[idx] = false;
                         }
-                        Debug.Log($"{reader["근무ID"]}, {reader["상황ID"]}");
                         idx++;
                     }
                 }
@@ -132,7 +130,6 @@ public class ScheduleManager : MonoBehaviour
 
                 string name = $"Situ{year}_{month}";
                 int day = (cday - 1) / 5 * 5 + 1;
-                Debug.Log($"next week -> {day}");
 
                 command.CommandText = $"SELECT * FROM {name} WHERE 일 >= {day} AND 일 < {day + 5}";
                 using (IDataReader reader = command.ExecuteReader())
@@ -279,7 +276,10 @@ public class ScheduleManager : MonoBehaviour
         }
 
         GameManager.Instance.SaveGameData("WeekData");
-        if (situList[(GameManager.Instance.atenaDate.day-1)%5] == "Situ_02_01_01")
+
+        int Today = GameManager.Instance.atenaDate.day;
+        if (((string)GameManager.Instance.situData[(Today - 1) % 5]).StartsWith("Situ_02") &&
+                    GameManager.Instance.isEventDay.array[(Today - 1) % 5] == 1)
         {
             SceneManager.LoadScene("OfflineScene");
         }

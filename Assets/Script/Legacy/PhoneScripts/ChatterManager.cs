@@ -17,7 +17,6 @@ public class ChatterManager : MonoBehaviour
     //선택지세트ID에 대해, {내용, 경험치, 평판, 친구수, 성장도, 에너지, 현금}에 대한 딕셔너리가 들어있는 리스트
     Dictionary<string, List<Dictionary<string, string>>> ChoiceIDData;
 
-    int situNum;
     string situID;
 
     string postSetID;
@@ -46,11 +45,15 @@ public class ChatterManager : MonoBehaviour
         ChoiceIDData = ReadChoiceIDCSV();
 
         //오늘의 상황ID의 번호, ID
-        situNum = GameManager_prev.Instance.gameData.Schedule[GameManager_prev.Instance.gameData.curTime.weekday].Item1;
-        situID = GameManager_prev.Instance.NumToSitu[situNum];
+        situID = (string)GameManager.Instance.situData[(GameManager.Instance.atenaDate.day - 1) % 5];
 
         //랜덤하게 게시글세트, 선택지세트의 ID 추출
         (postSetID, choiceSetID) = SituIDData[situID][Program.GetRandomIndices(SituIDData[situID].Count, 1)[0]];
+
+        if (GameManager.Instance.isEventDay.array[(GameManager.Instance.atenaDate.day - 1)%5] == 0)
+        {
+            choiceSetID = SituIDData["Situ_Idle"][Program.GetRandomIndices(SituIDData["Situ_Idle"].Count, 1)[0]].Item2;
+        }
 
         //포스트는 하루동안 고정
         postIdx = Program.GetRandomIndices(PostIDData[postSetID].Count,numberOfPost);
@@ -210,7 +213,7 @@ public class ChatterManager : MonoBehaviour
 
             float height = Program.CalculateTextHeight(postText);
             RectTransform rect = postOb.GetComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + (height - 55f));
+            rect.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y + (height - 110f));
 
             postOb.transform.SetParent(content.transform);
         }
@@ -229,7 +232,7 @@ public class ChatterManager : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             ChoiceButtonList[i].transform.Find("Post").GetComponent<TMP_Text>().text = 
-                ChoiceIDData[choiceSetID][choiceIdx[i]]["내용"].Replace("@최애", $"@{GameManager_prev.Instance.gameData.myFavorite}");
+                ChoiceIDData[choiceSetID][choiceIdx[i]]["내용"].Replace("@최애", $"@{GameManager.Instance.myFavorite}");
 
             ChoiceButtonList[i].transform.Find("Resource").GetComponent<TMP_Text>().text = PenaltyString(i);
         }
@@ -254,7 +257,7 @@ public class ChatterManager : MonoBehaviour
         }
         else
         {
-            SelectText.text = ChoiceIDData[choiceSetID][choiceIdx[index]]["내용"].Replace("@최애", $"@{GameManager_prev.Instance.gameData.myFavorite}");
+            SelectText.text = ChoiceIDData[choiceSetID][choiceIdx[index]]["내용"].Replace("@최애", $"@{GameManager.Instance.myFavorite}");
             SelectIdx = index;
         }
     }
@@ -272,13 +275,19 @@ public class ChatterManager : MonoBehaviour
         int energy = int.Parse(tmp["에너지"]);
         int cash = int.Parse(tmp["현금"]);
 
-        GameManager_prev.Instance.ChangeValue(exp: exp, energy: energy,friends:friends , cash: cash, reputation: reputation, atenaGrowth:atenaGrowth);
+        //언젠가 수정해
+        if (exp != 0) { GameManager.Instance.ChangeValue("exp", exp); }
+        if (reputation != 0) { GameManager.Instance.ChangeValue("reputation", reputation); }
+        if (friends != 0) { GameManager.Instance.ChangeValue("friends", friends); }
+        if (atenaGrowth != 0) { GameManager.Instance.ChangeValue("atenaGrowth", atenaGrowth); }
+        if (energy != 0) { GameManager.Instance.ChangeValue("energy", energy); }
+        if (cash != 0) { GameManager.Instance.ChangeValue("cash", cash); }
 
         GameObject postOb = Instantiate(postPrefab, transform.position, transform.rotation);
-        postOb.transform.Find("Name").GetComponent<TMP_Text>().text = GameManager_prev.Instance.gameData.playerName;
+        postOb.transform.Find("Name").GetComponent<TMP_Text>().text = GameManager.Instance.playerName;
 
         TMP_Text postText = postOb.transform.Find("Post").GetComponent<TMP_Text>();
-        postText.text = tmp["내용"].Replace("@최애", $"@{GameManager_prev.Instance.gameData.myFavorite}");
+        postText.text = tmp["내용"].Replace("@최애", $"@{GameManager.Instance.myFavorite}");
 
         float height = Program.CalculateTextHeight(postText);
         RectTransform rect = postOb.GetComponent<RectTransform>();
@@ -296,8 +305,8 @@ public class ChatterManager : MonoBehaviour
         int energy = int.Parse(tmp["에너지"]);
         int cash = int.Parse(tmp["현금"]);
 
-        if (GameManager_prev.Instance.gameData.energy < energy) return false;
-        if (GameManager_prev.Instance.gameData.cash < cash) return false;
+        if (GameManager.Instance.gameData.energy < energy) return false;
+        if (GameManager.Instance.gameData.cash < cash) return false;
 
         return true;
     }

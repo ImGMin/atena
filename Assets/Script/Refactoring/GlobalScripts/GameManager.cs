@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     public GameData gameData = new GameData();
     public AtenaDate atenaDate = new AtenaDate();
 
+    public string playerName = "!플레이어이름!";
+    public string myFavorite = "!최애이름!";
+
     //WeekData
     public SituData situData = new SituData();
     public WorkData workData = new WorkData();
@@ -323,10 +326,6 @@ public class GameManager : MonoBehaviour
         else
         {
             ArrayData<T> data = new ArrayData<T>(5);
-            for (int i = 0; i < 5; i++)
-            {
-                Debug.Log(data.array[i]);
-            }
             return data;
         }
     }
