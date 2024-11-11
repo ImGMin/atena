@@ -47,12 +47,18 @@ public class ChatterManager : MonoBehaviour
         //오늘의 상황ID의 번호, ID
         situID = (string)GameManager.Instance.situData[(GameManager.Instance.atenaDate.day - 1) % 5];
 
-        //랜덤하게 게시글세트, 선택지세트의 ID 추출
-        (postSetID, choiceSetID) = SituIDData[situID][Program.GetRandomIndices(SituIDData[situID].Count, 1)[0]];
-
-        if (GameManager.Instance.isEventDay.array[(GameManager.Instance.atenaDate.day - 1)%5] == 0)
+        if (SituIDData.ContainsKey(situID))
         {
-            choiceSetID = SituIDData["Situ_Idle"][Program.GetRandomIndices(SituIDData["Situ_Idle"].Count, 1)[0]].Item2;
+            (postSetID, choiceSetID) = SituIDData[situID][Program.GetRandomIndices(SituIDData[situID].Count, 1)[0]];
+            //랜덤하게 게시글세트, 선택지세트의 ID 추출
+            if (GameManager.Instance.isEventDay.array[(GameManager.Instance.atenaDate.day - 1) % 5] == 0)
+            {
+                choiceSetID = SituIDData["Situ_Idle"][Program.GetRandomIndices(SituIDData["Situ_Idle"].Count, 1)[0]].Item2;
+            }
+        }
+        else
+        {
+            (postSetID, choiceSetID) = SituIDData["Situ_Idle"][Program.GetRandomIndices(SituIDData[situID].Count, 1)[0]];
         }
 
         //포스트는 하루동안 고정
