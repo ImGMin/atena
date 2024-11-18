@@ -11,7 +11,7 @@ public class JasmineManager : MonoBehaviour
     List<Dictionary<string, string>> data;
     List<Album> albums = new List<Album>();
     List<List<Button>> buttons = new List<List<Button>>();
-    AtenaDate_prev albumDate;
+    (int,int,int) albumDate;
 
     public GameObject content;
     public GameObject albumPrefab;
@@ -103,7 +103,7 @@ public class JasmineManager : MonoBehaviour
         return data;
     }
 
-    AtenaDate_prev ParseAtenaDate(string dateString)
+    (int,int,int) ParseAtenaDate(string dateString)
     {
         // "년", "월", "일"을 기준으로 문자열을 분리
         string[] parts = dateString.Split(new char[] { '년', '월', '일' }, StringSplitOptions.RemoveEmptyEntries);
@@ -114,7 +114,38 @@ public class JasmineManager : MonoBehaviour
         int day = int.Parse(parts[2].Trim());
 
         // AtenaDate 객체 생성 및 반환
-        return new AtenaDate_prev(year, month, day);
+        return (year, month, day);
+    }
+
+    bool Check((int,int,int) albumDate)
+    {
+        AtenaDate curTime = GameManager.Instance.atenaDate;
+        if (curTime.year > albumDate.Item1)
+        {
+            return true;
+        }
+        else if (curTime.year < albumDate.Item1)
+        {
+            return false;
+        }
+
+        if (curTime.month > albumDate.Item2)
+        {
+            return true;
+        }
+        else if (curTime.month < albumDate.Item2)
+        {
+            return false;
+        }
+
+        if (curTime.day >= albumDate.Item3)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     void GenAlbumList()
@@ -123,7 +154,7 @@ public class JasmineManager : MonoBehaviour
         {
             albumDate = ParseAtenaDate(data[i]["발매일"]);
 
-            if (GameManager_prev.Instance.gameData.curTime < albumDate)
+            if (Check(albumDate))
             {
                 break;
             }
@@ -201,11 +232,11 @@ public class JasmineManager : MonoBehaviour
         LastPlayIdx = SelectIdx;
 
 
-        if (GameManager_prev.Instance.gameData.cash < 300)
+        if (GameManager.Instance.gameData.cash < 300)
         {
             return;
         }
-        GameManager_prev.Instance.ChangeValue(cash: -300);
+        GameManager.Instance.ChangeValue("cash", -300);
 
         Music playMusic = albums[SelectIdx.Item1].included[SelectIdx.Item2];
         playMusicName.text = playMusic.name;
@@ -222,17 +253,17 @@ public class JasmineManager : MonoBehaviour
 
         if (!playing)
         {
-            if (GameManager_prev.Instance.gameData.cash < 600) return;
+            if (GameManager.Instance.gameData.cash < 600) return;
             OnPlayButtonClick();
         }
         else
         {
-            if (GameManager_prev.Instance.gameData.cash < 300) return;
+            if (GameManager.Instance.gameData.cash < 300) return;
         }
 
         if (!playing) return;
         
-        GameManager_prev.Instance.ChangeValue(cash: -300);
+        GameManager.Instance.ChangeValue("cash", -300);
         autoImage.SetActive(true);
         autoPlaying = true;
     }
@@ -254,7 +285,8 @@ public class JasmineManager : MonoBehaviour
             int exp = int.Parse(data[LastPlayIdx.Item1]["경험치"]);
 
             Debug.Log($"{growth},{exp}");
-            GameManager_prev.Instance.ChangeValue(exp:exp, atenaGrowth:growth);
+            GameManager.Instance.ChangeValue("exp", exp);
+            GameManager.Instance.ChangeValue("atenaGrowth", growth);
 
             Init();
         }
@@ -263,7 +295,7 @@ public class JasmineManager : MonoBehaviour
     void AutoPlay()
     {
         if (playing || !autoPlaying) return;
-        if (GameManager_prev.Instance.gameData.cash < 300)
+        if (GameManager.Instance.gameData.cash < 300)
         {
             autoPlaying = false;
             return;
@@ -272,7 +304,7 @@ public class JasmineManager : MonoBehaviour
         autoTime += Time.deltaTime;
         if (autoTime > maxAutoTime)
         {
-            GameManager_prev.Instance.ChangeValue(cash: -300);
+            GameManager.Instance.ChangeValue("cash", -300);
 
             Music playMusic = albums[LastPlayIdx.Item1].included[LastPlayIdx.Item2];
             playMusicName.text = playMusic.name;

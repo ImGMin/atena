@@ -6051,6 +6051,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 989818236}
   m_CullTransparentMesh: 1
+--- !u!1 &999154652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 999154654}
+  - component: {fileID: 999154653}
+  m_Layer: 0
+  m_Name: JasmineManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &999154653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999154652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96f7ab830e9af7445aecdb8dfc8e79ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  content: {fileID: 330884331}
+  albumPrefab: {fileID: 7918690043839260933, guid: 18ce29d26a310484fb0ceb469755ca6e, type: 3}
+  musicPrefab: {fileID: 3262718374976347678, guid: 9e68f48327275704686dd7ae6571bcab, type: 3}
+  playButton: {fileID: 97378041}
+  playMusicName: {fileID: 1367795602}
+  slider: {fileID: 1708447404}
+  autoImage: {fileID: 0}
+  autoButton: {fileID: 786022379}
+  SelectRect: {fileID: 0}
+--- !u!4 &999154654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999154652}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1010681069
 GameObject:
   m_ObjectHideFlags: 0
@@ -11827,3 +11880,4 @@ SceneRoots:
   - {fileID: 186206189}
   - {fileID: 1237760975}
   - {fileID: 1430529218}
+  - {fileID: 999154654}
