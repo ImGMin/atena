@@ -153,8 +153,7 @@ public class JasmineManager : MonoBehaviour
         for (int i = 0; i < data.Count; i++)
         {
             albumDate = ParseAtenaDate(data[i]["발매일"]);
-
-            if (Check(albumDate))
+            if (!Check(albumDate))
             {
                 break;
             }
@@ -164,7 +163,7 @@ public class JasmineManager : MonoBehaviour
             Album album = new Album(data[i]["앨범 이름"]);
 
             albumOb.transform.Find("Title").GetComponent<TMP_Text>().text = $"{album.name}";
-            albumOb.transform.Find("Date").GetComponent<TMP_Text>().text = albumDate.ToString();
+            albumOb.transform.Find("Date").GetComponent<TMP_Text>().text = $"{albumDate.Item1}.{albumDate.Item2}.{albumDate.Item3}";
 
             List<Button> curButtons = new List<Button>();
 
@@ -178,7 +177,7 @@ public class JasmineManager : MonoBehaviour
                 GameObject musicOb = Instantiate(musicPrefab, transform.position, transform.rotation);
 
                 RectTransform rectTransform = musicOb.GetComponent<RectTransform>();
-                rectTransform.anchoredPosition = new Vector2(0, -25 + (-60 * j));
+                rectTransform.anchoredPosition = new Vector2(0, -25 + (-60 * j))*2;
 
                 musicOb.GetComponentInChildren<TMP_Text>().text = $" {j}. {name}";
                 Button button = musicOb.GetComponent<Button>();

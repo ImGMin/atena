@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class ExpandableButton : MonoBehaviour
 {
-    public float expandedHeight = 200f; // 버튼이 확장되었을 때의 높이
-    public float collapsedHeight = 100f; // 버튼이 원래 상태일 때의 높이
+    public float expandedHeight = 400f; // 버튼이 확장되었을 때의 높이
+    public float collapsedHeight = 200f; // 버튼이 원래 상태일 때의 높이
     private bool isExpanded = false;
 
     private RectTransform rectTransform;
@@ -14,6 +14,7 @@ public class ExpandableButton : MonoBehaviour
     {
         MusicList = transform.Find("Music Group").gameObject;
         expandedHeight = 130f + MusicList.transform.childCount * 60f;
+        expandedHeight *= 2;
 
         rectTransform = GetComponent<RectTransform>();
         Button button = GetComponent<Button>();
