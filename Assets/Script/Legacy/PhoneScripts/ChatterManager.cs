@@ -5,6 +5,7 @@ using System.Reflection;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class ChatterManager : MonoBehaviour
 {
@@ -44,14 +45,23 @@ public class ChatterManager : MonoBehaviour
         PostIDData = ReadPostIDCSV();
         ChoiceIDData = ReadChoiceIDCSV();
 
+        string eventDayPattern = @"^Situ_0[1-6]_[0-9]{2}$";
+        string prevEventDayPattern = @"^Situ_0[1-6]_[0-9]{2}_[0-9]{2}$";
+
         //오늘의 상황ID의 번호, ID
         situID = (string)GameManager.Instance.situData[(GameManager.Instance.atenaDate.day - 1) % 5];
 
         if (SituIDData.ContainsKey(situID))
         {
-            (postSetID, choiceSetID) = SituIDData[situID][Program.GetRandomIndices(SituIDData[situID].Count, 1)[0]];
             //랜덤하게 게시글세트, 선택지세트의 ID 추출
-            if (GameManager.Instance.isEventDay.array[(GameManager.Instance.atenaDate.day - 1) % 5] == 0)
+            (postSetID, choiceSetID) = SituIDData[situID][Program.GetRandomIndices(SituIDData[situID].Count, 1)[0]];
+
+            //이벤트날이나, 전날인데 추첨못됐으면 idle로 선택지 세트
+            if (Regex.IsMatch(situID, eventDayPattern) && GameManager.Instance.isEventDay.array[(GameManager.Instance.atenaDate.day - 1) % 5] == 0)
+            {
+                choiceSetID = SituIDData["Situ_Idle"][Program.GetRandomIndices(SituIDData["Situ_Idle"].Count, 1)[0]].Item2;
+            }
+            else if (Regex.IsMatch(situID, prevEventDayPattern) && GameManager.Instance.isEventDay.array[(GameManager.Instance.atenaDate.day - 1 + 1) % 5] == 0)
             {
                 choiceSetID = SituIDData["Situ_Idle"][Program.GetRandomIndices(SituIDData["Situ_Idle"].Count, 1)[0]].Item2;
             }
