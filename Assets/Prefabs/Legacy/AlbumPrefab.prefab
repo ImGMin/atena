@@ -414,8 +414,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2435b3bbd88bf94ca42812c558b8c32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expandedHeight: 200
-  collapsedHeight: 100
+  expandedHeight: 400
+  collapsedHeight: 200
+  isExpanded: 0
 --- !u!114 &5138326222886102167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,19 +460,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6397081875878846078}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6128227673149127372}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &5604670413648497290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -486,6 +475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expandedHeight: 400
   collapsedHeight: 200
+  isExpanded: 0
 --- !u!1 &7988736978538346649
 GameObject:
   m_ObjectHideFlags: 0

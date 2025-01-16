@@ -10,6 +10,8 @@ public class JasmineManager : MonoBehaviour
 
     List<Dictionary<string, string>> data;
     List<Album> albums = new List<Album>();
+
+    List<Button> albumButtons = new List<Button>();
     List<List<Button>> buttons = new List<List<Button>>();
     (int,int,int) albumDate;
 
@@ -24,6 +26,7 @@ public class JasmineManager : MonoBehaviour
     public GameObject autoImage;
     public Button autoButton;
 
+    bool albumPlaying = false;
     bool autoPlaying = false;
     float autoTime = 0f;
     float maxAutoTime = 1f;
@@ -188,6 +191,10 @@ public class JasmineManager : MonoBehaviour
             }
 
             albumOb.transform.SetParent(content.transform);
+
+            Button albumButton = albumOb.GetComponent<Button>();
+            albumButton.onClick.AddListener(() => OnMusicButtonClick(albumButton));
+            albumButtons.Add(albumButton);
             albums.Add(album);
             buttons.Add(curButtons);
         }
@@ -195,16 +202,30 @@ public class JasmineManager : MonoBehaviour
 
     public void OnMusicButtonClick(Button clickedButton)
     {
+        (int, int) index = (-1, -1);
+        for (int i = 0; i < albumButtons.Count; i++)
+        {
+            if (clickedButton == albumButtons[i])
+            {
+                if (!playing)// && !clickedButton.GetComponent<ExpandableButton>().isExpanded)
+                {
+                    index = (i, -1);
+                    albumPlaying = true;
+                }
+                clickedButton.GetComponent<ExpandableButton>().ToggleSize();
+                break;
+            }
+        }
+
         if (playing) return;
 
-        (int, int) index = (-1, -1);
         for (int i = 0; i < buttons.Count; i++)
         {
             for (int j = 0; j < buttons[i].Count; j++)
             {
                 if (clickedButton == buttons[i][j])
                 {
-                    index = (i,j); 
+                    index = (i,j);
                     break;
                 }
             }
@@ -228,6 +249,12 @@ public class JasmineManager : MonoBehaviour
     {
         if (SelectIdx == (-1, -1)) return;
         if (playing) return;
+
+        if (albumPlaying)
+        {
+            SelectIdx.Item2 = 0;
+        }
+
         LastPlayIdx = SelectIdx;
 
 
@@ -271,6 +298,7 @@ public class JasmineManager : MonoBehaviour
     {
         autoImage.SetActive(false);
         autoPlaying = false;
+        albumPlaying = false;
     }
 
     void PlayMusic()
@@ -297,6 +325,7 @@ public class JasmineManager : MonoBehaviour
         if (GameManager.Instance.gameData.cash < 300)
         {
             autoPlaying = false;
+            albumPlaying = false;
             return;
         }
 
@@ -305,6 +334,10 @@ public class JasmineManager : MonoBehaviour
         {
             GameManager.Instance.ChangeValue("cash", -300);
 
+            if (albumPlaying)
+            {
+                LastPlayIdx.Item2 = (LastPlayIdx.Item2 + 1) % albums[LastPlayIdx.Item1].included.Count;
+            }
             Music playMusic = albums[LastPlayIdx.Item1].included[LastPlayIdx.Item2];
             playMusicName.text = playMusic.name;
             playing = true;
