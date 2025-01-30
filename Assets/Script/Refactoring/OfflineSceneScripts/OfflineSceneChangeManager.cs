@@ -1,24 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class OfflineSceneChangeManager : BaseSceneManager
 {
-    [SerializeField]
-    GameObject miniGame1;
 
     protected override void Update()
     {
-        if (GameManager.Instance.atenaDate.hour > 0.3f)
+        if (GameManager.Instance.atenaDate.hour >= 1f)
         {
-            miniGame1.SetActive(true);
+            Exit();
         }
+    }
 
-        if (GameManager.Instance.atenaDate.hour >= 8f)
-        {
-            GameManager.Instance.SaveAllData();
-            SceneManager.LoadScene(nextSceneName);
-        }
+    public void Exit()
+    {
+        GameManager.Instance.atenaDate.hour = 8f; 
+        GameManager.Instance.SaveAllData();
+        SceneManager.LoadScene(nextSceneName);
     }
 }
