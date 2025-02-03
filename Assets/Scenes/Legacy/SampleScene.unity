@@ -24805,10 +24805,20 @@ MonoBehaviour:
   imagesParent: {fileID: 931846500}
   uploadButton: {fileID: 1727416782}
   testButton: {fileID: 1847757351}
-  selectedImage: {fileID: 0}
   imageClickObject: {fileID: 148404216}
   imagePrefab: {fileID: 830498640941217606, guid: 6ef10a405e54d1347881f7ac8597735f, type: 3}
   imageDataText: {fileID: 1857324074}
+  spriteList:
+  - {fileID: 21300000, guid: ab968ca60aae036439f7113d2a83b811, type: 3}
+  - {fileID: 21300000, guid: 7b0eff7567947e14596ecbace29a1cc8, type: 3}
+  - {fileID: 21300000, guid: 950ea4e13ffd22f4d87b7dd4490f52a5, type: 3}
+  - {fileID: 21300000, guid: 47f384dbe5e81554fb0c18fc89460514, type: 3}
+  - {fileID: 21300000, guid: 44469bd2fb1b4bb4cbc150b3880a8def, type: 3}
+  - {fileID: 21300000, guid: 7845e848a034029478093ad905e28a11, type: 3}
+  - {fileID: 21300000, guid: 9e6190e713ca6cb4d8cfad75ffa74daf, type: 3}
+  - {fileID: 21300000, guid: 9b7fa02ed035cf646a474c6925f02cc9, type: 3}
+  - {fileID: 21300000, guid: 34a58b5b5046f894da498ecf5b5cccec, type: 3}
+  - {fileID: 21300000, guid: 48a8e6a640fe4604293939b8ae7c3f22, type: 3}
 --- !u!1 &1727416780
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,34 +5,27 @@ using TMPro;
 
 public class AlbumManager : MonoBehaviour
 {
-    public Transform imagesParent;       // 이미지들이 포함된 부모 오브젝트
-    public Button uploadButton;          // 업로드 버튼
-    public Button testButton;            // 이미지 생성 테스트 버튼
-    public Image selectedImage;          // 선택된 이미지
-    public GameObject imageClickObject;  // ImageClick 오브젝트
-    public GameObject imagePrefab;       // 이미지 프리팹
-    public TextMeshProUGUI imageDataText; // 데이터를 표시할 UI 텍스트 
-    
+    [Header("UI Elements")]
+    public Transform imagesParent; // 이미지들이 포함된 부모 오브젝트
+    public Button uploadButton;    // 업로드 버튼
+    public Button testButton;      // 이미지 생성 테스트 버튼
+    public GameObject imageClickObject; // ImageClick 오브젝트
+    public GameObject imagePrefab; // 이미지 프리팹
+    public TextMeshProUGUI imageDataText; // 데이터를 표시할 UI 텍스트
+
+    [Header("Image Management")]
+    public List<Sprite> spriteList = new List<Sprite>(); // 이미지에 사용할 Sprite 리스트
+    private int currentSpriteIndex = 0; // Sprite 리스트의 현재 인덱스
 
     private Dictionary<Image, ImageData> imageDataDict = new Dictionary<Image, ImageData>(); // 이미지 데이터 관리
+    private Image selectedImage; // 선택된 이미지
 
     void Start()
     {
-        // 테스트 버튼 클릭 이벤트 연결
+        // Test 버튼 클릭 이벤트 연결
         if (testButton != null)
         {
             testButton.onClick.AddListener(CreateNewImage);
-        }
-
-        // 기존 자식 오브젝트에 버튼 이벤트 자동 설정
-        foreach (Transform child in imagesParent)
-        {
-            Image image = child.GetComponent<Image>();
-            if (image != null)
-            {
-                AddButtonEvents(image);
-                AddDefaultImageData(image);
-            }
         }
 
         // 업로드 버튼 클릭 이벤트 연결
@@ -42,120 +35,127 @@ public class AlbumManager : MonoBehaviour
         }
     }
 
-    private void AddButtonEvents(Image image)
-    {
-        Button button = image.GetComponent<Button>();
-        if (button == null)
-        {
-            button = image.gameObject.AddComponent<Button>();
-        }
-
-        button.onClick.AddListener(() => SelectImage(image));
-    }
-
-    private void AddDefaultImageData(Image image)
-    {
-        imageDataDict[image] = new ImageData(
-            exp: Random.Range(0, 100),
-            friends: Random.Range(0, 50),
-            reputation: Random.Range(0, 30),
-            atenaGrowth: Random.Range(0, 20),
-            isUploaded: false,
-            imageSprite: image.sprite
-        );
-    }
-
+    // 새로운 이미지 생성
     public void CreateNewImage()
     {
-        if (imagePrefab == null)
+        if (imagePrefab == null || spriteList.Count == 0)
         {
-            Debug.LogWarning("이미지 프리팹이 설정되지 않았습니다.");
+            Debug.LogWarning("이미지 프리팹 또는 Sprite 리스트가 설정되지 않았습니다.");
             return;
         }
 
+        // 이미지 프리팹을 생성하고 부모 오브젝트에 추가
         GameObject newImageObj = Instantiate(imagePrefab, imagesParent);
-        newImageObj.name = "Image_" + imagesParent.childCount;
-
         Image image = newImageObj.GetComponent<Image>();
-        if (image == null)
+
+        if (image != null)
         {
-            Debug.LogWarning("프리팹에 Image 컴포넌트가 없습니다.");
-            return;
+            // Sprite 리스트에서 순서대로 이미지 할당
+            Sprite assignedSprite = spriteList[currentSpriteIndex];
+            image.sprite = assignedSprite;
+
+            // 다음 인덱스로 이동 (리스트 끝에 도달하면 처음으로 돌아감)
+            currentSpriteIndex = (currentSpriteIndex + 1) % spriteList.Count;
+
+            // 고유한 데이터 생성
+            ImageData newData = new ImageData(
+                $"Image_{imagesParent.childCount}",
+                assignedSprite,
+                Random.Range(10, 100),   // 경험치 랜덤값
+                Random.Range(0, 10),    // 평판 랜덤값
+                Random.Range(0, 10),   // 친구 수 랜덤값
+                Random.Range(100, 1000),// 돈 랜덤값
+                Random.Range(1, 10)     // 성장도 랜덤값
+            );
+
+            // 데이터 등록
+            imageDataDict[image] = newData;
+
+            // 클릭 이벤트 연결
+            Button button = newImageObj.GetComponent<Button>() ?? newImageObj.AddComponent<Button>();
+            button.onClick.AddListener(() => SelectImage(image));
+
+            Debug.Log($"이미지 생성: {newData.imageName}");
         }
-
-        AddButtonEvents(image);
-
-        // 새 이미지에 기본 데이터 추가
-        AddDefaultImageData(image);
-
-        Debug.Log(newImageObj.name + " 이미지가 생성되었습니다.");
     }
 
+    // 이미지 선택
     public void SelectImage(Image image)
     {
-        selectedImage = image;
-        Debug.Log("이미지가 선택되었습니다: " + selectedImage.name);
+        selectedImage = image; // 선택된 이미지 저장
+        Debug.Log($"이미지 선택: {imageDataDict[image].imageName}");
 
         if (imageClickObject != null)
         {
-            imageClickObject.SetActive(true);
+            imageClickObject.SetActive(true); // ImageClick 오브젝트 활성화
         }
 
-        UpdateImageData();
+        UpdateImageData(); // 데이터 업데이트
     }
 
+    // 이미지 데이터 업데이트
     private void UpdateImageData()
     {
-        if (imageDataText != null && selectedImage != null)
+        if (imageDataText != null && selectedImage != null && imageDataDict.ContainsKey(selectedImage))
         {
-            if (imageDataDict.TryGetValue(selectedImage, out ImageData data))
-            {
-                imageDataText.text = $"경험치: {data.exp} 친구: {data.friends} 평판: {data.reputation} 성장도: {data.atenaGrowth}";
-            }
-            else
-            {
-                Debug.LogWarning("선택된 이미지에 대한 데이터가 없습니다.");
-            }
+            ImageData data = imageDataDict[selectedImage];
+            imageDataText.text = $"이름: {data.imageName}\n" +
+                                 $"경험치: {data.exp}\n" +
+                                 $"평판: {data.reputation}\n" +
+                                 $"돈: {data.money}\n" +
+                                 $"성장도: {data.atenaGrowth}";
         }
     }
 
+    // 이미지 업로드
     public void UploadImage()
     {
-        if (selectedImage != null)
-        {
-            if (imageDataDict.TryGetValue(selectedImage, out ImageData data))
-            {
-                if (data.isUploaded)
-                {
-                    Debug.Log(selectedImage.name + " 이미 업로드된 이미지입니다.");
-                    return;
-                }
-
-                // 업로드 상태 업데이트
-                data.isUploaded = true;
-
-                // 업로드된 이미지를 뒤로 보내기
-                MoveImageToBack(selectedImage);
-
-                Debug.Log(selectedImage.name + " 업로드 완료!");
-            }
-            else
-            {
-                Debug.LogWarning("선택된 이미지에 대한 데이터가 없습니다.");
-            }
-        }
-        else
+        if (selectedImage == null)
         {
             Debug.LogWarning("선택된 이미지가 없습니다!");
+            return;
+        }
+
+        if (!imageDataDict.ContainsKey(selectedImage))
+        {
+            Debug.LogWarning("선택된 이미지의 데이터가 없습니다!");
+            return;
+        }
+
+        ImageData data = imageDataDict[selectedImage];
+
+        if (data.isUploaded)
+        {
+            Debug.Log($"{data.imageName} 이미 업로드된 이미지입니다.");
+            return;
+        }
+
+        // 업로드 상태 변경 및 처리
+        data.isUploaded = true;
+        Debug.Log($"{data.imageName} 업로드 완료!");
+        // 업로드된 이미지를 업로드되지 않은 이미지들 뒤로 위치시킴
+            MoveImageToBack(selectedImage);
+
+        // 업로드된 이미지를 시각적으로 구분 (밝기 감소)
+        DimImage(selectedImage);
+
+        // ImageClick 오브젝트 비활성화
+        if (imageClickObject != null)
+        {
+            imageClickObject.SetActive(false);
         }
     }
 
-    private void MoveImageToBack(Image image)
+        void MoveImageToBack(Image image)
     {
-        image.transform.SetSiblingIndex(imagesParent.childCount - 1);
+        // 이미지를 업로드되지 않은 이미지들 뒤로 위치시킴
+        image.transform.SetSiblingIndex(imagesParent.childCount - 1);  // 가장 뒤로 배치
+
+        // 밝기 낮추기
         DimImage(image);
     }
-
+    
+    // 이미지 밝기 낮추기
     private void DimImage(Image image)
     {
         Color currentColor = image.color;
