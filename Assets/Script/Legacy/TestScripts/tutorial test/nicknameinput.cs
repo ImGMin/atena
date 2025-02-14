@@ -10,6 +10,7 @@ public class NicknameInput : MonoBehaviour
     public GameObject NicknameConfirm; // 닉네임 입력 확인 창
     public TMP_InputField inputField; // 닉네임 입력 필드
     public TextMeshProUGUI ConfirmText; // 확인창 텍스트
+    public GameObject SelectCharacter; //캐릭터 선택 창창
     private string SavedNickname; // 저장된 닉네임
 
     void Start()
@@ -54,7 +55,8 @@ public class NicknameInput : MonoBehaviour
             //컨펌 패널 비활성화
             NicknameConfirm.SetActive(false);
 
-            // 추가 로직 (게임 시작 등)을 여기에 추가
+            // 캐릭터 선택 창 활성화
+            SelectCharacter.SetActive(true);
         }
         else
         {

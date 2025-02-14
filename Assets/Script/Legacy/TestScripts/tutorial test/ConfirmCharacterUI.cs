@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class ConfirmCharacterUI : MonoBehaviour
 {
+    public GameObject tutorialSettingBackground; //닉네임, 캐릭터 선택화면 배경
+    public GameObject Background; //캐릭터 선택창 배경
     public GameObject CharacterConfirmWindow; // 컨펌 패널
     public TextMeshProUGUI CharacterConfirmText; // 컨펌 텍스트
     public Button CharacterCancelButton; // 취소 버튼
@@ -54,5 +56,7 @@ public class ConfirmCharacterUI : MonoBehaviour
         {
             selectCharacter.SaveName(); // SelectCharacter의 SaveName 메서드 호출
         }
+        tutorialSettingBackground.SetActive(false); //배경 비활성화
+        Background.SetActive(false); //캐릭터 선ㅌ택 배경 비활성화
     }
 }
