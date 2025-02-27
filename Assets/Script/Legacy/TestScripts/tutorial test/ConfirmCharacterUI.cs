@@ -58,5 +58,12 @@ public class ConfirmCharacterUI : MonoBehaviour
         }
         tutorialSettingBackground.SetActive(false); //배경 비활성화
         Background.SetActive(false); //캐릭터 선ㅌ택 배경 비활성화
+
+            // **닉네임 입력창 비활성화 추가**
+    GameObject nicknameInputPanel = GameObject.Find("NicknameInputPanel");
+    if (nicknameInputPanel != null)
+    {
+        nicknameInputPanel.SetActive(false);
+    }
     }
 }

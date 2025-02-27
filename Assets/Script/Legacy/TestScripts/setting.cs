@@ -8,7 +8,7 @@ public class setting : MonoBehaviour
     public Slider volumeSlider;
     public Slider bgmVolumeSlider;
     public Slider effectVolumeSlider;
-
+    public BGMManager bGMManager;
     private void Start()
     {
         Slider[] allSlider = Resources.FindObjectsOfTypeAll<Slider>();
@@ -31,6 +31,7 @@ public class setting : MonoBehaviour
 
     public void SetbgmVolume(float value)
     {
+        Debug.Log("슬라이더 값: " + value); // 디버깅 로그 추가
         SoundManager.Instance.SetbgmVolume(value);
     }
 

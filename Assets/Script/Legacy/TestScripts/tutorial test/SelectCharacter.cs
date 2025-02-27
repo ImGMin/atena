@@ -15,7 +15,7 @@ public class SelectCharacter : MonoBehaviour
     public GameObject SelectCharacterWindow; // 캐릭터 선택 창
     public TextMeshProUGUI CharacterConfirmText; // 확인 창에서 표시할 텍스트
     public GameObject CharacterConfirmWindow; // 캐릭터 확인 창
-
+    public GameObject NicknameInputPanel; // 닉네임 입력창 참조 추가
     private string selectedCharacterName; // 현재 선택된 캐릭터 이름을 저장할 변수
 
     void Start()
@@ -54,30 +54,36 @@ public class SelectCharacter : MonoBehaviour
     }
 
     // 확인창의 확인 버튼 클릭 시 호출
-    public void SaveName()
+public void SaveName()
+{
+    if (!string.IsNullOrEmpty(selectedCharacterName))
     {
-        if (!string.IsNullOrEmpty(selectedCharacterName))
+        Debug.Log($"저장된 캐릭터: {selectedCharacterName}");
+
+        // 선택된 캐릭터 이름 저장
+        PlayerPrefs.SetString("SelectedCharacter", selectedCharacterName);
+        PlayerPrefs.Save();
+
+        // 확인 창 비활성화
+        if (CharacterConfirmWindow != null)
         {
-            Debug.Log($"저장된 캐릭터: {selectedCharacterName}");
-
-            // 선택된 캐릭터 이름 저장 (PlayerPrefs 예제)
-            PlayerPrefs.SetString("SelectedCharacter", selectedCharacterName);
-            PlayerPrefs.Save();
-
-            // 확인 창 비활성화
-            if (CharacterConfirmWindow != null)
-            {
-                CharacterConfirmWindow.SetActive(false);
-            }
-
-            // 추가 로직: 게임 시작 또는 다른 UI 표시
-            Debug.Log("캐릭터 저장 완료! 다음 단계로 진행합니다.");
+            CharacterConfirmWindow.SetActive(false);
         }
-        else
+
+        // **닉네임 입력창 비활성화 추가**
+        if (NicknameInputPanel != null)
         {
-            Debug.LogError("캐릭터가 선택되지 않았습니다.");
+            NicknameInputPanel.SetActive(false);
         }
+
+        // 추가 로직: 게임 시작 또는 다른 UI 표시
+        Debug.Log("캐릭터 저장 완료! 다음 단계로 진행합니다.");
     }
+    else
+    {
+        Debug.LogError("캐릭터가 선택되지 않았습니다.");
+    }
+}
 
     // 확인창의 취소 버튼 클릭 시 호출
     public void CancelButtonClick()
