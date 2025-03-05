@@ -126,10 +126,12 @@ public class JudgeBarController : MonoBehaviour
         {
             Debug.Log(string.Join(", ", attemptResults));
             resultMessage();
-            DelayManager.ExecuteAfterDelay(this, 3f, () => {
+            StartCoroutine(ClosePopup());
+
+            /*DelayManager.ExecuteAfterDelay(this, 3f, () => {
                 Debug.Log("3초 후 팝업 닫힘");
                 ClosePopup();
-            });
+            });*/
             
         }
     }
@@ -162,8 +164,9 @@ void UpdateAttempts(AttemptResult result)
 
 }
 
-    void ClosePopup()
+    IEnumerator ClosePopup()
     {
+        yield return new WaitForSeconds(3f);
         popupPanel.SetActive(false); // 팝업 패널 비활성화
     }
 

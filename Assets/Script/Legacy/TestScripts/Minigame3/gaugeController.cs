@@ -60,9 +60,10 @@ public class gaugeController : MonoBehaviour
                     Debug.Log("@@@@@@@@@@시간 끝@@@@@@@@@@@@");
                     isActive = false;
                     // minigame3Ob.SetActive(false);
-                    DelayManager.ExecuteAfterDelay(this, 3f, () => {
+                    StartCoroutine(ClosePopup());
+                    /*DelayManager.ExecuteAfterDelay(this, 3f, () => { 
                         ClosePopup();
-                    });
+                    });*/
                     return;
                 }
             }
@@ -99,9 +100,10 @@ public class gaugeController : MonoBehaviour
                     Debug.Log("@@@@@@@@@@@@@@@@게이지 꽉 참@@@@@@@@@@@@@@@@@@@@");
                     Debug.Log("얻은 에너지: (time+5)/5");
                     //3초 후 팝업닫힘
-                    DelayManager.ExecuteAfterDelay(this, 3f, () => { 
+                    StartCoroutine(ClosePopup());
+                    /*DelayManager.ExecuteAfterDelay(this, 3f, () => { 
                         ClosePopup();
-                    });
+                    });*/
                 } 
                 clickCount = 0;
             }
@@ -159,8 +161,9 @@ public class gaugeController : MonoBehaviour
     }
 
     //팝업창 닫기
-        void ClosePopup()
+    IEnumerator ClosePopup()
     {
+        yield return new WaitForSeconds(3f);
         minigame3Ob.SetActive(false); // 팝업 패널 비활성화
     }
 }

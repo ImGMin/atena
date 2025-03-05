@@ -6,15 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class OfflineSceneChangeManager : BaseSceneManager
 {
-
-    protected override void Update()
-    {
-        if (GameManager.Instance.atenaDate.hour >= 1f)
-        {
-            Exit();
-        }
-    }
-
     public void Exit()
     {
         GameManager.Instance.atenaDate.hour = 8f; 
